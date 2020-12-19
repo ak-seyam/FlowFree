@@ -31,16 +31,16 @@ def _backtrack(assignments: dict,
             # TODO check this snippet again
             if inferences != case.failure:
                 assignments = {**assignments, **inferences}
-                res = _backtrack(
-                    assignments,
-                    csp,
-                    inp,
-                    select_unassigned_variable,
-                    order_domain_values,
-                    assignment_complete,
-                    get_inferences,
-                    is_consistant
-                )
+            res = _backtrack(
+                assignments,
+                csp,
+                inp,
+                select_unassigned_variable,
+                order_domain_values,
+                assignment_complete,
+                get_inferences,
+                is_consistant
+            )
             if res != case.failure:
                 return res
             # IMPORTANT TODO: remove inferences from assignments here (DONE)

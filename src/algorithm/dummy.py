@@ -40,7 +40,7 @@ def select_unassigned_variable(assignments: dict, inp):
 
 def order_domain_values(csp, assignments, inp, var):
     """
-    return the available values
+    return the available values, in the dummy case return all values that are not connected yet
     """
     values = []
     # get values that are not connected yet
