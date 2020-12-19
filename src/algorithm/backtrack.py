@@ -1,4 +1,4 @@
-from ..model.state import state
+from model.state import state
 
 
 def backtrack(csp,
