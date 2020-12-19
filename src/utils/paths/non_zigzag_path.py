@@ -2,7 +2,7 @@
 
 from typing import Tuple, List
 from model.directions import direction as d
-from get_item_in_coord import get_item_in_coord
+from points_properties import get_item_in_coord
 
 
 def get_square_coordinates(current_index: Tuple[int, int], corners):
@@ -74,6 +74,13 @@ def get_square_coordinates(current_index: Tuple[int, int], corners):
 
 
 def is_surrounding_square_filled(assignment, inp, current_index):
+    """
+    input:
+    assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
+    inp: 2d list of the input
+
+    return wheather or not any of the surrounding squares is filled
+    """
 
     # TODO (DONE)
     # input -> assignment

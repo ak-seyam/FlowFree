@@ -2,7 +2,7 @@
 def get_terminals(inp):
     """
     return terminals where terminals is a dictionnay key = target and value is a
-    list of start and end indices
+    list of start and end coordinates
     """
     
     res = {}
@@ -14,6 +14,6 @@ def get_terminals(inp):
                 if fields :
                     fields.append((col_ind,row_ind))
                 else :
-                    res[current_char] = (col_ind,row_ind)
+                    res[current_char] = [(col_ind,row_ind)]
     
     return res
