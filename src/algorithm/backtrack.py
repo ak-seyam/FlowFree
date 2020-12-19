@@ -25,6 +25,8 @@ def _backtrack(assignments: dict,
     var = select_unassigned_variable(
         csp, assignments, inp)  # TODO Room for improvement
     # TODO Room for improvement
+    if var == None :
+        return case.failure
     for value in order_domain_values(csp, assignments, inp, var):
         if is_consistant({var: value}, assignments, inp, csp):
             assignments[var] = value

@@ -26,6 +26,7 @@ def select_unassigned_variable(assignments: dict, inp):
 
     return the next unassigned values or non if no unassigned variable exist
     """
+
     # TODO (DONE)
     # initially assignments will be terminals
     # select the last one
@@ -42,6 +43,7 @@ def order_domain_values(csp, assignments, inp, var):
     """
     return the available values, in the dummy case return all values that are not connected yet
     """
+
     values = []
     # get values that are not connected yet
     terminals = get_terminals(inp)
@@ -60,11 +62,27 @@ def inference():
     """
     return inferences as list or state.faileur
     """
+
     return case.failure
 
 
-def is_consistant(assignment: dict, assignments: List[dict], csp):
+def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
     """
-    return weather or not assignment is consistant with assignments according to the csp
+    input:
+    current_assignment: the coordinate = value dict 
+    assignments: the current assignments w/o current assignmet
+    csp: in dump it is just an array of constrains in dumb it should be just an array with a square case checking 
+
+    return: weather or not assignment is consistant with assignments according to the csp
     """
-    pass
+
+    # TODO
+    # steps
+    # - check each constraint in csp they all should result True
+    #    if no -> return false, return true otherwise
+    for constraint in csp:
+        # add the current assignment to assignments without mutating assignments
+        # to do any furthur color checks base of the current location
+        constraint({**assignments, **current_assignment},
+                   inp, list(current_assignment.keys())[0])
+    return True
