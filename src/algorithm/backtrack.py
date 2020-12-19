@@ -22,12 +22,14 @@ def _backtrack(assignments: dict,
                is_consistant):
     if assignment_complete(assignments, inp):
         return assignments
-    var = select_unassigned_variable(csp,assignments, inp) # TODO Room for improvement
-    for value in order_domain_values(csp, assignments, inp, var): # TODO Room for improvement
-        if is_consistant({var: value}, assignments, csp):
+    var = select_unassigned_variable(
+        csp, assignments, inp)  # TODO Room for improvement
+    # TODO Room for improvement
+    for value in order_domain_values(csp, assignments, inp, var):
+        if is_consistant({var: value}, assignments, inp, csp):
             assignments[var] = value
             # return key value for non failure
-            inferences = get_inferences()  # TODO rewrite this after you study consistency 
+            inferences = get_inferences()  # TODO rewrite this after you study consistency
             # TODO check this snippet again
             if inferences != case.failure:
                 assignments = {**assignments, **inferences}
@@ -44,7 +46,7 @@ def _backtrack(assignments: dict,
             if res != case.failure:
                 return res
             # IMPORTANT TODO: remove inferences from assignments here (DONE)
-            for key in inferences :
+            for key in inferences:
                 del assignments[key]
         del assignments[var]
     return case.failure
