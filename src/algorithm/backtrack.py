@@ -19,7 +19,7 @@ def _backtrack(assignments: list,
                is_consistant):
     if assignment_complete(assignments):
         return assignments
-    var = select_unassigned_variable(csp)
+    var = select_unassigned_variable(csp,assignments)
     for value in order_domain_values():
         if is_consistant({var: value}, assignments, csp):
             assignments.append(value)
@@ -38,6 +38,6 @@ def _backtrack(assignments: list,
                 )
             if res != state.failure:
                 return res
-        # removing failure from assignments doesn't make sense imp
+        # removing failure from assignments doesn't make sense imo
         assignments.remove({var: value})
     return state.failure
