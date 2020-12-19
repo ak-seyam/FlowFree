@@ -5,14 +5,7 @@ from model.directions import direction as d
 from get_item_in_coord import get_item_in_coord
 
 
-def mark_non_zigzag_path(inp: List[list], start_pos: Tuple[int, int]):
-    """
-    annotate the path in inp with values of non zigzag path
-    """
-    pass
-
-
-def get_square_indices(current_index: Tuple[int, int], corners):
+def get_square_coordinates(current_index: Tuple[int, int], corners):
     """
     input: 
     current index: (x,y):tuple
@@ -80,7 +73,13 @@ def get_square_indices(current_index: Tuple[int, int], corners):
     return list(order.values())
 
 
-def surrounding_square_filled(inp, current_index):
+def is_surrounding_square_filled(assignment, inp, current_index):
+
+    # TODO (DONE)
+    # input -> assignment
+    # search in assignments for the square coordinates
+    # if all exist and have the same value
+    # then return true
 
     # defining corners
     corners = {
@@ -90,7 +89,8 @@ def surrounding_square_filled(inp, current_index):
         d.west: -1
     }
 
-    surrounding_squares = get_square_indices(current_index, corners)
+    # TODO change this to coord (DONE)
+    surrounding_squares = get_square_coordinates(current_index, corners)
 
     current_index_letter = get_item_in_coord(inp, current_index)
 
@@ -98,28 +98,17 @@ def surrounding_square_filled(inp, current_index):
     for square in surrounding_squares:
         has_sur_square_filled = True
         for coord in square:
-            has_sur_square_filled = has_sur_square_filled and (
-                get_item_in_coord(inp, coord) == current_index_letter)
+            value_in_assignment = assignment.get(coord)
+            if value_in_assignment != None :
+                # has_sur_square_filled = has_sur_square_filled and (
+                #     value_in_assignment == current_index_letter)
+                if value_in_assignment != current_index_letter :
+                    has_sur_square_filled = False
+                    break
+            else :
+                has_sur_square_filled = False
+                break
         if has_sur_square_filled :
             return True
     
     return False
-
-def get_terminals(inp):
-    """
-    return terminals where terminals is a dictionnay key = target and value is a
-    list of start and end indices
-    """
-    res = {}
-    for row_ind in range(len(inp)):
-        for col_ind in range(len(inp[row_ind])):
-            current_char = inp[row_ind][col_ind]
-            if current_char != "_":
-                fields = res.get(current_char)
-                if fields :
-                    fields.append((col_ind,row_ind))
-                else :
-                    res[current_char] = (col_ind,row_ind)
-    
-    return res
-                   

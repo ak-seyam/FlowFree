@@ -1,6 +1,6 @@
 from enum import Enum
 
-class state(Enum):
+class case(Enum):
     success = 'Success'
-    failure = 'failure'
+    failure = 'Failure'
     

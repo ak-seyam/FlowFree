@@ -1,43 +1,50 @@
-from model.state import state
+
+from model.case import case
 
 
 def backtrack(csp,
+              inp,
               select_unassigned_variable,
               order_domain_values,
               assignment_complete,
               get_inferences,
               is_consistant):
-    return _backtrack([], csp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant)
+    return _backtrack([], csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant)
 
 
-def _backtrack(assignments: list,
+def _backtrack(assignments: dict,
                csp,
+               inp,
                select_unassigned_variable,
                order_domain_values,
                assignment_complete,
                get_inferences,
                is_consistant):
-    if assignment_complete(assignments):
+    if assignment_complete(assignments, inp):
         return assignments
-    var = select_unassigned_variable(csp,assignments)
-    for value in order_domain_values():
+    var = select_unassigned_variable(csp,assignments, inp) # TODO Room for improvement
+    for value in order_domain_values(csp, assignments, inp, var): # TODO Room for improvement
         if is_consistant({var: value}, assignments, csp):
-            assignments.append(value)
-            inferences = get_inferences()  # TODO rewrite this after you study consistency
+            assignments[var] = value
+            # return key value for non failure
+            inferences = get_inferences()  # TODO rewrite this after you study consistency 
             # TODO check this snippet again
-            if inferences != state.failure:
-                assignments.extend(inferences)
+            if inferences != case.failure:
+                assignments = {**assignments, **inferences}
                 res = _backtrack(
                     assignments,
                     csp,
+                    inp,
                     select_unassigned_variable,
                     order_domain_values,
                     assignment_complete,
                     get_inferences,
                     is_consistant
                 )
-            if res != state.failure:
+            if res != case.failure:
                 return res
-        # removing failure from assignments doesn't make sense imo
-        assignments.remove({var: value})
-    return state.failure
+            # IMPORTANT TODO: remove inferences from assignments here (DONE)
+            for key in inferences :
+                del assignments[key]
+        del assignments[var]
+    return case.failure
