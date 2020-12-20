@@ -2,7 +2,7 @@
 
 from typing import Tuple, List
 from model.directions import direction as d
-from points_properties import get_item_in_coord
+from utils.paths.points_properties import get_item_in_coord
 
 
 def get_square_coordinates(current_index: Tuple[int, int], corners):
@@ -51,22 +51,26 @@ def get_square_coordinates(current_index: Tuple[int, int], corners):
     # 1- elemination
     # north squares
     if current_index[1]-1 <= corners[d.north]:
-        for key in order:
+        keys = list( order.keys() )
+        for key in keys:
             if d.north in key:
                 del order[key]
     # south squares
     if current_index[1]+1 >= corners[d.south]:
-        for key in order:
+        keys = list( order.keys() )
+        for key in keys:
             if d.south in key:
                 del order[key]
     # west squares
     if current_index[0]-1 <= corners[d.west]:
-        for key in order:
+        keys = list( order.keys() )
+        for key in keys:
             if d.west in key:
                 del order[key]
     # east squares
     if current_index[0]+1 >= corners[d.east]:
-        for key in order:
+        keys = list( order.keys() )
+        for key in keys:
             if d.east in key:
                 del order[key]
 

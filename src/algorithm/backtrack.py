@@ -9,7 +9,7 @@ def backtrack(csp,
               assignment_complete,
               get_inferences,
               is_consistant):
-    return _backtrack([], csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant)
+    return _backtrack({}, csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant)
 
 
 def _backtrack(assignments: dict,

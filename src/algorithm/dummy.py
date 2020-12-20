@@ -18,7 +18,7 @@ def assignment_complete(assignments, inp):
 
 
 # changed
-def select_unassigned_variable(assignments: dict, inp):
+def select_unassigned_variable(csp,assignments: dict, inp):
     """
     input:
     assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
@@ -31,9 +31,15 @@ def select_unassigned_variable(assignments: dict, inp):
     # initially assignments will be terminals
     # select the last one
     # the first empty place should be returned
+    print("assignents", assignments)
     assignments_list = list(assignments.keys())
-    last_point = assignments_list[-1]
-    return search_around(last_point, inp, is_empty)
+    if len(assignments_list) :
+        last_point = assignments_list[-1]
+        return search_around(last_point, inp, is_empty)
+    else :
+        terminals = get_terminals(inp)
+        first_point = list(terminals.values())[0][0]
+        return search_around(first_point,inp,is_empty)
 
 # changed
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM

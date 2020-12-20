@@ -27,9 +27,9 @@ def search_around(point,inp,search_criteria):
             return south_coord
     if point[1] < len(inp) - 1 : # east
         east_coord = (point[0],point[1]+1)
-        if is_empty(inp,south_coord) :
+        if is_empty(inp,east_coord) :
             return east_coord
     if point[1] > 0 : # west
         west_coord = (point[0],point[1]-1)
-        if is_empty(inp,south_coord) :
+        if is_empty(inp,west_coord) :
             return west_coord
