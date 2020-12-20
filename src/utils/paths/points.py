@@ -81,7 +81,7 @@ def is_two_points_connected(point1: Tuple[int, int], point2: Tuple[int, int], as
         raise Exception("the two point are marked with different values")
 
     path = [point1]
-    visited_points = [point1]
+    visited_points = []
     surrounding_equal_points = search_around(
         point1, assignments, lambda assi, p: points_are_equal(assi,p,point1))
     get_path(point1,point2,assignments,path,surrounding_equal_points,visited_points)

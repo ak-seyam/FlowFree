@@ -5,6 +5,7 @@ from model.case import case
 from utils.paths.non_zigzag_path import is_surrounding_square_filled
 from random import random
 
+
 def assignment_complete(assignments, inp):
     """
     input:
@@ -43,9 +44,9 @@ def select_unassigned_variable(csp, assignments: dict, inp):
     #     first_point = list(terminals.values())[0][0]
     #     return search_around(first_point, assignments, is_empty)[0]
 
-    rand_index_1 = random() * len(inp) // 1
-    rand_index_2 = random() * len(inp) // 1
-    return (rand_index_1,rand_index_2)
+    rand_index_1 = int(random() * len(inp) // 1)
+    rand_index_2 = int(random() * len(inp) // 1)
+    return (rand_index_1, rand_index_2)
 
 # changed
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
@@ -111,7 +112,7 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
     # is ok
 
     # if the node already assigned
-    if assignments.get(list(current_assignment.keys())[0]) != None :
+    if assignments.get(list(current_assignment.keys())[0]) != None:
         return False
 
     ssf = is_surrounding_square_filled(
@@ -126,9 +127,10 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
         return False
 
     # weather or not any point had the same color
-    surrounded_points = search_around(list(current_assignment.keys())[0],assignments,lambda assign,point: False if assign.get(point) == None else assign.get(point) == list(current_assignment.values())[0])
+    surrounded_points = search_around(list(current_assignment.keys())[0], assignments, lambda assign, point: False if assign.get(
+        point) == None else assign.get(point) == list(current_assignment.values())[0])
 
-    if len(surrounded_points) == 0 :
+    if len(surrounded_points) == 0:
         return False
 
     return True

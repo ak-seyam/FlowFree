@@ -30,8 +30,8 @@ def _backtrack(assignments: dict,
     if var == None:
         return case.failure
     for value in order_domain_values(csp, assignments, inp, var):
+        assignments[var] = value
         if is_consistant({var: value}, assignments, inp, csp):
-            assignments[var] = value
             # return key value for non failure
             inferences = get_inferences()  # TODO rewrite this after you study consistency
             # TODO check this snippet again
