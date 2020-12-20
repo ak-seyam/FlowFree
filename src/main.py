@@ -3,14 +3,13 @@ from utils.paths.non_zigzag_path import is_surrounding_square_filled
 from algorithm.backtrack import backtrack
 from algorithm import dummy as dum
 from utils.paths.initial_state import get_initial_state
+from utils.formater import to_2d_list, formatter
 
 paths = [
     "../input/input55.txt"
 ]
 
 inp = read_inputfile(paths[0])
-print("input:")
-print(inp)
 
 # dummy stuff XD
 constraints_dummy = [is_surrounding_square_filled]
@@ -24,5 +23,5 @@ res = backtrack(
     dum.inference,
     dum.is_consistant
 )
-
-print(res)
+twoD_list = to_2d_list(res,5,5)
+formatter(twoD_list)

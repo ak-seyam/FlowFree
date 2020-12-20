@@ -44,9 +44,17 @@ def select_unassigned_variable(csp, assignments: dict, inp):
     #     first_point = list(terminals.values())[0][0]
     #     return search_around(first_point, assignments, is_empty)[0]
 
-    rand_index_1 = int(random() * len(inp) // 1)
-    rand_index_2 = int(random() * len(inp) // 1)
-    return (rand_index_1, rand_index_2)
+    _tmp = []
+    for i in range(len(inp)):
+        for j in range(len(inp[0])):
+            if assignments.get((i, j)) == None:
+                _tmp.append((i, j))
+    rand_index = int(random()*len(_tmp) // 1)
+
+    # rand_index_1 = int(random() * len(inp) // 1)
+    # rand_index_2 = int(random() * len(inp) // 1)
+
+    return _tmp[rand_index]
 
 # changed
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
@@ -70,7 +78,8 @@ def order_domain_values(csp, assignments, inp, var):
     # terminals = get_initial_state(inp)[0]
 
     terminals = get_initial_state(inp)[0]
-    return list(terminals.keys())
+    return [color.lower() for color in terminals.keys()]
+    # return list(terminals.keys())
 
     # terminals = get_initial_state(inp)[0]
     # for key in terminals:
@@ -112,25 +121,40 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
     # is ok
 
     # if the node already assigned
-    if assignments.get(list(current_assignment.keys())[0]) != None:
-        return False
+    # TODO delete
+    # if assignments.get(list(current_assignment.keys())[0]) != None:
+    #     return False
+
+    # if all surrounding are empty then consistent
 
     ssf = is_surrounding_square_filled(
         {**assignments, **current_assignment}, inp, list(current_assignment.keys())[0])
     if ssf:
         return False
 
+    color = list(current_assignment.values())[0]
     terminal_connected = is_terminals_connect(
-        list(current_assignment.values())[0], inp, assignments)
+        color, inp, {**assignments, **current_assignment})
 
     if terminal_connected:
-        return False
-
+        for coord in list(assignments.keys()):
+            if assignments[coord] == color:
+                # has 1 empty neighbors or 2 same color neighbors
+                empty_neighbors = search_around(
+                    coord, inp, assignments, is_empty)
+                empty_neighbors_count = len(empty_neighbors)
+                same_color_neighbors = search_around(
+                    coord, inp, assignments,
+                    lambda assi, point: assi.get(point).lower() == color)
+                same_color_neighbors_count = len(same_color_neighbors)
+                if not(empty_neighbors_count == 1 or same_color_neighbors_count == 2):
+                    return False
+    
     # weather or not any point had the same color
-    surrounded_points = search_around(list(current_assignment.keys())[0], assignments, lambda assign, point: False if assign.get(
-        point) == None else assign.get(point) == list(current_assignment.values())[0])
+    # surrounded_points = search_around(list(current_assignment.keys())[0], assignments, lambda assign, point: False if assign.get(
+    #     point) == None else assign.get(point) == list(current_assignment.values())[0])
 
-    if len(surrounded_points) == 0:
-        return False
+    # if len(surrounded_points) == 0:
+    #     return False
 
     return True

@@ -10,33 +10,33 @@ def get_item_in_coord(mat, coord: Tuple[int, int]):
 
 
 def is_empty(assignment, coord):
-    return assignment[coord] == None
+    return assignment.get(coord) == None
 
 
-def search_around(point, assignment, search_criteria):
+def search_around(coord, inp ,assignment, search_criteria):
     """
     input:
-    point: the coordinates point of interest 
+    coord: the coordinates point of interest 
     inp: 2d list of the input
     search_criteria: function return boolean takes assignments and coordinate respectively
 
     traverse the four main directions and return all coordinates the meets a specific criteria
     """
     res = []
-    if point[0] > 0:  # north
-        north_coord = (point[0]-1, point[1])
+    if coord[0] > 0:  # north
+        north_coord = (coord[0]-1, coord[1])
         if search_criteria(assignment, north_coord):
             res.append(north_coord)
-    if point[0] < len(assignment) - 1:  # south
-        south_coord = (point[0]+1, point[1])
+    if coord[0] < len(inp) - 1:  # south
+        south_coord = (coord[0]+1, coord[1])
         if search_criteria(assignment, south_coord):
             res.append(south_coord)
-    if point[1] < len(assignment) - 1:  # east
-        east_coord = (point[0], point[1]+1)
+    if coord[1] < len(inp) - 1:  # east
+        east_coord = (coord[0], coord[1]+1)
         if search_criteria(assignment, east_coord):
             res.append(east_coord)
-    if point[1] > 0:  # west
-        west_coord = (point[0], point[1]-1)
+    if coord[1] > 0:  # west
+        west_coord = (coord[0], coord[1]-1)
         if search_criteria(assignment, west_coord):
             res.append(west_coord)
     return res
@@ -46,7 +46,7 @@ def points_are_equal(assignments, point1, point2):
     return (assignments.get(point1) != None) and \
         (assignments.get(point1) == assignments.get(point2))
 
-def get_path(starting_point,end_point,assignments, path, surrounding_equal_points, visited_points):
+def get_path(starting_point,end_point,assignments, path, surrounding_equal_points, visited_points,inp):
     """
     use dfs to get the path from starting point by manipulating the path attrib
     """
@@ -62,17 +62,17 @@ def get_path(starting_point,end_point,assignments, path, surrounding_equal_point
         visited_points.append(point)
         path.append(point)
         surrounding_equal_points = search_around(
-            point, assignments, lambda assi, p: points_are_equal(assi,p,point))
-        get_path(point,end_point,assignments,path,surrounding_equal_points,visited_points)
+            point,inp, assignments, lambda assi, p: points_are_equal(assi,p,point))
+        get_path(point,inp, end_point,assignments,path,surrounding_equal_points,visited_points)
 
 
-def is_two_points_connected(point1: Tuple[int, int], point2: Tuple[int, int], assignments: dict):
+def is_two_points_connected(point1: Tuple[int, int], point2: Tuple[int, int], assignments: dict, inp):
     """
     input:
     point{1,2}: coordinates of the points
     assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
 
-    return weather or not the 2 points are connected
+    return tuple (weather or not the 2 points are connected, path if connected empty otherwise) 
     """
     if assignments.get(point1) == None or assignments.get(point2) == None:
         return False
@@ -83,11 +83,13 @@ def is_two_points_connected(point1: Tuple[int, int], point2: Tuple[int, int], as
     path = [point1]
     visited_points = []
     surrounding_equal_points = search_around(
-        point1, assignments, lambda assi, p: points_are_equal(assi,p,point1))
-    get_path(point1,point2,assignments,path,surrounding_equal_points,visited_points)
+        point1, inp, assignments,lambda assi, p: points_are_equal(assi,p,point1))
+    get_path(point1,point2,assignments,path,surrounding_equal_points,visited_points,inp)
     connected = (path[0] == point1) and (path[-1] == point2)
+    if not connected :
+        path = []
     return connected
 
 def is_terminals_connect(terminal_color,inp,assignment):
-    terminals = get_initial_state(inp)[0][terminal_color]
-    return is_two_points_connected(terminals[0],terminals[1],assignment)
+    terminals = get_initial_state(inp)[0][terminal_color.upper()]
+    return is_two_points_connected(terminals[0],terminals[1],assignment,inp)
