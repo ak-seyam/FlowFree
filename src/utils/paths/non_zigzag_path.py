@@ -1,8 +1,8 @@
-# NOTE: inp is 2d list of chars/strings represents the input 
+# NOTE: inp is 2d list of chars/strings represents the input
 
 from typing import Tuple, List
 from model.directions import direction as d
-from utils.paths.points_properties import get_item_in_coord
+from utils.paths.points import get_item_in_coord, search_around, points_are_equal, get_path
 
 
 def get_square_coordinates(current_index: Tuple[int, int], corners):
@@ -51,25 +51,25 @@ def get_square_coordinates(current_index: Tuple[int, int], corners):
     # 1- elemination
     # north squares
     if current_index[1]-1 <= corners[d.north]:
-        keys = list( order.keys() )
+        keys = list(order.keys())
         for key in keys:
             if d.north in key:
                 del order[key]
     # south squares
     if current_index[1]+1 >= corners[d.south]:
-        keys = list( order.keys() )
+        keys = list(order.keys())
         for key in keys:
             if d.south in key:
                 del order[key]
     # west squares
     if current_index[0]-1 <= corners[d.west]:
-        keys = list( order.keys() )
+        keys = list(order.keys())
         for key in keys:
             if d.west in key:
                 del order[key]
     # east squares
     if current_index[0]+1 >= corners[d.east]:
-        keys = list( order.keys() )
+        keys = list(order.keys())
         for key in keys:
             if d.east in key:
                 del order[key]
@@ -103,23 +103,25 @@ def is_surrounding_square_filled(assignment, inp, current_index):
     # TODO change this to coord (DONE)
     surrounding_squares = get_square_coordinates(current_index, corners)
 
-    current_index_letter = get_item_in_coord(inp, current_index)
+    # current_index_letter = get_item_in_coord(inp, current_index)
+    current_index_letter = assignment[current_index]
 
     # check if we have the same letter in any one of the surrounding squares
     for square in surrounding_squares:
         has_sur_square_filled = True
         for coord in square:
             value_in_assignment = assignment.get(coord)
-            if value_in_assignment != None :
+            if value_in_assignment != None:
                 # has_sur_square_filled = has_sur_square_filled and (
                 #     value_in_assignment == current_index_letter)
-                if value_in_assignment != current_index_letter :
+                if value_in_assignment != current_index_letter:
                     has_sur_square_filled = False
                     break
-            else :
+            else:
                 has_sur_square_filled = False
                 break
-        if has_sur_square_filled :
+        if has_sur_square_filled:
             return True
-    
+
     return False
+

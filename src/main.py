@@ -2,6 +2,7 @@ from reader.reader import read_inputfile
 from utils.paths.non_zigzag_path import is_surrounding_square_filled
 from algorithm.backtrack import backtrack
 from algorithm import dummy as dum
+from utils.paths.initial_state import get_initial_state
 
 paths = [
     "../input/input55.txt"
@@ -14,6 +15,7 @@ print(inp)
 # dummy stuff XD
 constraints_dummy = [is_surrounding_square_filled]
 res = backtrack(
+    get_initial_state(inp)[1],
     constraints_dummy,
     inp,
     dum.select_unassigned_variable,

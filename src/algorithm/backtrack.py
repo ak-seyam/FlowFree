@@ -2,14 +2,16 @@
 from model.case import case
 
 
-def backtrack(csp,
-              inp,
-              select_unassigned_variable,
-              order_domain_values,
-              assignment_complete,
-              get_inferences,
-              is_consistant):
-    return _backtrack({}, csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant)
+def backtrack(
+        initial_assignments,
+        csp,
+        inp,
+        select_unassigned_variable,
+        order_domain_values,
+        assignment_complete,
+        get_inferences,
+        is_consistant):
+    return _backtrack(initial_assignments, csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant)
 
 
 def _backtrack(assignments: dict,
@@ -25,7 +27,7 @@ def _backtrack(assignments: dict,
     var = select_unassigned_variable(
         csp, assignments, inp)  # TODO Room for improvement
     # TODO Room for improvement
-    if var == None :
+    if var == None:
         return case.failure
     for value in order_domain_values(csp, assignments, inp, var):
         if is_consistant({var: value}, assignments, inp, csp):
