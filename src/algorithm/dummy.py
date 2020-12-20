@@ -3,7 +3,7 @@ from utils.paths.points import get_item_in_coord, is_empty, search_around, is_te
 from utils.paths.initial_state import get_initial_state
 from model.case import case
 from utils.paths.non_zigzag_path import is_surrounding_square_filled
-
+from random import random
 
 def assignment_complete(assignments, inp):
     """
@@ -25,22 +25,27 @@ def select_unassigned_variable(csp, assignments: dict, inp):
     assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
     inp: 2d list of the input
 
-    return the next unassigned values or non if no unassigned variable exist
+    return a random coordinate
     """
 
     # TODO (DONE)
     # initially assignments will be terminals
     # select the last one
     # the first empty place should be returned
-    print("assignents", assignments)
-    assignments_list = list(assignments.keys())
-    if len(assignments_list):
-        last_point = assignments_list[-1]
-        return search_around(last_point, assignments, is_empty)[0]
-    else:
-        terminals = get_initial_state(inp)[0]
-        first_point = list(terminals.values())[0][0]
-        return search_around(first_point, assignments, is_empty)[0]
+
+    # print("assignents", assignments)
+    # assignments_list = list(assignments.keys())
+    # if len(assignments_list):
+    #     last_point = assignments_list[-1]
+    #     return search_around(last_point, assignments, is_empty)[0]
+    # else:
+    #     terminals = get_initial_state(inp)[0]
+    #     first_point = list(terminals.values())[0][0]
+    #     return search_around(first_point, assignments, is_empty)[0]
+
+    rand_index_1 = random() * len(inp) // 1
+    rand_index_2 = random() * len(inp) // 1
+    return (rand_index_1,rand_index_2)
 
 # changed
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
@@ -104,6 +109,10 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
     # TODO now every constraint is hardcoded this should improved in other backtrack logic
     # NOTE for other is consistant you might use a totally different csp and this
     # is ok
+
+    # if the node already assigned
+    if assignments.get(list(current_assignment.keys())[0]) != None :
+        return False
 
     ssf = is_surrounding_square_filled(
         {**assignments, **current_assignment}, inp, list(current_assignment.keys())[0])
