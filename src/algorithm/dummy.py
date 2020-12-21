@@ -17,13 +17,13 @@ def assignment_complete(assignments, inp):
     # if len of assignments keys length of inp (rows * columns) - starting points
     # then assignment is complete
 
-    terminals = get_initial_state(inp)[0]
-    for terminal_color in terminals:
-        if not is_terminals_connect(terminal_color,inp,assignments):
-            return False
-    return True
+    # terminals = get_initial_state(inp)[0]
+    # for terminal_color in terminals:
+    #     if not is_terminals_connect(terminal_color,inp,assignments):
+    #         return False
+    # return True
 
-    # return len(assignments) >= (len(inp) * len(inp[0]))
+    return len(assignments) >= (len(inp) * len(inp[0]))
 
 
 # changed
@@ -58,12 +58,14 @@ def select_unassigned_variable(csp, assignments: dict, inp):
                 _tmp.append((i, j))
     rand_index = int(random()*len(_tmp) // 1)
 
-    if len(_tmp) != 0:
-        return _tmp[rand_index]
-    else:
-        rand_index_1 = int(random() * len(inp) // 1)
-        rand_index_2 = int(random() * len(inp) // 1)
-        return (rand_index_1, rand_index_2)
+    return _tmp[rand_index]
+
+    # if len(_tmp) != 0:
+    #     return _tmp[rand_index]
+    # else:
+    #     rand_index_1 = int(random() * len(inp) // 1)
+    #     rand_index_2 = int(random() * len(inp) // 1)
+    #     return (rand_index_1, rand_index_2)
 
 # changed
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
