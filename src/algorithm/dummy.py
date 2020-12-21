@@ -151,7 +151,7 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
     for coord in surrounding_same_color_neighbors:
         scn = get_same_color_neighbors(
             coord, current_assignment_color, assignments, inp)
-        if len(scn) > 1:
+        if len(scn) > 2:
             return False
 
     # check if already marked point will be in the path
@@ -160,7 +160,7 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
     comb_points_of_interest = [current_assignment_coord]
     comb_points_of_interest.extend(get_neighbors_coords(current_assignment_coord, inp))
     for coord in comb_points_of_interest:
-        if is_empty(assignments,coord):
+        if is_empty(assignments, coord) or assignments[coord].isupper():
             continue
         good_comb = check_for_good_combinations(coord,assignments[coord],assignments,inp)
         if not good_comb :

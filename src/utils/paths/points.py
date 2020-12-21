@@ -128,7 +128,7 @@ def check_for_good_combinations(coord, current_color, assignments, inp):
     """
     # neighbors_coordinates = get_neighbors_coords(coord, inp)
     empty_neighbors = search_around(coord, inp, assignments, is_empty)
-    if len(empty_neighbors) > 2:
+    if len(empty_neighbors) >= 2:
         return True
 
     same_color_neighbors = get_same_color_neighbors(
