@@ -93,3 +93,8 @@ def is_two_points_connected(point1: Tuple[int, int], point2: Tuple[int, int], as
 def is_terminals_connect(terminal_color,inp,assignment):
     terminals = get_initial_state(inp)[0][terminal_color.upper()]
     return is_two_points_connected(terminals[0],terminals[1],assignment,inp)
+
+def get_same_color_neighbors(coord,color,assignments,inp):
+    similar_neighbors = search_around(coord, inp, assignments,
+                                                 lambda assi, point: False if assi.get(point) == None else assi.get(point).lower() == color)
+    return similar_neighbors

@@ -3,7 +3,9 @@ from utils.paths.non_zigzag_path import is_surrounding_square_filled
 from algorithm.backtrack import backtrack
 from algorithm import dummy as dum
 from utils.paths.initial_state import get_initial_state
-from utils.formater import to_2d_list, formatter
+from utils.formater import formatter, formatter
+from random import seed
+seed(42)
 
 paths = [
     "../input/input55.txt"
@@ -23,5 +25,5 @@ res = backtrack(
     dum.inference,
     dum.is_consistant
 )
-twoD_list = to_2d_list(res,5,5)
-formatter(twoD_list)
+print(res)
+formatter(res,5,5)

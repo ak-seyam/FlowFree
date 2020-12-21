@@ -110,11 +110,11 @@ def is_surrounding_square_filled(assignment, inp, current_index):
     for square in surrounding_squares:
         has_sur_square_filled = True
         for coord in square:
-            value_in_assignment = assignment.get(coord)
+            value_in_assignment = assignment.get(coord) 
             if value_in_assignment != None:
                 # has_sur_square_filled = has_sur_square_filled and (
                 #     value_in_assignment == current_index_letter)
-                if value_in_assignment != current_index_letter:
+                if value_in_assignment.lower() != current_index_letter.lower():
                     has_sur_square_filled = False
                     break
             else:

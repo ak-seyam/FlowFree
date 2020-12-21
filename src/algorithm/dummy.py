@@ -1,5 +1,5 @@
 from typing import List
-from utils.paths.points import get_item_in_coord, is_empty, search_around, is_terminals_connect
+from utils.paths.points import get_item_in_coord, is_empty, search_around, is_terminals_connect, get_same_color_neighbors
 from utils.paths.initial_state import get_initial_state
 from model.case import case
 from utils.paths.non_zigzag_path import is_surrounding_square_filled
@@ -16,7 +16,14 @@ def assignment_complete(assignments, inp):
     """
     # if len of assignments keys length of inp (rows * columns) - starting points
     # then assignment is complete
-    return len(assignments) >= (len(inp) * len(inp[0]))
+
+    terminals = get_initial_state(inp)[0]
+    for terminal_color in terminals:
+        if not is_terminals_connect(terminal_color,inp,assignments):
+            return False
+    return True
+
+    # return len(assignments) >= (len(inp) * len(inp[0]))
 
 
 # changed
@@ -51,10 +58,12 @@ def select_unassigned_variable(csp, assignments: dict, inp):
                 _tmp.append((i, j))
     rand_index = int(random()*len(_tmp) // 1)
 
-    # rand_index_1 = int(random() * len(inp) // 1)
-    # rand_index_2 = int(random() * len(inp) // 1)
-
-    return _tmp[rand_index]
+    if len(_tmp) != 0:
+        return _tmp[rand_index]
+    else:
+        rand_index_1 = int(random() * len(inp) // 1)
+        rand_index_2 = int(random() * len(inp) // 1)
+        return (rand_index_1, rand_index_2)
 
 # changed
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
@@ -125,36 +134,61 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
     # if assignments.get(list(current_assignment.keys())[0]) != None:
     #     return False
 
-    # if all surrounding are empty then consistent
+    current_assignment_color = list(current_assignment.values())[0]
+    current_assignment_coord = list(current_assignment.keys())[0]
 
     ssf = is_surrounding_square_filled(
-        {**assignments, **current_assignment}, inp, list(current_assignment.keys())[0])
+        {**assignments, **current_assignment}, inp, current_assignment_coord)
     if ssf:
         return False
 
-    color = list(current_assignment.values())[0]
+    # check if surrounding same color has only one neighbor before we add our new
+    # color
+    surrounding_same_color_neighbors = get_same_color_neighbors(
+        current_assignment_coord, current_assignment_color, assignments, inp)
+    for coord in surrounding_same_color_neighbors:
+        scn = get_same_color_neighbors(
+            coord, current_assignment_color, assignments, inp)
+        if len(scn) > 1:
+            return False
+
+    # check if already marked point will be in the path
+    for coord in assignments:
+        if assignments[coord] == current_assignment_color:
+            # has 1 empty neighbors or 2 same color neighbors
+            empty_neighbors = search_around(
+                coord, inp, assignments, is_empty)
+            empty_neighbors_count = len(empty_neighbors)
+            same_color_neighbors = get_same_color_neighbors(
+                coord, current_assignment_color, assignments, inp)
+            same_color_neighbors_count = len(same_color_neighbors)
+            if not(empty_neighbors_count >= 1 or same_color_neighbors_count >= 2):
+                return False
+
+    # for terminals check wheather or not they have more than one similar neighbor
+    terminals = get_initial_state(inp)[0]
+    for terminal in terminals:
+        similar_neighbors_start = search_around(terminals[terminal][0], inp, assignments,
+                                                lambda assign, point: False if assign.get(point) == None else assign[point].upper() == terminal)
+        number_of_similar_neighbors_start = len(similar_neighbors_start)
+
+        similar_neighbors_end = search_around(terminals[terminal][1], inp, assignments,
+                                              lambda assign, point: False if assign.get(point) == None else assign[point].upper() == terminal)
+        number_of_similar_neighbors_end = len(similar_neighbors_end)
+        if number_of_similar_neighbors_start > 1 or number_of_similar_neighbors_end > 1:
+            return False
+
     terminal_connected = is_terminals_connect(
-        color, inp, {**assignments, **current_assignment})
+        current_assignment_color, inp, {**assignments})
 
     if terminal_connected:
-        for coord in list(assignments.keys()):
-            if assignments[coord] == color:
-                # has 1 empty neighbors or 2 same color neighbors
-                empty_neighbors = search_around(
-                    coord, inp, assignments, is_empty)
-                empty_neighbors_count = len(empty_neighbors)
-                same_color_neighbors = search_around(
-                    coord, inp, assignments,
-                    lambda assi, point: assi.get(point).lower() == color)
-                same_color_neighbors_count = len(same_color_neighbors)
-                if not(empty_neighbors_count == 1 or same_color_neighbors_count == 2):
-                    return False
-    
-    # weather or not any point had the same color
-    # surrounded_points = search_around(list(current_assignment.keys())[0], assignments, lambda assign, point: False if assign.get(
-    #     point) == None else assign.get(point) == list(current_assignment.values())[0])
+        return False
 
-    # if len(surrounded_points) == 0:
+    # weather or not any point had the same color
+    # surrounded_points = get_same_color_neighbors(current_assignment_coord,current_assignment_color,assignments,inp)
+    # has_no_same_color_sur = (len(surrounded_points) == 0)
+    # if has_no_same_color_sur :
     #     return False
+    
 
     return True
