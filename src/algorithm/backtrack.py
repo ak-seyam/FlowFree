@@ -33,9 +33,9 @@ def _backtrack(assignments: dict,
     for value in order_domain_values(csp, assignments, inp, var):
         assignments[var] = value
         if is_consistant({var: value},  assignments, inp, csp):
-            print({var: value})
-            formatter(assignments, len(inp), len(inp), init="_")
-            print("-------------------------")
+            # print({var: value})
+            # formatter(assignments, len(inp), len(inp), init="_")
+            # print("-------------------------")
             # return key value for non failure
             inferences = get_inferences()  # TODO rewrite this after you study consistency
             # TODO check this snippet again

@@ -3,7 +3,7 @@ from utils.paths.points import get_item_in_coord, is_empty, search_around, is_te
 from utils.paths.initial_state import get_initial_state
 from model.case import case
 from utils.paths.non_zigzag_path import is_surrounding_square_filled
-from random import random
+from random import random, shuffle
 
 
 def assignment_complete(assignments, inp):
@@ -89,7 +89,9 @@ def order_domain_values(csp, assignments, inp, var):
     # terminals = get_initial_state(inp)[0]
 
     terminals = get_initial_state(inp)[0]
-    return [color.lower() for color in terminals.keys()]
+    colors = [color.lower() for color in terminals.keys()]
+    shuffle(colors)
+    return colors
     # return list(terminals.keys())
 
     # terminals = get_initial_state(inp)[0]

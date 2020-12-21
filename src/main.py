@@ -5,7 +5,7 @@ from algorithm import dummy as dum
 from utils.paths.initial_state import get_initial_state
 from utils.formater import formatter, formatter
 from random import seed
-seed(42)
+# seed(2)
 
 paths = [
     "../input/input55.txt"
