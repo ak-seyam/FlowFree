@@ -33,10 +33,8 @@ def _backtrack(assignments: dict,
     for value in order_domain_values(csp, assignments, inp, var):
         if is_consistant({var: value}, assignments, inp, csp):
             assignments[var] = value
-            if var == (4,4) and value == 'o':
-                print("debugging")
             print({var:value})
-            formatter(assignments,5,5,init="_")
+            formatter(assignments,len(inp),len(inp),init="_")
             print("-------------------------")
             # return key value for non failure
             inferences = get_inferences()  # TODO rewrite this after you study consistency

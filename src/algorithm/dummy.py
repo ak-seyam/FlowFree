@@ -1,5 +1,5 @@
 from typing import List
-from utils.paths.points import get_item_in_coord, is_empty, search_around, is_terminals_connect, get_same_color_neighbors
+from utils.paths.points import get_item_in_coord, is_empty, search_around, is_terminals_connect, get_same_color_neighbors, check_for_good_combinations, get_neighbors_coords
 from utils.paths.initial_state import get_initial_state
 from model.case import case
 from utils.paths.non_zigzag_path import is_surrounding_square_filled
@@ -155,18 +155,17 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
             return False
 
     # check if already marked point will be in the path
-    for coord in assignments:
-        if assignments[coord] == current_assignment_color:
-            # has 1 empty neighbors or 2 same color neighbors
-            empty_neighbors = search_around(
-                coord, inp, assignments, is_empty)
-            empty_neighbors_count = len(empty_neighbors)
-            same_color_neighbors = get_same_color_neighbors(
-                coord, current_assignment_color, assignments, inp)
-            same_color_neighbors_count = len(same_color_neighbors)
-            if not(empty_neighbors_count >= 1 or same_color_neighbors_count >= 2):
-                return False
 
+    # Combination check
+    comb_points_of_interest = [current_assignment_coord]
+    comb_points_of_interest.extend(get_neighbors_coords(current_assignment_coord, inp))
+    for coord in comb_points_of_interest:
+        if is_empty(assignments,coord):
+            continue
+        good_comb = check_for_good_combinations(coord,assignments[coord],assignments,inp)
+        if not good_comb :
+            return False
+    # select
     # for terminals check wheather or not they have more than one similar neighbor
     terminals = get_initial_state(inp)[0]
     for terminal in terminals:
@@ -191,6 +190,5 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
     # has_no_same_color_sur = (len(surrounded_points) == 0)
     # if has_no_same_color_sur :
     #     return False
-    
 
     return True
