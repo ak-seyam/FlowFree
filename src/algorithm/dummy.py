@@ -102,20 +102,20 @@ def is_consistant(initial_state,current_assignment: dict, assignments: List[dict
     current_assignment_color = list(current_assignment.values())[0]
     current_assignment_coord = list(current_assignment.keys())[0]
 
-    ssf = is_surrounding_square_filled(
-        {**assignments, **current_assignment}, inp, current_assignment_coord)
-    if ssf:
-        return False
+    # ssf = is_surrounding_square_filled(
+    #     {**assignments, **current_assignment}, inp, current_assignment_coord)
+    # if ssf:
+    #     return False
 
     # check if surrounding same color has only one neighbor before we add our new
     # color
-    surrounding_same_color_neighbors = get_same_color_neighbors(
-        current_assignment_coord, current_assignment_color, assignments, inp)
-    for coord in surrounding_same_color_neighbors:
-        scn = get_same_color_neighbors(
-            coord, current_assignment_color, assignments, inp)
-        if len(scn) > 2:
-            return False
+    # surrounding_same_color_neighbors = get_same_color_neighbors(
+    #     current_assignment_coord, current_assignment_color, assignments, inp)
+    # for coord in surrounding_same_color_neighbors:
+    #     scn = get_same_color_neighbors(
+    #         coord, current_assignment_color, assignments, inp)
+    #     if len(scn) > 2:
+    #         return False
 
     # check if already marked point will be in the path
 
