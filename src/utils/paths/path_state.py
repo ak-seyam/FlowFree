@@ -2,7 +2,7 @@
 
 from typing import Tuple, List
 from model.directions import direction as d
-from utils.paths.points import get_item_in_coord, search_around, points_are_equal, get_path
+from utils.paths.points import get_item_in_coord, search_around, points_are_equal, get_path, get_neighbors_coords, is_empty, check_for_good_combinations
 
 
 def get_square_coordinates(current_index: Tuple[int, int], corners):
@@ -125,3 +125,31 @@ def is_surrounding_square_filled(assignment, inp, current_index):
 
     return False
 
+def is_good_combination(current_assignment_coord, assignments,inp):
+    """
+    check the combination (position) of the current assignment point as well as the surrounding points
+    """
+    comb_points_of_interest = [current_assignment_coord]
+    comb_points_of_interest.extend(get_neighbors_coords(current_assignment_coord, inp))
+    for coord in comb_points_of_interest:
+        if is_empty(assignments, coord) or assignments[coord].isupper():
+            continue
+        good_comb = check_for_good_combinations(coord,assignments[coord],assignments,inp)
+        if not good_comb :
+            return False
+    
+    return True
+        
+def terminal_with_two_same_color_exist(initial_state,assignments, inp):
+    terminals = initial_state[0]
+    for terminal in terminals:
+        similar_neighbors_start = search_around(terminals[terminal][0], inp, assignments,
+                                                lambda assign, point: False if assign.get(point) == None else assign[point].upper() == terminal)
+        number_of_similar_neighbors_start = len(similar_neighbors_start)
+
+        similar_neighbors_end = search_around(terminals[terminal][1], inp, assignments,
+                                              lambda assign, point: False if assign.get(point) == None else assign[point].upper() == terminal)
+        number_of_similar_neighbors_end = len(similar_neighbors_end)
+        if number_of_similar_neighbors_start > 1 or number_of_similar_neighbors_end > 1:
+            return True
+    return False

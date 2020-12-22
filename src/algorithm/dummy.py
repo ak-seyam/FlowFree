@@ -1,7 +1,7 @@
 from typing import List
 from utils.paths.points import get_item_in_coord, is_empty, search_around, is_terminals_connect, get_same_color_neighbors, check_for_good_combinations, get_neighbors_coords
 from model.case import case
-from utils.paths.non_zigzag_path import is_surrounding_square_filled
+from utils.paths.path_state import is_surrounding_square_filled,is_good_combination, terminal_with_two_same_color_exist
 from random import random, shuffle
 
 def assignment_complete(assignments, inp):
@@ -102,45 +102,18 @@ def is_consistant(initial_state,current_assignment: dict, assignments: List[dict
     current_assignment_color = list(current_assignment.values())[0]
     current_assignment_coord = list(current_assignment.keys())[0]
 
-    # ssf = is_surrounding_square_filled(
-    #     {**assignments, **current_assignment}, inp, current_assignment_coord)
-    # if ssf:
-    #     return False
-
-    # check if surrounding same color has only one neighbor before we add our new
-    # color
-    # surrounding_same_color_neighbors = get_same_color_neighbors(
-    #     current_assignment_coord, current_assignment_color, assignments, inp)
-    # for coord in surrounding_same_color_neighbors:
-    #     scn = get_same_color_neighbors(
-    #         coord, current_assignment_color, assignments, inp)
-    #     if len(scn) > 2:
-    #         return False
-
     # check if already marked point will be in the path
 
     # Combination check
-    comb_points_of_interest = [current_assignment_coord]
-    comb_points_of_interest.extend(get_neighbors_coords(current_assignment_coord, inp))
-    for coord in comb_points_of_interest:
-        if is_empty(assignments, coord) or assignments[coord].isupper():
-            continue
-        good_comb = check_for_good_combinations(coord,assignments[coord],assignments,inp)
-        if not good_comb :
-            return False
+    good_comb = is_good_combination(current_assignment_coord,assignments,inp)
+    if not good_comb :
+        return False
+
     # select
     # for terminals check wheather or not they have more than one similar neighbor
-    terminals = initial_state[0]
-    for terminal in terminals:
-        similar_neighbors_start = search_around(terminals[terminal][0], inp, assignments,
-                                                lambda assign, point: False if assign.get(point) == None else assign[point].upper() == terminal)
-        number_of_similar_neighbors_start = len(similar_neighbors_start)
-
-        similar_neighbors_end = search_around(terminals[terminal][1], inp, assignments,
-                                              lambda assign, point: False if assign.get(point) == None else assign[point].upper() == terminal)
-        number_of_similar_neighbors_end = len(similar_neighbors_end)
-        if number_of_similar_neighbors_start > 1 or number_of_similar_neighbors_end > 1:
-            return False
+    terminal_with_two_neighbors = terminal_with_two_same_color_exist(initial_state,assignments,inp)
+    if terminal_with_two_neighbors :
+        return False
 
     terminal_connected = is_terminals_connect(
         initial_state,current_assignment_color, inp, {**assignments})
