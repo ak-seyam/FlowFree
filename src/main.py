@@ -5,7 +5,7 @@ from algorithm import dummy as dum
 from utils.paths.initial_state import get_initial_state
 from utils.formater import formatter, formatter
 from random import seed
-# seed(2)
+seed(0)
 
 paths = [
     "../input/input55.txt"
@@ -14,9 +14,13 @@ paths = [
 inp = read_inputfile(paths[0])
 
 # dummy stuff XD
-constraints_dummy = [is_surrounding_square_filled]
+constraints_dummy = [is_surrounding_square_filled] 
+
+initial_state = get_initial_state(inp)
+
 res = backtrack(
-    get_initial_state(inp)[1],
+    initial_state,
+    initial_state[1],
     constraints_dummy,
     inp,
     dum.select_unassigned_variable,

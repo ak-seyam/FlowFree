@@ -111,8 +111,8 @@ def is_two_points_connected(point1: Tuple[int, int], point2: Tuple[int, int], as
     return connected
 
 
-def is_terminals_connect(terminal_color, inp, assignment):
-    terminals = get_initial_state(inp)[0][terminal_color.upper()]
+def is_terminals_connect(initial_state,terminal_color, inp, assignment):
+    terminals = initial_state[0][terminal_color.upper()]
     return is_two_points_connected(terminals[0], terminals[1], assignment, inp)
 
 

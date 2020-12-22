@@ -1,10 +1,8 @@
 from typing import List
 from utils.paths.points import get_item_in_coord, is_empty, search_around, is_terminals_connect, get_same_color_neighbors, check_for_good_combinations, get_neighbors_coords
-from utils.paths.initial_state import get_initial_state
 from model.case import case
 from utils.paths.non_zigzag_path import is_surrounding_square_filled
 from random import random, shuffle
-
 
 def assignment_complete(assignments, inp):
     """
@@ -16,12 +14,6 @@ def assignment_complete(assignments, inp):
     """
     # if len of assignments keys length of inp (rows * columns) - starting points
     # then assignment is complete
-
-    # terminals = get_initial_state(inp)[0]
-    # for terminal_color in terminals:
-    #     if not is_terminals_connect(terminal_color,inp,assignments):
-    #         return False
-    # return True
 
     return len(assignments) >= (len(inp) * len(inp[0]))
 
@@ -40,16 +32,6 @@ def select_unassigned_variable(csp, assignments: dict, inp):
     # initially assignments will be terminals
     # select the last one
     # the first empty place should be returned
-
-    # print("assignents", assignments)
-    # assignments_list = list(assignments.keys())
-    # if len(assignments_list):
-    #     last_point = assignments_list[-1]
-    #     return search_around(last_point, assignments, is_empty)[0]
-    # else:
-    #     terminals = get_initial_state(inp)[0]
-    #     first_point = list(terminals.values())[0][0]
-    #     return search_around(first_point, assignments, is_empty)[0]
 
     _tmp = []
     for i in range(len(inp)):
@@ -71,38 +53,17 @@ def select_unassigned_variable(csp, assignments: dict, inp):
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
 
 
-def order_domain_values(csp, assignments, inp, var):
+def order_domain_values(initial_state,csp, assignments, inp, var):
     """
     return the available values, in the dummy case return all values
     """
 
-    # values = []
-
-    # # get the surrounding values
-    # colored_neighbors_coordinates = search_around(
-    #     var, assignments, lambda assignments, point: assignments.get(point) != None)
-
-    # for coord in colored_neighbors_coordinates:
-    #     values.append(assignments[coord])
-
     # # remove the totally connected
-    # terminals = get_initial_state(inp)[0]
 
-    terminals = get_initial_state(inp)[0]
+    terminals = initial_state[0]
     colors = [color.lower() for color in terminals.keys()]
     shuffle(colors)
     return colors
-    # return list(terminals.keys())
-
-    # terminals = get_initial_state(inp)[0]
-    # for key in terminals:
-    #     same_color_neighbors_s = search_around(
-    #         terminals[key][0], inp, lambda inp, point: get_item_in_coord(inp, point) == key) != None
-    #     same_color_neighbors_e = search_around(
-    #         terminals[key][1], inp, lambda inp, point: get_item_in_coord(inp, point) == key) != None
-    #     if not (same_color_neighbors_e and same_color_neighbors_s):
-    #         values.append(key)
-    # return values
 
 
 # TODO: study consistency to know the paramters you should pass here
@@ -114,7 +75,7 @@ def inference():
     return case.failure
 
 
-def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
+def is_consistant(initial_state,current_assignment: dict, assignments: List[dict], inp, csp):
     """
     input:
     current_assignment: the coordinate = value dict 
@@ -169,7 +130,7 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
             return False
     # select
     # for terminals check wheather or not they have more than one similar neighbor
-    terminals = get_initial_state(inp)[0]
+    terminals = initial_state[0]
     for terminal in terminals:
         similar_neighbors_start = search_around(terminals[terminal][0], inp, assignments,
                                                 lambda assign, point: False if assign.get(point) == None else assign[point].upper() == terminal)
@@ -182,7 +143,7 @@ def is_consistant(current_assignment: dict, assignments: List[dict], inp, csp):
             return False
 
     terminal_connected = is_terminals_connect(
-        current_assignment_color, inp, {**assignments})
+        initial_state,current_assignment_color, inp, {**assignments})
 
     if terminal_connected:
         return False

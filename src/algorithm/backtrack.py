@@ -3,6 +3,7 @@ from model.case import case
 
 
 def backtrack(
+        initial_state,
         initial_assignments,
         csp,
         inp,
@@ -11,17 +12,19 @@ def backtrack(
         assignment_complete,
         get_inferences,
         is_consistant):
-    return _backtrack(initial_assignments, csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant)
+    return _backtrack(initial_state, initial_assignments, csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant)
 
 
-def _backtrack(assignments: dict,
-               csp,
-               inp,
-               select_unassigned_variable,
-               order_domain_values,
-               assignment_complete,
-               get_inferences,
-               is_consistant):
+def _backtrack(
+        initial_state,
+        assignments: dict,
+        csp,
+        inp,
+        select_unassigned_variable,
+        order_domain_values,
+        assignment_complete,
+        get_inferences,
+        is_consistant):
     # TODO check if all terminal are connected
     if assignment_complete(assignments, inp):
         return assignments
@@ -30,9 +33,9 @@ def _backtrack(assignments: dict,
     # TODO Room for improvement
     if var == None:
         return case.failure
-    for value in order_domain_values(csp, assignments, inp, var):
+    for value in order_domain_values(initial_state,csp, assignments, inp, var):
         assignments[var] = value
-        if is_consistant({var: value},  assignments, inp, csp):
+        if is_consistant(initial_state,{var: value},  assignments, inp, csp):
             # print({var: value})
             # formatter(assignments, len(inp), len(inp), init="_")
             # print("-------------------------")
@@ -42,6 +45,7 @@ def _backtrack(assignments: dict,
             if inferences != case.failure:
                 assignments = {**assignments, **inferences}
             res = _backtrack(
+                initial_state,
                 assignments,
                 csp,
                 inp,
