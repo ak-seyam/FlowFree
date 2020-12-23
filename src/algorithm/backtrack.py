@@ -11,8 +11,9 @@ def backtrack(
         order_domain_values,
         assignment_complete,
         get_inferences,
-        is_consistant):
-    return _backtrack(initial_state, initial_assignments, csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant)
+        is_consistant,
+        callback):
+    return _backtrack(initial_state, initial_assignments, csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant, callback)
 
 
 def _backtrack(
@@ -24,8 +25,10 @@ def _backtrack(
         order_domain_values,
         assignment_complete,
         get_inferences,
-        is_consistant):
+        is_consistant,
+        callback):
     # TODO check if all terminal are connected
+    callback(assignments)
     if assignment_complete(assignments, inp):
         return assignments
     var = select_unassigned_variable(
@@ -33,9 +36,9 @@ def _backtrack(
     # TODO Room for improvement
     if var == None:
         return case.failure
-    for value in order_domain_values(initial_state,csp, assignments, inp, var):
+    for value in order_domain_values(initial_state, csp, assignments, inp, var):
         assignments[var] = value
-        if is_consistant(initial_state,{var: value},  assignments, inp, csp):
+        if is_consistant(initial_state, {var: value},  assignments, inp, csp):
             # print({var: value})
             # formatter(assignments, len(inp), len(inp), init="_")
             # print("-------------------------")
@@ -53,7 +56,8 @@ def _backtrack(
                 order_domain_values,
                 assignment_complete,
                 get_inferences,
-                is_consistant
+                is_consistant,
+                callback
             )
             if res != case.failure:
                 return res

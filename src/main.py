@@ -25,7 +25,7 @@ res = backtrack(
     dum.order_domain_values,
     dum.assignment_complete,
     dum.inference,
-    dum.is_consistant
+    dum.is_consistant,
+    lambda assignments: print(assignments) # for testing only
 )
-print(res)
-formatter(res,5,5)
+formatter(res,len(inp),len(inp[0]))
