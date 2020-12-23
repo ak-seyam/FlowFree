@@ -27,8 +27,8 @@ def _backtrack(
         get_inferences,
         is_consistant,
         callback):
-    callback(assignments)
     # TODO check if all terminal are connected
+    callback(assignments)
     if assignment_complete(assignments, inp):
         return assignments
     var = select_unassigned_variable(

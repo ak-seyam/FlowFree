@@ -26,7 +26,6 @@ res = backtrack(
     dum.assignment_complete,
     dum.inference,
     dum.is_consistant,
-    lambda assignments: ""
+    lambda assignments: print(assignments) # for testing only
 )
-print(res)
-formatter(res,5,5)
+formatter(res,len(inp),len(inp[0]))
