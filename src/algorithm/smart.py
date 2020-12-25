@@ -1,5 +1,6 @@
 import math
-from typing import List, Tuple
+from typing import List, Tuple, Dict
+from algorithm.dummy import is_consistant
 
 
 def order_domain_values():
@@ -7,29 +8,69 @@ def order_domain_values():
     pass
 
 
-def select_unassigned_variable(csp, assignments: dict, inp):
+def select_unassigned_variable(initial_state, csp, assignments: dict, inp):
     """
     Args:
         assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
         inp: 2d list of the input
-    
+
     Return:
         coords : a random coordinate
     """
-    pass
+    available_vars = []
+    for i in range(len(inp)):
+        for j in range(len(inp[0])):
+            if assignments.get((i, j)) == None:
+                available_vars.append((i, j))
+
+    variables_domain = get_available_domain_multiple(
+        initial_state, available_vars, assignments, inp,  csp)
+    smallest_domains = MRV(variables_domain)
+    return smallest_domains[0]
 
 
 def forward_check():
     pass
 
 
-def get_domain(coord):
-    pass
-    # full_domain = [] # TODO
+def get_available_domain_multiple(initial_state, variables, assignments, inp,  csp):
+    variables_domain = {}
+    for coord in variables:
+        domain = get_available_domain(
+            initial_state, coord, assignments, inp,  csp)
+        variables_domain[coord] = domain
 
-#     point_domain = []
-#     for value in full_domain
-#         if value
+    return variables_domain
+
+
+def get_available_domain(initial_state, coord, assignments, inp,  csp):
+    """ return list of values that satisfy the constrains for selected coord
+
+    example assigning one value for terminal the othe domain will be reduced
+    >>> from reader.reader import read_inputfile
+    >>> from utils.paths.points import get_initial_state
+    >>> paths = ["../input/input55.txt"]
+    >>> inp = read_inputfile(paths[0])
+    >>> initial_state = get_initial_state(inp)
+    >>> assignments = {(0,1): 'b'}
+    >>> coord = (1,0)
+    >>> csp = None
+    >>> get_available_domain(initial_state, coord, assignments, inp,csp)
+    ['r', 'o', 'y', 'g']
+    """
+    terminals = initial_state[0]
+    colors = [color.lower() for color in terminals.keys()]
+    full_domain = colors
+
+    point_domain = []
+    for value in full_domain:
+        # add val to check constrain
+        assignments[coord] = value
+        if is_consistant(initial_state, {coord: value},  assignments, inp, csp):
+            point_domain += value
+        del assignments[coord]
+
+    return point_domain
 
 
 def degree_heuristic(variables: List) -> List[Tuple[int, int]]:
@@ -50,7 +91,7 @@ def degree_heuristic(variables: List) -> List[Tuple[int, int]]:
     # choose the variable with largest number of constrains
 
 
-def MRV(variables: List) -> List[Tuple[int, int]]:
+def MRV(variables_domain: Dict[Tuple[int, int], List[str]]) -> List[Tuple[int, int]]:
     ''' variable selection heuristic witch choose the variable with Minimum remaining values
     Args:
         variables : available variables to choose from
@@ -64,9 +105,13 @@ def MRV(variables: List) -> List[Tuple[int, int]]:
 
     smallest_domain = math.inf
     selected_coords = []
-    for coord in variables:
-        domain_len = len(get_domain(coord))
-        smallest_domain = min(domain_len, smallest_domain)
+    for coord in variables_domain:
+        domain_len = len(variables_domain[coord])
+
+        if domain_len < smallest_domain:
+            selected_coords = []
+            smallest_domain = domain_len
+
         if smallest_domain == domain_len:
             selected_coords.append(coord)
 
