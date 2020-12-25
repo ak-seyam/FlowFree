@@ -31,7 +31,7 @@ def _backtrack(
     callback(assignments)
     if assignment_complete(assignments, inp):
         return assignments
-    var = select_unassigned_variable(
+    var = select_unassigned_variable(initial_state,
         csp, assignments, inp)  # TODO Room for improvement
     # TODO Room for improvement
     if var == None:

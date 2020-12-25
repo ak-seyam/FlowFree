@@ -19,7 +19,7 @@ def assignment_complete(assignments, inp):
 
 
 # changed
-def select_unassigned_variable(csp, assignments: dict, inp):
+def select_unassigned_variable(initial_state, csp, assignments: dict, inp):
     """
     input:
     assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
