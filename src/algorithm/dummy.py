@@ -104,6 +104,11 @@ def is_consistant(initial_state,current_assignment: dict, assignments: List[dict
 
     # check if already marked point will be in the path
 
+    ssf = is_surrounding_square_filled(
+        {**assignments, **current_assignment}, inp, current_assignment_coord)
+    if ssf:
+        return False
+
     # Combination check
     good_comb = is_good_combination(current_assignment_coord,assignments,inp)
     if not good_comb :
