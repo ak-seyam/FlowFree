@@ -27,12 +27,6 @@ def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
     Return:
         coords : a random coordinate
     """
-    available_vars = []
-    for i in range(len(inp)):
-        for j in range(len(inp[0])):
-            if assignments.get((i, j)) == None:
-                available_vars.append((i, j))
-
     smallest_domains = MRV(variables_domain)
     return smallest_domains[0]
 
