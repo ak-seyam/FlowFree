@@ -19,7 +19,7 @@ def assignment_complete(assignments, inp):
 
 
 # changed
-def select_unassigned_variable(initial_state, csp, assignments: dict, inp):
+def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
     """
     input:
     assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
@@ -53,7 +53,7 @@ def select_unassigned_variable(initial_state, csp, assignments: dict, inp):
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
 
 
-def order_domain_values(initial_state,csp, assignments, inp, var):
+def order_domain_values(initial_state, csp, assignments, inp, var, variables_domain):
     """
     return the available values, in the dummy case return all values
     """

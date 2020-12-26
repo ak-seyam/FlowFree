@@ -3,12 +3,22 @@ from typing import List, Tuple, Dict
 from algorithm.dummy import is_consistant
 
 
-def order_domain_values():
+def order_domain_values(initial_state, csp, assignments, inp, var, variables_domain):
     """ return the available values, order with least-constaining-value heuristic """
-    pass
+    # TODO use least-constaining-value
+    return variables_domain[var]
 
 
-def select_unassigned_variable(initial_state, csp, assignments: dict, inp):
+def free_vars(assignments, inp):
+    available_vars = []
+    for i in range(len(inp)):
+        for j in range(len(inp[0])):
+            if assignments.get((i, j)) == None:
+                available_vars.append((i, j))
+    return available_vars
+
+
+def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
     """
     Args:
         assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
@@ -23,8 +33,6 @@ def select_unassigned_variable(initial_state, csp, assignments: dict, inp):
             if assignments.get((i, j)) == None:
                 available_vars.append((i, j))
 
-    variables_domain = get_available_domain_multiple(
-        initial_state, available_vars, assignments, inp,  csp)
     smallest_domains = MRV(variables_domain)
     return smallest_domains[0]
 
