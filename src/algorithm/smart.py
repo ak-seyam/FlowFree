@@ -37,8 +37,13 @@ def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
     return smallest_domains[0]
 
 
-def forward_check():
-    pass
+def forward_check(variables_domain):
+    ''' forward check for empty domains return true if no empty domains'''
+    for coords in variables_domain:
+        if len(variables_domain[coords]) == 0:
+            return False
+
+    return True
 
 
 def get_available_domain_multiple(initial_state, variables, assignments, inp,  csp):

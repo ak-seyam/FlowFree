@@ -37,6 +37,8 @@ def _backtrack(
     variables_domain = smart.get_available_domain_multiple(
         initial_state, free_vars, assignments, inp,  csp)
 
+    if not smart.forward_check(variables_domain):
+        return case.failure
     var = select_unassigned_variable(variables_domain,
                                      csp, assignments, inp)  # TODO Room for improvement
     # TODO Room for improvement
