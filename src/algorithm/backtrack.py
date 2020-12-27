@@ -1,5 +1,6 @@
 from utils.formater import formatter
 from model.case import case
+from algorithm import smart
 
 
 def backtrack(
@@ -31,12 +32,19 @@ def _backtrack(
     callback(assignments)
     if assignment_complete(assignments, inp):
         return assignments
-    var = select_unassigned_variable(
-        csp, assignments, inp)  # TODO Room for improvement
+    # only for smart
+    free_vars = smart.free_vars(assignments, inp)
+    variables_domain = smart.get_available_domain_multiple(
+        initial_state, free_vars, assignments, inp,  csp)
+
+    if not smart.forward_check(variables_domain):
+        return case.failure
+    var = select_unassigned_variable(variables_domain,
+                                     csp, assignments, inp)  # TODO Room for improvement
     # TODO Room for improvement
     if var == None:
         return case.failure
-    for value in order_domain_values(initial_state, csp, assignments, inp, var):
+    for value in order_domain_values(initial_state, csp, assignments, inp, var, variables_domain):
         assignments[var] = value
         if is_consistant(initial_state, {var: value},  assignments, inp, csp):
             # print({var: value})

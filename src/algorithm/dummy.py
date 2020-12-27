@@ -19,7 +19,7 @@ def assignment_complete(assignments, inp):
 
 
 # changed
-def select_unassigned_variable(csp, assignments: dict, inp):
+def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
     """
     input:
     assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
@@ -53,7 +53,7 @@ def select_unassigned_variable(csp, assignments: dict, inp):
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
 
 
-def order_domain_values(initial_state,csp, assignments, inp, var):
+def order_domain_values(initial_state, csp, assignments, inp, var, variables_domain):
     """
     return the available values, in the dummy case return all values
     """
@@ -103,6 +103,11 @@ def is_consistant(initial_state,current_assignment: dict, assignments: List[dict
     current_assignment_coord = list(current_assignment.keys())[0]
 
     # check if already marked point will be in the path
+
+    ssf = is_surrounding_square_filled(
+        {**assignments, **current_assignment}, inp, current_assignment_coord)
+    if ssf:
+        return False
 
     # Combination check
     good_comb = is_good_combination(current_assignment_coord,assignments,inp)
