@@ -1,6 +1,7 @@
 import math
 from typing import List, Tuple, Dict
 from algorithm.dummy import is_consistant
+from model.case import case
 
 
 def order_domain_values(initial_state, csp, assignments, inp, var, variables_domain):
@@ -17,6 +18,28 @@ def free_vars(assignments, inp):
                 available_vars.append((i, j))
     return available_vars
 
+def inference():
+    """
+    return inferences as list or state.faileur
+    """
+
+    return case.failure
+
+
+def get_var(initial_state , csp , assignments, inp ):
+    """
+    docstring
+    """
+    fv = free_vars(assignments, inp)
+    variables_domain = get_available_domain_multiple(
+        initial_state, fv, assignments, inp,  csp)
+
+    if not forward_check(variables_domain):
+        return case.failure
+        
+    var = select_unassigned_variable(variables_domain,
+                                     csp, assignments, inp)  
+    return var, variables_domain
 
 def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
     """

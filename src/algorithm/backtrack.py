@@ -8,13 +8,13 @@ def backtrack(
         initial_assignments,
         csp,
         inp,
-        select_unassigned_variable,
         order_domain_values,
         assignment_complete,
         get_inferences,
         is_consistant,
-        callback):
-    return _backtrack(initial_state, initial_assignments, csp, inp, select_unassigned_variable, order_domain_values, assignment_complete, get_inferences, is_consistant, callback)
+        callback,
+        get_var):
+    return _backtrack(initial_state, initial_assignments, csp, inp, order_domain_values, assignment_complete, get_inferences, is_consistant, callback, get_var)
 
 
 def _backtrack(
@@ -22,25 +22,29 @@ def _backtrack(
         assignments: dict,
         csp,
         inp,
-        select_unassigned_variable,
         order_domain_values,
         assignment_complete,
         get_inferences,
         is_consistant,
-        callback):
+        callback,
+        get_var):
     # TODO check if all terminal are connected
     callback(assignments)
     if assignment_complete(assignments, inp):
         return assignments
     # only for smart
-    free_vars = smart.free_vars(assignments, inp)
-    variables_domain = smart.get_available_domain_multiple(
-        initial_state, free_vars, assignments, inp,  csp)
+    # free_vars = smart.free_vars(assignments, inp)
+    # variables_domain = smart.get_available_domain_multiple(
+    #     initial_state, free_vars, assignments, inp,  csp)
 
-    if not smart.forward_check(variables_domain):
+    # if not smart.forward_check(variables_domain):
+    #     return case.failure
+    # var = select_unassigned_variable(variables_domain,
+    #                                  csp, assignments, inp)  # TODO Room for improvement
+    v_tuple = get_var(initial_state,csp,assignments,inp)
+    if v_tuple == case.failure :
         return case.failure
-    var = select_unassigned_variable(variables_domain,
-                                     csp, assignments, inp)  # TODO Room for improvement
+    var, variables_domain = v_tuple
     # TODO Room for improvement
     if var == None:
         return case.failure
@@ -60,12 +64,12 @@ def _backtrack(
                 assignments,
                 csp,
                 inp,
-                select_unassigned_variable,
                 order_domain_values,
                 assignment_complete,
                 get_inferences,
                 is_consistant,
-                callback
+                callback,
+                get_var
             )
             if res != case.failure:
                 return res
