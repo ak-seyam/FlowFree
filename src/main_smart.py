@@ -8,7 +8,7 @@ from random import seed
 seed(0)
 
 paths = [
-    "../input/input88.txt"
+    "../input/input991.txt"
 ]
 
 inp = read_inputfile(paths[0])
@@ -21,11 +21,11 @@ res = backtrack(
     initial_state[1],
     [],
     inp,
-    smart.select_unassigned_variable,
     dum.order_domain_values,
     dum.assignment_complete,
     dum.inference,
     dum.is_consistant,
-    lambda assignments: 1  # for testing only
+    lambda assignments: 1,  # for testing only
+    smart.get_var
 )
 formatter(res, len(inp), len(inp[0]))
