@@ -17,6 +17,10 @@ def assignment_complete(assignments, inp):
 
     return len(assignments) >= (len(inp) * len(inp[0]))
 
+def get_var(initial_state ,csp ,assignments, inp) :
+    var = select_unassigned_variable(None,
+                                     csp, assignments, inp)  # TODO Room for improvement
+    return var, None
 
 # changed
 def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
