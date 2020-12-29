@@ -146,3 +146,24 @@ def MRV(variables_domain: Dict[Tuple[int, int], List[str]]) -> List[Tuple[int, i
             selected_coords.append(coord)
 
     return selected_coords
+
+
+def least_constraining_value(assignments, coord, domain):
+    ''' value selection heuristic whitch count the order the values by number of constrains with 
+    smallest first  
+    '''
+
+    smallest_number_of_constraints = math.inf
+    count_value_ordered = []
+    for value in domain:
+        count = 0
+        count += count_is_surrounding_square_filled(
+            {**{coord: value}, **assignments}, coord, value)
+        count_value_ordered.append(count, value)
+
+    count_value_ordered.sort()
+    order_domain_values = []
+    for count, value in count_value_ordered:
+        order_domain_values += value
+
+    return order_domain_values
