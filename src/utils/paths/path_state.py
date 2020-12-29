@@ -1,6 +1,7 @@
 # NOTE: inp is 2d list of chars/strings represents the input
 
 from typing import Tuple, List
+from warnings import warn
 from model.directions import direction as d
 from utils.paths.points import get_item_in_coord, search_around, points_are_equal, get_path, get_neighbors_coords, is_empty, check_for_good_combinations
 
@@ -110,7 +111,7 @@ def is_surrounding_square_filled(assignment, inp, current_index):
     for square in surrounding_squares:
         has_sur_square_filled = True
         for coord in square:
-            value_in_assignment = assignment.get(coord) 
+            value_in_assignment = assignment.get(coord)
             if value_in_assignment != None:
                 # has_sur_square_filled = has_sur_square_filled and (
                 #     value_in_assignment == current_index_letter)
@@ -125,38 +126,38 @@ def is_surrounding_square_filled(assignment, inp, current_index):
 
     return False
 
-def is_good_combination(current_assignment_coord, assignments,inp):
+
+def is_good_combination(current_assignment_coord, assignments, inp):
     """
     check the combination (position) of the current assignment point as well as the surrounding points
     """
     comb_points_of_interest = [current_assignment_coord]
-    comb_points_of_interest.extend(get_neighbors_coords(current_assignment_coord, inp))
+    comb_points_of_interest.extend(
+        get_neighbors_coords(current_assignment_coord, inp))
     for coord in comb_points_of_interest:
         if is_empty(assignments, coord) or assignments[coord].isupper():
             continue
-        good_comb = check_for_good_combinations(coord,assignments[coord],assignments,inp)
-        if not good_comb :
+        good_comb = check_for_good_combinations(
+            coord, assignments[coord], assignments, inp)
+        if not good_comb:
             return False
-    
+
     return True
 
+
 def is_neighbors_terminal_have_vaild_path(current_assignment_coord, initial_state, assignments, inp):
-    terminals = initial_state[0]
 
     terminal_neighbors_coords = search_around(
         current_assignment_coord, inp, assignments,
         lambda assign, point: assign.get(point, '').isupper() # empty and assigned points will be false only terminals will pass
     )
     for coord in terminal_neighbors_coords:
-        # empty and assigned points will be false only terminals will pass
-        if assignments.get(coord,  '').isupper():
         terminal_color = assignments[coord]
         similar_neighbors = len(search_around(coord, inp, assignments,
                                               lambda assign, point: assign.get(point, '').upper() == terminal_color))
         empty_neighbors = len(search_around(coord, inp, assignments,
                                             is_empty))
         valid_state = similar_neighbors == 1 or (
-
             similar_neighbors == 0 and empty_neighbors >= 1)
         if not valid_state:
             return False
