@@ -22,7 +22,7 @@ res = backtrack(
     dum.assignment_complete,
     dum.inference,
     dum.is_consistant,
-    lambda assignments: print(assignments), # for testing only
+    lambda assignments: 1,
     dum.get_var
 )
 formatter(res,len(inp),len(inp[0]))
