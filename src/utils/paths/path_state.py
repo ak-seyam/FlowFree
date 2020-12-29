@@ -139,9 +139,31 @@ def is_good_combination(current_assignment_coord, assignments,inp):
             return False
     
     return True
-        
-def terminal_with_two_same_color_exist(initial_state,assignments, inp):
+
+def is_neighbors_terminal_have_vaild_path(current_assignment_coord, initial_state, assignments, inp):
     terminals = initial_state[0]
+
+    neighbors = get_neighbors_coords(current_assignment_coord, inp)
+    for coord in neighbors:
+        # empty and assigned points will be false only terminals will pass
+        if assignments.get(coord,  '').isupper():
+            terminal_color = assignments[coord]
+            similar_neighbors = len(search_around(coord, inp, assignments,
+                                                  lambda assign, point: assign.get(point, '').upper() == terminal_color))
+            empty_neighbors = len(search_around(coord, inp, assignments,
+                                                is_empty))
+            valid_state = similar_neighbors == 1 or (
+
+                similar_neighbors == 0 and empty_neighbors >= 1)
+            if not valid_state:
+                return False
+    return True
+
+
+def terminal_with_two_same_color_exist(current_assignment_coord, initial_state, assignments, inp):
+    '''#deprcated use instead @is_neighbors_terminal_have_vaild_path'''
+    terminals = initial_state[0]
+    # old slow implementation
     for terminal in terminals:
         similar_neighbors_start = search_around(terminals[terminal][0], inp, assignments,
                                                 lambda assign, point: False if assign.get(point) == None else assign[point].upper() == terminal)

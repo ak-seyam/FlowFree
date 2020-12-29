@@ -1,7 +1,7 @@
 from typing import List
 from utils.paths.points import get_item_in_coord, is_empty, search_around, is_terminals_connect, get_same_color_neighbors, check_for_good_combinations, get_neighbors_coords
 from model.case import case
-from utils.paths.path_state import is_surrounding_square_filled,is_good_combination, terminal_with_two_same_color_exist
+from utils.paths.path_state import is_surrounding_square_filled, is_good_combination, terminal_with_two_same_color_exist, is_neighbors_terminal_have_vaild_path
 from random import random, shuffle
 
 def assignment_complete(assignments, inp):
@@ -119,9 +119,17 @@ def is_consistant(initial_state,current_assignment: dict, assignments: List[dict
         return False
 
     # select
+    '''
     # for terminals check wheather or not they have more than one similar neighbor
-    terminal_with_two_neighbors = terminal_with_two_same_color_exist(initial_state,assignments,inp)
-    if terminal_with_two_neighbors :
+    >  we don't need to check all the terminals every time only the connected ones see @issue
+
+    #terminal_with_two_neighbors = terminal_with_two_same_color_exist(initial_state,assignments,inp)
+    #if terminal_with_two_neighbors :
+    #    return False
+    '''
+    # for connected terminals check wheather or not they have more than one similar neighbor
+    if not is_neighbors_terminal_have_vaild_path(
+            current_assignment_coord, initial_state, assignments, inp):
         return False
 
     terminal_connected = is_terminals_connect(
