@@ -165,6 +165,7 @@ def is_neighbors_terminal_have_vaild_path(current_assignment_coord, initial_stat
 
 def terminal_with_two_same_color_exist(current_assignment_coord, initial_state, assignments, inp):
     '''#deprcated use instead @is_neighbors_terminal_have_vaild_path'''
+    warn("Deprecated: use is_neighbors_terminal_have_vaild_path instead, as this function will be removed", DeprecationWarning)
     terminals = initial_state[0]
     # old slow implementation
     for terminal in terminals:
