@@ -143,20 +143,23 @@ def is_good_combination(current_assignment_coord, assignments,inp):
 def is_neighbors_terminal_have_vaild_path(current_assignment_coord, initial_state, assignments, inp):
     terminals = initial_state[0]
 
-    neighbors = get_neighbors_coords(current_assignment_coord, inp)
-    for coord in neighbors:
+    terminal_neighbors_coords = search_around(
+        current_assignment_coord, inp, assignments,
+        lambda assign, point: assign.get(point, '').isupper() # empty and assigned points will be false only terminals will pass
+    )
+    for coord in terminal_neighbors_coords:
         # empty and assigned points will be false only terminals will pass
         if assignments.get(coord,  '').isupper():
-            terminal_color = assignments[coord]
-            similar_neighbors = len(search_around(coord, inp, assignments,
-                                                  lambda assign, point: assign.get(point, '').upper() == terminal_color))
-            empty_neighbors = len(search_around(coord, inp, assignments,
-                                                is_empty))
-            valid_state = similar_neighbors == 1 or (
+        terminal_color = assignments[coord]
+        similar_neighbors = len(search_around(coord, inp, assignments,
+                                              lambda assign, point: assign.get(point, '').upper() == terminal_color))
+        empty_neighbors = len(search_around(coord, inp, assignments,
+                                            is_empty))
+        valid_state = similar_neighbors == 1 or (
 
-                similar_neighbors == 0 and empty_neighbors >= 1)
-            if not valid_state:
-                return False
+            similar_neighbors == 0 and empty_neighbors >= 1)
+        if not valid_state:
+            return False
     return True
 
 
