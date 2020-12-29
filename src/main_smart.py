@@ -21,7 +21,7 @@ res = backtrack(
     initial_state[1],
     [],
     inp,
-    dum.order_domain_values,
+    smart.order_domain_values,
     dum.assignment_complete,
     dum.inference,
     dum.is_consistant,
