@@ -6,7 +6,6 @@ from algorithm import smart
 def backtrack(
         initial_state,
         initial_assignments,
-        csp,
         inp,
         order_domain_values,
         assignment_complete,
@@ -14,13 +13,12 @@ def backtrack(
         is_consistant,
         callback,
         get_var):
-    return _backtrack(initial_state, initial_assignments, csp, inp, order_domain_values, assignment_complete, get_inferences, is_consistant, callback, get_var)
+    return _backtrack(initial_state, initial_assignments, inp, order_domain_values, assignment_complete, get_inferences, is_consistant, callback, get_var)
 
 
 def _backtrack(
         initial_state,
         assignments: dict,
-        csp,
         inp,
         order_domain_values,
         assignment_complete,
@@ -32,25 +30,16 @@ def _backtrack(
     callback(assignments)
     if assignment_complete(assignments, inp):
         return assignments
-    # only for smart
-    # free_vars = smart.free_vars(assignments, inp)
-    # variables_domain = smart.get_available_domain_multiple(
-    #     initial_state, free_vars, assignments, inp,  csp)
-
-    # if not smart.forward_check(variables_domain):
-    #     return case.failure
-    # var = select_unassigned_variable(variables_domain,
-    #                                  csp, assignments, inp)  # TODO Room for improvement
-    v_tuple = get_var(initial_state,csp,assignments,inp)
+    v_tuple = get_var(initial_state,assignments,inp)
     if v_tuple == case.failure :
         return case.failure
     var, variables_domain = v_tuple
     # TODO Room for improvement
     if var == None:
         return case.failure
-    for value in order_domain_values(initial_state, csp, assignments, inp, var, variables_domain):
+    for value in order_domain_values(initial_state, assignments, inp, var, variables_domain):
         assignments[var] = value
-        if is_consistant(initial_state, {var: value},  assignments, inp, csp):
+        if is_consistant(initial_state, {var: value},  assignments, inp):
             # print({var: value})
             # formatter(assignments, len(inp), len(inp), init="_")
             # print("-------------------------")
@@ -62,7 +51,6 @@ def _backtrack(
             res = _backtrack(
                 initial_state,
                 assignments,
-                csp,
                 inp,
                 order_domain_values,
                 assignment_complete,

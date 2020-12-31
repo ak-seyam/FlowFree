@@ -8,7 +8,7 @@ from random import seed
 seed(0)
 
 paths = [
-    "../input/input1212.txt"
+    "../input/input88.txt"
 ]
 
 inp = read_inputfile(paths[0])
@@ -18,7 +18,6 @@ initial_state = get_initial_state(inp)
 res = backtrack(
     initial_state,
     initial_state[1],
-    [],
     inp,
     smart.order_domain_values,
     dum.assignment_complete,

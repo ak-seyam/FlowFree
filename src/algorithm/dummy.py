@@ -17,13 +17,13 @@ def assignment_complete(assignments, inp):
 
     return len(assignments) >= (len(inp) * len(inp[0]))
 
-def get_var(initial_state ,csp ,assignments, inp) :
+def get_var(initial_state ,assignments, inp) :
     var = select_unassigned_variable(None,
-                                     csp, assignments, inp)  # TODO Room for improvement
+                                     assignments, inp)  # TODO Room for improvement
     return var, None
 
 # changed
-def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
+def select_unassigned_variable(variables_domain, assignments: dict, inp):
     """
     input:
     assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
@@ -57,7 +57,7 @@ def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
 # ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
 
 
-def order_domain_values(initial_state, csp, assignments, inp, var, variables_domain):
+def order_domain_values(initial_state, assignments, inp, var, variables_domain):
     """
     return the available values, in the dummy case return all values
     """
@@ -79,29 +79,14 @@ def inference():
     return case.failure
 
 
-def is_consistant(initial_state,current_assignment: dict, assignments: List[dict], inp, csp):
+def is_consistant(initial_state,current_assignment: dict, assignments: List[dict], inp ):
     """
     input:
     current_assignment: the coordinate = value dict 
     assignments: the current assignments w/o current assignmet
-    csp: (you violate the constraint be returning true) in dump it is just an array of constrains in dumb it should be just an array with a square case checking 
 
-    return: weather or not assignment is consistant with assignments according to the csp
+    return: weather or not assignment is consistant with assignments 
     """
-
-    # TODO
-    # steps
-    # - check each constraint in csp they all should result True
-    #    if no -> return false, return true otherwise
-
-    # TODO now every constraint is hardcoded this should improved in other backtrack logic
-    # NOTE for other is consistant you might use a totally different csp and this
-    # is ok
-
-    # if the node already assigned
-    # TODO delete
-    # if assignments.get(list(current_assignment.keys())[0]) != None:
-    #     return False
 
     current_assignment_color = list(current_assignment.values())[0]
     current_assignment_coord = list(current_assignment.keys())[0]
