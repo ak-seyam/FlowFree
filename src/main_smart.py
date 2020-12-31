@@ -8,11 +8,10 @@ from random import seed
 seed(0)
 
 paths = [
-    "../input/input991.txt"
+    "../input/input1212.txt"
 ]
 
 inp = read_inputfile(paths[0])
-# dummy stuff XD
 
 initial_state = get_initial_state(inp)
 
