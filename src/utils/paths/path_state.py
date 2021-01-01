@@ -78,6 +78,34 @@ def get_square_coordinates(current_index: Tuple[int, int], corners):
     return list(order.values())
 
 
+def count_is_surrounding_square_filled(assignment, inp, current_index,  value):
+    """
+    input:
+    assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
+    inp: 2d list of the input
+
+    return number of unassigned variables in the constrain
+    """
+    # FIXME count only decreased domains
+    # defining corners
+    corners = {
+        d.north: -1,
+        d.south: len(inp),
+        d.east: len(inp),
+        d.west: -1
+    }
+
+    surrounding_squares = get_square_coordinates(current_index, corners)
+
+    constrains_count = 0
+    for square in surrounding_squares:
+        for coord in square:
+            if assignment.get(coord) != None:
+                constrains_count += 1
+
+    return constrains_count
+
+
 def is_surrounding_square_filled(assignment, inp, current_index):
     """
     input:

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>maze</title>
+  <style>
+    canvas {
+      position: absolute;
+      left: 40px;
+      /* display: block; */
+    }
+
+    .back_canv {
+      z-index: -2;
+      background: rgb(223 201 201 / 0%);
+    }
+  </style>
+</head>
+
+<body style="background: rgb(206, 178, 178)">
+  <select name="map" id="map_selector">
+    <optgroup label="easy">
+      <option value="55" selected>5x5</option>
+    </optgroup>
+    <optgroup label="medium">
+      <option value="77">7x7</option>
+      <option value="88">8x8</option>
+      <option value="991">9x9</option>
+    </optgroup>
+    <optgroup label="hard">
+      <option value="10101">10x10 _1</option>
+      <option value="10101">10x10 _2</option>
+    </optgroup>
+    <optgroup label="bonus">
+      <option value="1212">12x12</option>
+      <option value="1214">12x14</option>
+      <option value="1414">14x14</option>
+    </optgroup>
+  </select>
+
+  <select name="sloution_method" id="sloution_method">
+    <option value="dump">dump</option>
+    <option value="smart">smart</option>
+  </select>
+
+
+  <h1 id="distance_cost">...</h1>
+
+
+  <div id="canvas_container"></div>
+  <script type="module" src="./static/index.js"></script>
+</body>
+
+</html>

@@ -4,10 +4,18 @@ from algorithm.dummy import is_consistant
 from model.case import case
 
 
-def order_domain_values(initial_state , assignments, inp, var, variables_domain):
+def order_domain_values(initial_state, assignments, inp, var, variables_domain):
     """ return the available values, order with least-constaining-value heuristic """
-    # TODO use least-constaining-value
     return variables_domain[var]
+    
+    # use least-constaining-value
+    # is actully slower 🤷‍♀
+    # if len(variables_domain[var]) > 1:
+    #     ordered_domain = least_constraining_value(initial_state, assignments,
+    #                                               var, variables_domain, inp)
+    #     return ordered_domain
+    # else:
+    #     return variables_domain[var]
 
 
 def free_vars(assignments, inp):
@@ -48,7 +56,7 @@ def select_unassigned_variable(variables_domain , assignments: dict, inp):
         inp: 2d list of the input
 
     Return:
-        coords : a random coordinate
+        coords : return coordinatation with mrv
     """
     smallest_domains = MRV(variables_domain)
     return smallest_domains[0]
@@ -145,3 +153,32 @@ def MRV(variables_domain: Dict[Tuple[int, int], List[str]]) -> List[Tuple[int, i
             selected_coords.append(coord)
 
     return selected_coords
+
+
+def least_constraining_value(initial_state, assignments, coord, variables_domain, inp):
+    ''' value selection heuristic whitch count the order the values by number of constrains with 
+    smallest first  
+    '''
+
+    smallest_number_of_constraints = math.inf
+    count_value_ordered = []
+
+    variables = free_vars({**{coord: 'holder'}, **assignments}, inp)
+    domain = variables_domain[coord]
+    for value in domain:
+
+        updated_variable_domains = get_available_domain_multiple(
+            initial_state, variables, assignments, inp)
+        count_constrained = 0
+        for coord in updated_variable_domains:
+            if len(updated_variable_domains[coord]) < len(variables_domain[coord]):
+                count_constrained += 1
+
+        count_value_ordered.append((count_constrained, value))
+
+    count_value_ordered.sort()
+    order_domain_values = []
+    for count, value in count_value_ordered:
+        order_domain_values += value
+
+    return order_domain_values
