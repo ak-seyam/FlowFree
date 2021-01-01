@@ -8,7 +8,7 @@ from random import seed
 seed(0)
 
 paths = [
-    "../input/input88.txt"
+    "../input/input10101.txt"
 ]
 
 inp = read_inputfile(paths[0])
