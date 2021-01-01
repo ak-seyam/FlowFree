@@ -1,8 +1,9 @@
 # NOTE: inp is 2d list of chars/strings represents the input
 
 from typing import Tuple, List
+from warnings import warn
 from model.directions import direction as d
-from utils.paths.points import get_item_in_coord, search_around, points_are_equal, get_path, get_neighbors_coords, is_empty, check_for_good_combinations
+from utils.paths.points import get_item_in_coord, search_around, points_are_equal, get_path, get_neighbors_coords, is_empty, get_same_color_neighbors
 
 
 def get_square_coordinates(current_index: Tuple[int, int], corners):
@@ -108,7 +109,7 @@ def count_is_surrounding_square_filled(assignment, inp, current_index,  value):
 def is_surrounding_square_filled(assignment, inp, current_index):
     """
     input:
-    assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
+    assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals and the current assignment
     inp: 2d list of the input
 
     return wheather or not any of the surrounding squares is filled
@@ -171,28 +172,49 @@ def is_good_combination(current_assignment_coord, assignments, inp):
 
     return True
 
+def check_for_good_combinations(coord, current_color, assignments, inp):
+    """
+    takes coord and assignments returns true if it is good combination
+    """
+    # neighbors_coordinates = get_neighbors_coords(coord, inp)
+    empty_neighbors = search_around(coord, inp, assignments, is_empty)
+    if len(empty_neighbors) >= 2:
+        return True
+
+    same_color_neighbors = get_same_color_neighbors(
+        coord, current_color, assignments, inp)
+    if len(same_color_neighbors) == 2:
+        # we don't need is surrounding square anywhere but here
+        ssf = is_surrounding_square_filled(assignments,inp,coord)
+        return not ssf
+
+    if len(empty_neighbors) == 1 and len(same_color_neighbors) == 1:
+        return True
+    
+    return False
+
 def is_neighbors_terminal_have_vaild_path(current_assignment_coord, initial_state, assignments, inp):
-    terminals = initial_state[0]
 
-    neighbors = get_neighbors_coords(current_assignment_coord, inp)
-    for coord in neighbors:
-        # empty and assigned points will be false only terminals will pass
-        if assignments.get(coord,  '').isupper():
-            terminal_color = assignments[coord]
-            similar_neighbors = len(search_around(coord, inp, assignments,
-                                                  lambda assign, point: assign.get(point, '').upper() == terminal_color))
-            empty_neighbors = len(search_around(coord, inp, assignments,
-                                                is_empty))
-            valid_state = similar_neighbors == 1 or (
-
-                similar_neighbors == 0 and empty_neighbors >= 1)
-            if not valid_state:
-                return False
+    terminal_neighbors_coords = search_around(
+        current_assignment_coord, inp, assignments,
+        lambda assign, point: assign.get(point, '').isupper() # empty and assigned points will be false only terminals will pass
+    )
+    for coord in terminal_neighbors_coords:
+        terminal_color = assignments[coord]
+        similar_neighbors = len(search_around(coord, inp, assignments,
+                                              lambda assign, point: assign.get(point, '').upper() == terminal_color))
+        empty_neighbors = len(search_around(coord, inp, assignments,
+                                            is_empty))
+        valid_state = similar_neighbors == 1 or (
+            similar_neighbors == 0 and empty_neighbors >= 1)
+        if not valid_state:
+            return False
     return True
 
 
 def terminal_with_two_same_color_exist(current_assignment_coord, initial_state, assignments, inp):
     '''#deprcated use instead @is_neighbors_terminal_have_vaild_path'''
+    warn("Deprecated: use is_neighbors_terminal_have_vaild_path instead, as this function will be removed", DeprecationWarning)
     terminals = initial_state[0]
     # old slow implementation
     for terminal in terminals:

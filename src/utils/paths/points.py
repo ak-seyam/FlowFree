@@ -121,20 +121,3 @@ def get_same_color_neighbors(coord, color, assignments, inp):
                                       lambda assi, point: False if assi.get(point) == None else assi.get(point).lower() == color)
     return similar_neighbors
 
-
-def check_for_good_combinations(coord, current_color, assignments, inp):
-    """
-    takes coord and assignments returns true if it is good combination
-    """
-    # neighbors_coordinates = get_neighbors_coords(coord, inp)
-    empty_neighbors = search_around(coord, inp, assignments, is_empty)
-    if len(empty_neighbors) >= 2:
-        return True
-
-    same_color_neighbors = get_same_color_neighbors(
-        coord, current_color, assignments, inp)
-    if len(same_color_neighbors) == 2:
-        return True
-
-    if len(empty_neighbors) == 1 and len(same_color_neighbors) == 1:
-        return True
