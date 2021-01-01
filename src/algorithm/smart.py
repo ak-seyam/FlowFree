@@ -48,7 +48,7 @@ def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
         inp: 2d list of the input
 
     Return:
-        coords : a random coordinate
+        coords : return coordinatation with mrv
     """
     smallest_domains = MRV(variables_domain)
     return smallest_domains[0]
