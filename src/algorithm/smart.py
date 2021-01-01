@@ -4,10 +4,18 @@ from algorithm.dummy import is_consistant
 from model.case import case
 
 
-def order_domain_values(initial_state , assignments, inp, var, variables_domain):
+def order_domain_values(initial_state, assignments, inp, var, variables_domain):
     """ return the available values, order with least-constaining-value heuristic """
-    # TODO use least-constaining-value
     return variables_domain[var]
+    
+    # use least-constaining-value
+    # is actully slower 🤷‍♀
+    # if len(variables_domain[var]) > 1:
+    #     ordered_domain = least_constraining_value(initial_state, assignments,
+    #                                               var, variables_domain, inp)
+    #     return ordered_domain
+    # else:
+    #     return variables_domain[var]
 
 
 def free_vars(assignments, inp):
