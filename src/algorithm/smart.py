@@ -4,7 +4,7 @@ from algorithm.dummy import is_consistant
 from model.case import case
 
 
-def order_domain_values(initial_state, csp, assignments, inp, var, variables_domain):
+def order_domain_values(initial_state , assignments, inp, var, variables_domain):
     """ return the available values, order with least-constaining-value heuristic """
     # TODO use least-constaining-value
     return variables_domain[var]
@@ -26,22 +26,22 @@ def inference():
     return case.failure
 
 
-def get_var(initial_state , csp , assignments, inp ):
+def get_var(initial_state   , assignments, inp ):
     """
     docstring
     """
     fv = free_vars(assignments, inp)
     variables_domain = get_available_domain_multiple(
-        initial_state, fv, assignments, inp,  csp)
+        initial_state, fv, assignments, inp)
 
     if not forward_check(variables_domain):
         return case.failure
         
     var = select_unassigned_variable(variables_domain,
-                                     csp, assignments, inp)  
+                                     assignments, inp)  
     return var, variables_domain
 
-def select_unassigned_variable(variables_domain, csp, assignments: dict, inp):
+def select_unassigned_variable(variables_domain , assignments: dict, inp):
     """
     Args:
         assignment: a dict contains only the colored points with key (coordinate) values (colors) including the terminals
@@ -63,17 +63,17 @@ def forward_check(variables_domain):
     return True
 
 
-def get_available_domain_multiple(initial_state, variables, assignments, inp,  csp):
+def get_available_domain_multiple(initial_state, variables, assignments, inp):
     variables_domain = {}
     for coord in variables:
         domain = get_available_domain(
-            initial_state, coord, assignments, inp,  csp)
+            initial_state, coord, assignments, inp)
         variables_domain[coord] = domain
 
     return variables_domain
 
 
-def get_available_domain(initial_state, coord, assignments, inp,  csp):
+def get_available_domain(initial_state, coord, assignments, inp):
     """ return list of values that satisfy the constrains for selected coord
 
     example assigning one value for terminal the othe domain will be reduced
@@ -84,8 +84,7 @@ def get_available_domain(initial_state, coord, assignments, inp,  csp):
     >>> initial_state = get_initial_state(inp)
     >>> assignments = {(0,1): 'b'}
     >>> coord = (1,0)
-    >>> csp = None
-    >>> get_available_domain(initial_state, coord, assignments, inp,csp)
+    >>> get_available_domain(initial_state, coord, assignments, inp)
     ['r', 'o', 'y', 'g']
     """
     terminals = initial_state[0]
@@ -96,7 +95,7 @@ def get_available_domain(initial_state, coord, assignments, inp,  csp):
     for value in full_domain:
         # add val to check constrain
         assignments[coord] = value
-        if is_consistant(initial_state, {coord: value},  assignments, inp, csp):
+        if is_consistant(initial_state, {coord: value},  assignments, inp ):
             point_domain += value
         del assignments[coord]
 
