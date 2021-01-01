@@ -24,22 +24,6 @@ def search_around(coord, inp, assignment, search_criteria):
     """
     neighbors_coordinates = get_neighbors_coords(coord, inp)
     res = []
-    # if coord[0] > 0:  # north
-    #     north_coord = (coord[0]-1, coord[1])
-    #     if search_criteria(assignment, north_coord):
-    #         res.append(north_coord)
-    # if coord[0] < len(inp) - 1:  # south
-    #     south_coord = (coord[0]+1, coord[1])
-    #     if search_criteria(assignment, south_coord):
-    #         res.append(south_coord)
-    # if coord[1] < len(inp) - 1:  # east
-    #     east_coord = (coord[0], coord[1]+1)
-    #     if search_criteria(assignment, east_coord):
-    #         res.append(east_coord)
-    # if coord[1] > 0:  # west
-    #     west_coord = (coord[0], coord[1]-1)
-    #     if search_criteria(assignment, west_coord):
-    #         res.append(west_coord)
     for n_coord in neighbors_coordinates:
         if search_criteria(assignment, n_coord):
             res.append(n_coord)

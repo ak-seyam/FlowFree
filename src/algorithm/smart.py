@@ -26,13 +26,13 @@ def inference():
     return case.failure
 
 
-def get_var(initial_state   , assignments, inp ):
+def get_var(initial_state , assignments, inp, connected_terminals ):
     """
     docstring
     """
     fv = free_vars(assignments, inp)
     variables_domain = get_available_domain_multiple(
-        initial_state, fv, assignments, inp)
+        initial_state, fv, assignments, inp, connected_terminals)
 
     if not forward_check(variables_domain):
         return case.failure
@@ -63,17 +63,17 @@ def forward_check(variables_domain):
     return True
 
 
-def get_available_domain_multiple(initial_state, variables, assignments, inp):
+def get_available_domain_multiple(initial_state, variables, assignments, inp, connected_terminals):
     variables_domain = {}
     for coord in variables:
         domain = get_available_domain(
-            initial_state, coord, assignments, inp)
+            initial_state, coord, assignments, inp,connected_terminals)
         variables_domain[coord] = domain
 
     return variables_domain
 
 
-def get_available_domain(initial_state, coord, assignments, inp):
+def get_available_domain(initial_state, coord, assignments, inp, connected_terminals):
     """ return list of values that satisfy the constrains for selected coord
 
     example assigning one value for terminal the othe domain will be reduced
@@ -95,7 +95,7 @@ def get_available_domain(initial_state, coord, assignments, inp):
     for value in full_domain:
         # add val to check constrain
         assignments[coord] = value
-        if is_consistant(initial_state, {coord: value},  assignments, inp ):
+        if is_consistant(initial_state, {coord: value},  assignments, inp, connected_terminals ):
             point_domain += value
         del assignments[coord]
 

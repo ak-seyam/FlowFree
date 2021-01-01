@@ -1,6 +1,7 @@
 from utils.formater import formatter
 from model.case import case
 from algorithm import smart
+from utils.paths.modifiers import refresh_connected_terminals
 
 
 def backtrack(
@@ -13,7 +14,8 @@ def backtrack(
         is_consistant,
         callback,
         get_var):
-    return _backtrack(initial_state, initial_assignments, inp, order_domain_values, assignment_complete, get_inferences, is_consistant, callback, get_var)
+    connected_terminals = {}
+    return _backtrack(initial_state, initial_assignments, inp, order_domain_values, assignment_complete, get_inferences, is_consistant, callback, get_var, connected_terminals)
 
 
 def _backtrack(
@@ -25,13 +27,14 @@ def _backtrack(
         get_inferences,
         is_consistant,
         callback,
-        get_var):
+        get_var,
+        connected_terminals):
     # TODO check if all terminal are connected
     callback(assignments)
     if assignment_complete(assignments, inp):
         return assignments
-    v_tuple = get_var(initial_state,assignments,inp)
-    if v_tuple == case.failure :
+    v_tuple = get_var(initial_state, assignments, inp, connected_terminals)
+    if v_tuple == case.failure:
         return case.failure
     var, variables_domain = v_tuple
     # TODO Room for improvement
@@ -39,13 +42,11 @@ def _backtrack(
         return case.failure
     for value in order_domain_values(initial_state, assignments, inp, var, variables_domain):
         assignments[var] = value
-        if is_consistant(initial_state, {var: value},  assignments, inp):
-            # print({var: value})
-            # formatter(assignments, len(inp), len(inp), init="_")
-            # print("-------------------------")
-            # return key value for non failure
-            inferences = get_inferences()  # TODO rewrite this after you study consistency
-            # TODO check this snippet again
+        if is_consistant(initial_state, {var: value},  assignments, inp, connected_terminals):
+            # TODO update connected terminal the current variable has a neighbor terminal
+            connected_terminals = refresh_connected_terminals(
+                {var: value}, assignments, connected_terminals, initial_state, inp)
+            inferences = get_inferences()
             if inferences != case.failure:
                 assignments = {**assignments, **inferences}
             res = _backtrack(
@@ -57,7 +58,8 @@ def _backtrack(
                 get_inferences,
                 is_consistant,
                 callback,
-                get_var
+                get_var,
+                connected_terminals
             )
             if res != case.failure:
                 return res

@@ -19,7 +19,7 @@ def assignment_complete(assignments, inp):
     return len(assignments) >= (len(inp) * len(inp[0]))
 
 
-def get_var(initial_state, assignments, inp):
+def get_var(initial_state, assignments, inp, connected_terminals):
     var = select_unassigned_variable(None,
                                      assignments, inp)  # TODO Room for improvement
     return var, None
@@ -83,7 +83,7 @@ def inference():
     return case.failure
 
 
-def is_consistant(initial_state, current_assignment: dict, assignments: List[dict], inp):
+def is_consistant(initial_state, current_assignment: dict, assignments: List[dict], inp, connected_terminals):
     """
     input:
     current_assignment: the coordinate = value dict 
@@ -116,8 +116,10 @@ def is_consistant(initial_state, current_assignment: dict, assignments: List[dic
             current_assignment_coord, initial_state, assignments, inp):
         return False
 
-    terminal_connected = is_terminals_connect(
-        initial_state, current_assignment_color, inp, {**assignments})
+    # terminal_connected = is_terminals_connect(
+    #     initial_state, current_assignment_color, inp, {**assignments})
+    
+    terminal_connected = current_assignment_color.upper() in connected_terminals
 
     if terminal_connected:
         return False
