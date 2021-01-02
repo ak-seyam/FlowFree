@@ -115,6 +115,8 @@ function draw_map(map_meta, canv) {
 }
 
 function draw_flow(assigments, canv) {
+  canv.clearRect(0, 0, canv.width, canv.height);
+
   assigments.forEach(point => {
     let drawer
     if (point.color == point.color.toUpperCase()) {
@@ -199,12 +201,33 @@ async function main() {
   const sol_selector = document.getElementById("sloution_method");
   const selected_sol = sol_selector[sol_selector.selectedIndex].value;
 
-  const assigments = await fetch(`http://127.0.0.1:5000/map/sol/${map_id}`).then(res => res.json())
-  draw_flow(assigments, ctx_flow)
+  socket.on('assigment', assigments => {
+    draw_flow(assigments, ctx_flow)
+    // console.log(assigments)
+  })
+
+  const animate_selector = document.getElementById("animation_select")
+  const animation_selection = animate_selector[animate_selector.selectedIndex].value;
+
+  if (animation_selection == "animate") {
+    const assigments = await fetch(`http://127.0.0.1:5000/map/animate/${map_id}`).then(res => res.json())
+  }
+  else if (animation_selection == "sol") { 
+    const assigments = await fetch(`http://127.0.0.1:5000/map/sol/${map_id}`).then(res => res.json())
+    console.log(assigments)
+    draw_flow(assigments, ctx_flow)
+  }
+  // draw_flow(assigments, ctx_flow)
+
 }
 
 const map_selector = document.getElementById("map_selector");
 const sol_selector = document.getElementById("sloution_method");
+const animate_selector = document.getElementById("animation_select")
+
+animate_selector.addEventListener("change", () => {
+  main()
+})
 
 map_selector.addEventListener("change", () => {
   main();
@@ -213,5 +236,16 @@ map_selector.addEventListener("change", () => {
 sol_selector.addEventListener("change", () => {
   main();
 })
+
+var socket = io();
+socket.on('connect', function () {
+  console.log("connected")
+  // socket.emit('my event', { data: 'I\'m connected!' });
+});
+
+socket.on('message', function () {
+  console.log("m")
+
+});
 
 main();

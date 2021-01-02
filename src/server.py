@@ -1,5 +1,7 @@
 from flask import Flask, jsonify
 from flask import request, send_from_directory
+from flask_socketio import SocketIO
+from flask_socketio import send, emit
 
 import json
 import dataclasses
@@ -12,8 +14,10 @@ from algorithm import smart
 from utils.paths.initial_state import get_initial_state
 from utils.formater import formatter, formatter
 from random import seed
+from time import sleep
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 
 
 path = "../input/input{map_num}.txt"
@@ -45,6 +49,14 @@ def map(map_num):
     return jsonify(height=height, width=width)
 
 
+def assigment_to_point(assigments):
+    point_list = []
+    for i, coord in enumerate(assigments):
+        point_list.append({'x': coord[0],
+                           'y': coord[1], 'color': assigments[coord]})
+
+    return point_list
+
 @app.route('/map/sol/<string:map_num>')
 def solution(map_num):
     inp = read_inputfile(path.format(map_num=map_num))
@@ -57,17 +69,41 @@ def solution(map_num):
         dum.assignment_complete,
         dum.inference,
         dum.is_consistant,
-        lambda assignments: 1,  # for testing only
+        lambda assignments: 1,
         smart.get_var
     )
-    point_list = []
-    for i, coord in enumerate(res):
-        point_list.append({'x': coord[0],
-                           'y': coord[1], 'color': res[coord]})
+    point_list = assigment_to_point(res)
+    return jsonify(point_list)
+
+
+def draw_with_delay(assignments, delay):
+    socketio.emit(
+        "assigment", assigment_to_point(assignments))
+    sleep(delay)
+
+
+@app.route('/map/animate/<string:map_num>')
+def solution_animated(map_num):
+    inp = read_inputfile(path.format(map_num=map_num))
+    initial_state = get_initial_state(inp)
+    res = backtrack(
+        initial_state,
+        initial_state[1],
+        inp,
+        smart.order_domain_values,
+        dum.assignment_complete,
+        dum.inference,
+        dum.is_consistant,
+        lambda assignments: draw_with_delay(assignments, .1),
+        smart.get_var
+    )
+
+    # socketio.emit("assigment", point_list)
+    point_list = assigment_to_point(res)
     return jsonify(point_list)
 
 
 # NOTE for map visit /index.html
 if __name__ == "__main__":
 
-    app.run(debug=True)
+    socketio.run(app, debug=True)

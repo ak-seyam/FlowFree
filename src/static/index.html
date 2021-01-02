@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>maze</title>
+  <script src="./static/socket.io.js"></script>
+
   <style>
     canvas {
       position: absolute;
@@ -44,6 +46,10 @@
     <option value="smart">smart</option>
   </select>
 
+  <select name="animation" id="animation_select">
+    <option value="animate">animation</option>
+    <option value="sol">sol</option>
+  </select>
 
   <h1 id="distance_cost">...</h1>
 
