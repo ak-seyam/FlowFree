@@ -129,10 +129,8 @@ def is_surrounding_square_filled(assignment, inp, current_index):
         d.west: -1
     }
 
-    # TODO change this to coord (DONE)
     surrounding_squares = get_square_coordinates(current_index, corners)
 
-    # current_index_letter = get_item_in_coord(inp, current_index)
     current_index_letter = assignment[current_index]
 
     # check if we have the same letter in any one of the surrounding squares
@@ -141,8 +139,6 @@ def is_surrounding_square_filled(assignment, inp, current_index):
         for coord in square:
             value_in_assignment = assignment.get(coord)
             if value_in_assignment != None:
-                # has_sur_square_filled = has_sur_square_filled and (
-                #     value_in_assignment == current_index_letter)
                 if value_in_assignment.lower() != current_index_letter.lower():
                     has_sur_square_filled = False
                     break
@@ -176,7 +172,6 @@ def check_for_good_combinations(coord, current_color, assignments, inp):
     """
     takes coord and assignments returns true if it is good combination
     """
-    # neighbors_coordinates = get_neighbors_coords(coord, inp)
     empty_neighbors = search_around(coord, inp, assignments, is_empty)
     if len(empty_neighbors) >= 2:
         return True

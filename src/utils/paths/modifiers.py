@@ -18,16 +18,6 @@ def refresh_connected_terminals(current_assignment, assignments, connected_termi
     result:
     new state of the connected terminals
     """
-    # pseudoscope
-    # get terminal neighbors of the same color
-    # if length of the result is 0
-    # return the inputted connected terminals
-    # else
-    # check if this terminal is connected to the other one
-    # if yes
-    # add return current connected terminals + current terminal
-    # else
-    # return the inputted connected terminals
     current_assignment_coord = list(current_assignment.keys())[0]
     current_assignment_color = current_assignment[current_assignment_coord]
 

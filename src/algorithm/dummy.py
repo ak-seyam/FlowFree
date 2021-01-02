@@ -36,11 +36,6 @@ def select_unassigned_variable(variables_domain, assignments: dict, inp):
     return a random coordinate
     """
 
-    # TODO (DONE)
-    # initially assignments will be terminals
-    # select the last one
-    # the first empty place should be returned
-
     _tmp = []
     for i in range(len(inp)):
         for j in range(len(inp[0])):
@@ -50,23 +45,10 @@ def select_unassigned_variable(variables_domain, assignments: dict, inp):
 
     return _tmp[rand_index]
 
-    # if len(_tmp) != 0:
-    #     return _tmp[rand_index]
-    # else:
-    #     rand_index_1 = int(random() * len(inp) // 1)
-    #     rand_index_2 = int(random() * len(inp) // 1)
-    #     return (rand_index_1, rand_index_2)
-
-# changed
-# ROI TODO: you can use cached values BUT DON'T DO IT B4 YOU TELL THE WHOLE TEAM
-
-
 def order_domain_values(initial_state, assignments, inp, var, variables_domain):
     """
     return the available values, in the dummy case return all values
     """
-
-    # # remove the totally connected
 
     terminals = initial_state[0]
     colors = [color.lower() for color in terminals.keys()]
@@ -74,12 +56,10 @@ def order_domain_values(initial_state, assignments, inp, var, variables_domain):
     return colors
 
 
-# TODO: study consistency to know the paramters you should pass here
 def inference():
     """
     return inferences as list or state.faileur
     """
-
     return case.failure
 
 
@@ -115,19 +95,9 @@ def is_consistant(initial_state, current_assignment: dict, assignments: List[dic
     if not is_neighbors_terminal_have_vaild_path(
             current_assignment_coord, initial_state, assignments, inp):
         return False
-
-    # terminal_connected = is_terminals_connect(
-    #     initial_state, current_assignment_color, inp, {**assignments})
     
     terminal_connected = current_assignment_color.upper() in connected_terminals
 
     if terminal_connected:
         return False
-
-    # weather or not any point had the same color
-    # surrounded_points = get_same_color_neighbors(current_assignment_coord,current_assignment_color,assignments,inp)
-    # has_no_same_color_sur = (len(surrounded_points) == 0)
-    # if has_no_same_color_sur :
-    #     return False
-
     return True
