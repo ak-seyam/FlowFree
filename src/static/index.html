@@ -5,7 +5,14 @@
   <meta charset="UTF-8" />
   <title>maze</title>
   <script src="./static/socket.io.js"></script>
-
+  <script>
+    
+        var socket = io();
+        socket.on('connect', function () {
+          console.log("connected")
+          // socket.emit('my event', { data: 'I\'m connected!' });
+        });
+      </script>
   <style>
     canvas {
       position: absolute;
