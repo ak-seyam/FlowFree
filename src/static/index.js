@@ -114,8 +114,8 @@ function draw_map(map_meta, canv) {
   }
 }
 
-function draw_flow(assigments, canv) {
-  canv.clearRect(0, 0, canv.width, canv.height);
+function draw_flow(assigments, ctx) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   assigments.forEach(point => {
     let drawer
@@ -131,7 +131,7 @@ function draw_flow(assigments, canv) {
       step_x,
       step_y,
       point.color.toUpperCase(),
-      canv
+      ctx
     );
   })
 }
