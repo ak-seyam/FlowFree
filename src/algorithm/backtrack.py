@@ -14,7 +14,7 @@ def backtrack(
         is_consistant,
         callback,
         get_var):
-    connected_terminals = {}
+    connected_terminals = set()
     return _backtrack(initial_state, initial_assignments, inp, order_domain_values, assignment_complete, get_inferences, is_consistant, callback, get_var, connected_terminals)
 
 

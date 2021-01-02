@@ -31,9 +31,12 @@ def refresh_connected_terminals(current_assignment, assignments, connected_termi
     current_assignment_coord = list(current_assignment.keys())[0]
     current_assignment_color = current_assignment[current_assignment_coord]
 
+
     terminal_connected = is_terminals_connect(
         initial_state, current_assignment_color, inp, assignments)
     if terminal_connected:
-        return connected_terminals + {current_assignment_color.upper()}
+        connected_terminals = connected_terminals.copy()
+        connected_terminals.add(current_assignment_color.upper())
+        return connected_terminals
 
     return connected_terminals
