@@ -51,7 +51,7 @@ def get_path(starting_point, end_point, assignments, path, surrounding_equal_poi
     """
     use dfs to get the path from starting point by manipulating the path attrib
     """
-    if starting_point == None or starting_point in visited_points:
+    if starting_point == None:
         path.pop()  # remove the last point from path but keep in in the visited points
         return None
 
@@ -60,12 +60,13 @@ def get_path(starting_point, end_point, assignments, path, surrounding_equal_poi
         return None
 
     for point in surrounding_equal_points:
-        visited_points.append(point)
-        path.append(point)
-        surrounding_equal_points = search_around(
-            point, inp, assignments, lambda assi, p: points_are_equal(assi, p, point))
-        get_path(point, inp, end_point, assignments, path,
-                 surrounding_equal_points, visited_points)
+        if point not in visited_points:
+            visited_points.append(point)
+            path.append(point)
+            surrounding_equal_points = search_around(
+                point, inp, assignments, lambda assi, p: points_are_equal(assi, p, point))
+            get_path(point, end_point, assignments, path,
+                      surrounding_equal_points, visited_points,  inp)
 
 
 def is_two_points_connected(point1: Tuple[int, int], point2: Tuple[int, int], assignments: dict, inp):
@@ -83,7 +84,7 @@ def is_two_points_connected(point1: Tuple[int, int], point2: Tuple[int, int], as
         raise Exception("the two point are marked with different values")
 
     path = [point1]
-    visited_points = []
+    visited_points = [point1]
     surrounding_equal_points = search_around(
         point1, inp, assignments, lambda assi, p: points_are_equal(assi, p, point1))
     get_path(point1, point2, assignments, path,
