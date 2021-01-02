@@ -31,15 +31,9 @@ def refresh_connected_terminals(current_assignment, assignments, connected_termi
     current_assignment_coord = list(current_assignment.keys())[0]
     current_assignment_color = current_assignment[current_assignment_coord]
 
-    terminal_neighbors = search_around(
-        current_assignment_coord, inp, assignments,
-        lambda assign, point: assign.get(
-            point, '') == current_assignment_color.upper())
-
-    if len(terminal_neighbors) != 0:
-        terminal_connected = is_terminals_connect(
-            initial_state, current_assignment_color, inp, assignments)
-        if terminal_connected:
-            return connected_terminals + {current_assignment_color.upper()}
+    terminal_connected = is_terminals_connect(
+        initial_state, current_assignment_color, inp, assignments)
+    if terminal_connected:
+        return connected_terminals + {current_assignment_color.upper()}
 
     return connected_terminals

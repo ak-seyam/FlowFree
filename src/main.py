@@ -6,7 +6,7 @@ from utils.formater import formatter, formatter
 from random import seed
 seed(0)
 paths = [
-    "../input/input77.txt"
+    "../input/input55.txt"
 ]
 
 inp = read_inputfile(paths[0])
