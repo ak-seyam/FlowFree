@@ -44,8 +44,7 @@ def get_neighbors_coords(coord, inp):
 
 
 def points_are_equal(assignments, point1, point2):
-    return (assignments.get(point1) != None) and \
-        (assignments.get(point1) == assignments.get(point2))
+    return assignments.get(point1, '').upper() == assignments.get(point2, '').upper()
 
 
 def get_path(starting_point, end_point, assignments, path, surrounding_equal_points, visited_points, inp):
