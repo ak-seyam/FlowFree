@@ -1,6 +1,6 @@
 
 var colors = {
-  A: "Aqua",
+  A: "AntiqueWhite",
   B: "Blue",
   C: "CadetBlue",
   D: "DarkGoldenRod",
@@ -20,7 +20,7 @@ var colors = {
   T: "Tan",
   Q: "Turquoise",
   V: "Violet",
-  W: "White",
+  W: "Gainsboro",
   Y: "Yellow",
   RANDOM: getRandomColor
 };
