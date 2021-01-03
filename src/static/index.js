@@ -96,7 +96,6 @@ async function main() {
 
   socket.on('assigment', assigments => {
     draw_flow(assigments, ctx_flow)
-    socket.emit('send_more', false);
   })
 
   const animate_selector = document.getElementById("animation_select")

@@ -93,12 +93,13 @@ def solution(map_num):
 def draw_with_delay(assignments, delay):
     if dump_sesssion['in_demand']:
         return
-    while not dump_sesssion.get('send_more', False):
-        # print(dump_sesssion.get('send_more', False))
-        sleep(.3)
+    while not dump_sesssion['send_more']:
+        sleep(.11)
+
     socketio.emit(
         "assigment", assigment_to_point(assignments))
-    sleep(delay)
+    # sleep(delay)
+    dump_sesssion['send_more'] = False
 
 
 @socketio.on('send_more')
