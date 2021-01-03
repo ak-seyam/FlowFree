@@ -96,7 +96,7 @@ async function main() {
 
   socket.on('assigment', assigments => {
     draw_flow(assigments, ctx_flow)
-    // console.log(assigments)
+    socket.emit('send_more', false);
   })
 
   const animate_selector = document.getElementById("animation_select")
@@ -130,6 +130,13 @@ map_selector.addEventListener("change", () => {
 sol_selector.addEventListener("change", () => {
   main();
 })
+
+document.getElementById("send_one").onclick = () => socket.emit('send_more', true)
+
+var interval
+document.getElementById("auto_send").onclick = () => { interval = setInterval(() => socket.emit('send_more', true), .1) }
+document.getElementById("stop").onclick = () => clearInterval(interval)
+
 
 socket.on('message', function () {
   console.log("m")
