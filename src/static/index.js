@@ -150,6 +150,7 @@ map_selector.addEventListener("change", () => {
 sol_selector.addEventListener("change", () => {
   main();
 })
+document.getElementById("reset").onclick = () => { main() }
 
 document.getElementById("send_one").onclick = () => socket.emit('send_more', true)
 
