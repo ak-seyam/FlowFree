@@ -103,7 +103,8 @@ async function main() {
   const animation_selection = animate_selector[animate_selector.selectedIndex].value;
 
   if (animation_selection == "animate") {
-    const assigments = await fetch(`http://127.0.0.1:5000/map/animate/${map_id}`).then(res => res.json())
+    // const assigments = await fetch(`http://127.0.0.1:5000/map/animate/${map_id}`).then(res => res.json())
+    socket.emit("animate", map_id)
     // draw_flow(assigments, ctx_flow)
   }
   else if (animation_selection == "sol") { 
@@ -134,9 +135,9 @@ sol_selector.addEventListener("change", () => {
 document.getElementById("send_one").onclick = () => socket.emit('send_more', true)
 
 var interval
-document.getElementById("auto_send").onclick = () => { interval = setInterval(() => socket.emit('send_more', true), .1) }
+document.getElementById("auto_send").onclick = () => { interval = setInterval(() => socket.emit('send_more', true), 110) }
 document.getElementById("stop").onclick = () => clearInterval(interval)
-
+socket.on('done', () => clearInterval(interval))
 
 socket.on('message', function () {
   console.log("m")

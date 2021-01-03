@@ -20,7 +20,7 @@ import threading
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-dump_sesssion = {'send_more': True}
+dump_sesssion = {'send_more': False}
 
 path = "../input/input{map_num}.txt"
 
@@ -81,8 +81,8 @@ def solution(map_num):
 
 def draw_with_delay(assignments, delay):
     while not dump_sesssion.get('send_more', False):
-        print(dump_sesssion.get('send_more', False))
-        sleep(delay)
+        # print(dump_sesssion.get('send_more', False))
+        sleep(.3)
     socketio.emit(
         "assigment", assigment_to_point(assignments))
     sleep(delay)
@@ -92,10 +92,10 @@ def draw_with_delay(assignments, delay):
 @socketio.on('send_more')
 def control_animation(send_permession):
     dump_sesssion['send_more'] = send_permession
-    print("send_more", send_permession)
+    # print("send_more", send_permession)
 
 
-@app.route('/map/animate/<string:map_num>')
+@socketio.on('animate')
 def solution_animated(map_num):
     inp = read_inputfile(path.format(map_num=map_num))
     initial_state = get_initial_state(inp)
@@ -110,10 +110,10 @@ def solution_animated(map_num):
         lambda assignments: draw_with_delay(assignments, .1),
         smart.get_var
     )
-
+    socketio.emit('done', 'done')
     # socketio.emit("assigment", point_list)
     # point_list = assigment_to_point(res)
-    return jsonify("ok")
+    # return jsonify("ok")
 
 
 # NOTE for map visit /index.html
