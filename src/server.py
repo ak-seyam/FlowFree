@@ -62,7 +62,7 @@ def map(map_num):
     return jsonify(height=height, width=width)
 
 
-def assigment_to_point(assigments):
+def coord_dict_to_point(assigments):
     point_list = []
     for i, coord in enumerate(assigments):
         point_list.append({'x': coord[0],
@@ -86,7 +86,7 @@ def solution(map_num):
         lambda assignments: 1,
         smart.get_var
     )
-    point_list = assigment_to_point(res)
+    point_list = coord_dict_to_point(res)
     return jsonify(point_list)
 
 
@@ -94,10 +94,12 @@ def draw_with_delay(assignments, variables_domain, var, value, delay):
     if dump_sesssion['in_demand']:
         return
     while not dump_sesssion['send_more']:
+        if dump_sesssion['in_demand']:
+            break
         sleep(.11)
 
     socketio.emit(
-        "assigment", assigment_to_point(assignments))
+        "assigment", coord_dict_to_point(assignments))
     # sleep(delay)
     if variables_domain is not None:
         socketio.emit("variable_domain", coord_dict_to_point(variables_domain))
