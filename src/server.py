@@ -115,7 +115,7 @@ def control_animation(send_permession):
 
 
 @socketio.on('animate')
-def solution_animated(map_num):
+def solution_animated(request):
     # make sure no other session is running
     if dump_sesssion['solver_state'] == solver_state.locked:
         dump_sesssion['in_demand'] = True
@@ -126,20 +126,36 @@ def solution_animated(map_num):
     # hold current session
     dump_sesssion['solver_state'] = solver_state.locked
 
-    inp = read_inputfile(path.format(map_num=map_num))
+    inp = read_inputfile(path.format(map_num=request["map_id"]))
     initial_state = get_initial_state(inp)
-    res = backtrack(
-        initial_state,
-        initial_state[1],
-        inp,
-        smart.order_domain_values,
-        dum.assignment_complete,
-        dum.inference,
-        dum.is_consistant,
-        lambda assignments, variables_domain, var, value: draw_with_delay(
-            assignments, variables_domain, var, value, .1),
-        smart.get_var
-    )
+
+    if request["method"] == 'smart':
+        res = backtrack(
+            initial_state,
+            initial_state[1],
+            inp,
+            smart.order_domain_values,
+            dum.assignment_complete,
+            dum.inference,
+            dum.is_consistant,
+            lambda assignments, variables_domain, var, value: draw_with_delay(
+                assignments, variables_domain, var, value, .1),
+            smart.get_var
+        )
+    else:
+        res = backtrack(
+            initial_state,
+            initial_state[1],
+            inp,
+            dum.order_domain_values,
+            dum.assignment_complete,
+            dum.inference,
+            dum.is_consistant,
+            lambda assignments, variables_domain, var, value: draw_with_delay(
+                assignments, variables_domain, var, value, .1),
+            dum.get_var
+        )
+
     socketio.emit('done', 'done')
 
     # free session

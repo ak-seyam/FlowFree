@@ -122,9 +122,8 @@ async function main() {
   const animation_selection = animate_selector[animate_selector.selectedIndex].value;
 
   if (animation_selection == "animate") {
-    // const assigments = await fetch(`http://127.0.0.1:5000/map/animate/${map_id}`).then(res => res.json())
-    socket.emit("animate", map_id)
-    // draw_flow(assigments, ctx_flow)
+    if (selected_sol == "smart") { }
+    socket.emit("animate", { 'map_id': map_id, 'method': selected_sol })
   }
   else if (animation_selection == "sol") { 
     const assigments = await fetch(`http://127.0.0.1:5000/map/sol/${map_id}`).then(res => res.json())
@@ -147,7 +146,13 @@ map_selector.addEventListener("change", () => {
   main();
 });
 
-sol_selector.addEventListener("change", () => {
+sol_selector.addEventListener("change", (e) => {
+  if (e.target.value == "dump") {
+    document.getElementById("colors_table").style.display = "none";
+  }
+  else {
+    document.getElementById("colors_table").style.display = "unset";
+  }
   main();
 })
 document.getElementById("reset").onclick = () => { main() }
