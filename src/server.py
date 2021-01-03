@@ -15,10 +15,12 @@ from utils.paths.initial_state import get_initial_state
 from utils.formater import formatter, formatter
 from random import seed
 from time import sleep
+import threading
 
 app = Flask(__name__)
 socketio = SocketIO(app)
 
+dump_sesssion = {'send_more': True}
 
 path = "../input/input{map_num}.txt"
 
@@ -57,6 +59,7 @@ def assigment_to_point(assigments):
 
     return point_list
 
+
 @app.route('/map/sol/<string:map_num>')
 def solution(map_num):
     inp = read_inputfile(path.format(map_num=map_num))
@@ -77,9 +80,19 @@ def solution(map_num):
 
 
 def draw_with_delay(assignments, delay):
+    while not dump_sesssion.get('send_more', False):
+        print(dump_sesssion.get('send_more', False))
+        sleep(delay)
     socketio.emit(
         "assigment", assigment_to_point(assignments))
     sleep(delay)
+
+
+
+@socketio.on('send_more')
+def control_animation(send_permession):
+    dump_sesssion['send_more'] = send_permession
+    print("send_more", send_permession)
 
 
 @app.route('/map/animate/<string:map_num>')
@@ -99,8 +112,8 @@ def solution_animated(map_num):
     )
 
     # socketio.emit("assigment", point_list)
-    point_list = assigment_to_point(res)
-    return jsonify(point_list)
+    # point_list = assigment_to_point(res)
+    return jsonify("ok")
 
 
 # NOTE for map visit /index.html

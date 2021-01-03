@@ -3,7 +3,7 @@ var colors = {
   A: "Aqua",
   B: "Blue",
   C: "CadetBlue",
-  D: "DarkMagenta",
+  D: "DarkGoldenRod",
   F: "Fuchsia",
   G: "Green",
   H: "HotPink",
