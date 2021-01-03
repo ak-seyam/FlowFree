@@ -16,11 +16,22 @@ from utils.formater import formatter, formatter
 from random import seed
 from time import sleep
 import threading
+from enum import Enum
 
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-dump_sesssion = {'send_more': False}
+
+class solver_state(Enum):
+    free = 0
+    locked = 1
+    in_demand = 2
+
+
+dump_sesssion = {'send_more': False,
+                
+                
+                 'solver_state': solver_state.free, 'in_demand': False}
 
 path = "../input/input{map_num}.txt"
 
@@ -80,13 +91,14 @@ def solution(map_num):
 
 
 def draw_with_delay(assignments, delay):
+    if dump_sesssion['in_demand']:
+        return
     while not dump_sesssion.get('send_more', False):
         # print(dump_sesssion.get('send_more', False))
         sleep(.3)
     socketio.emit(
         "assigment", assigment_to_point(assignments))
     sleep(delay)
-
 
 
 @socketio.on('send_more')
@@ -97,6 +109,16 @@ def control_animation(send_permession):
 
 @socketio.on('animate')
 def solution_animated(map_num):
+    # make sure no other session is running
+    if dump_sesssion['solver_state'] == solver_state.locked:
+        dump_sesssion['in_demand'] = True
+        while dump_sesssion['solver_state'] == solver_state.locked:
+            sleep(0.3)
+
+    dump_sesssion['in_demand'] = False
+    # hold current session
+    dump_sesssion['solver_state'] = solver_state.locked
+
     inp = read_inputfile(path.format(map_num=map_num))
     initial_state = get_initial_state(inp)
     res = backtrack(
@@ -111,9 +133,9 @@ def solution_animated(map_num):
         smart.get_var
     )
     socketio.emit('done', 'done')
-    # socketio.emit("assigment", point_list)
-    # point_list = assigment_to_point(res)
-    # return jsonify("ok")
+
+    # free session
+    dump_sesssion['solver_state'] = solver_state.free
 
 
 # NOTE for map visit /index.html
