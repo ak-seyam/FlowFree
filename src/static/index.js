@@ -154,10 +154,15 @@ sol_selector.addEventListener("change", () => {
 document.getElementById("send_one").onclick = () => socket.emit('send_more', true)
 
 var interval
-document.getElementById("auto_send").onclick = () => { interval = setInterval(() => socket.emit('send_more', true), 100) }
+var delay_ms = 100
+document.getElementById("auto_send").onclick = () => { interval = setInterval(() => socket.emit('send_more', true), delay_ms) }
 document.getElementById("stop").onclick = () => clearInterval(interval)
 socket.on('done', () => clearInterval(interval))
 
+document.getElementById("delay").onchange = (e) => {
+  clearInterval(interval)
+  delay_ms = e.target.value
+}
 socket.on('message', function () {
   console.log("m")
 
