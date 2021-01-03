@@ -90,7 +90,7 @@ def solution(map_num):
     return jsonify(point_list)
 
 
-def draw_with_delay(assignments, delay):
+def draw_with_delay(assignments, variables_domain, var, value, delay):
     if dump_sesssion['in_demand']:
         return
     while not dump_sesssion['send_more']:
@@ -99,6 +99,10 @@ def draw_with_delay(assignments, delay):
     socketio.emit(
         "assigment", assigment_to_point(assignments))
     # sleep(delay)
+    if variables_domain is not None:
+        socketio.emit("variable_domain", coord_dict_to_point(variables_domain))
+    if var is not None:
+        socketio.emit("var", {'x': var[0], 'y': var[1], 'color': value})
     dump_sesssion['send_more'] = False
 
 
@@ -130,7 +134,8 @@ def solution_animated(map_num):
         dum.assignment_complete,
         dum.inference,
         dum.is_consistant,
-        lambda assignments: draw_with_delay(assignments, .1),
+        lambda assignments, variables_domain, var, value: draw_with_delay(
+            assignments, variables_domain, var, value, .1),
         smart.get_var
     )
     socketio.emit('done', 'done')

@@ -30,7 +30,7 @@ function create_canvas(height, width) {
   container.appendChild(canvas_flow);
   var ctx_flow = canvas_flow.getContext("2d");
 
-
+  document.getElementById("variable_selection").style.left = `${canvas_back.width + 50}px`
   return [ctx_back, ctx_flow]
 }
 
@@ -72,6 +72,22 @@ function draw_flow(assigments, ctx) {
   })
 }
 
+function write_domains(variable_domains) {
+  let domains_table = document.getElementById("colors_table")
+  domains_table.innerHTML = "<tr> <th> point</th><th colspan='12'>colors</th></tr>"
+  for (let index in variable_domains) {
+    let point = variable_domains[index]
+
+    let row = domains_table.insertRow()
+    let coord_cell = row.insertCell()
+    coord_cell.innerHTML = `(${point.x}, ${point.y})`
+    for (let color of point.color) {
+      let cell = row.insertCell()
+      cell.innerHTML = color
+      cell.style.backgroundColor = colors[color.toUpperCase()]
+    }
+  }
+}
 
 // function wipe_all(canvas_list,height,width) {
 //   canvas_list.forEach(canv => {
@@ -98,6 +114,10 @@ async function main() {
     draw_flow(assigments, ctx_flow)
   })
 
+  socket.on('variable_domain', variables_domains => write_domains(variables_domains));
+  socket.on('var', point => {
+    document.getElementById('select_point').innerHTML = `(${point.x}, ${point.y}) ${point.color}`
+  })
   const animate_selector = document.getElementById("animation_select")
   const animation_selection = animate_selector[animate_selector.selectedIndex].value;
 
@@ -134,7 +154,7 @@ sol_selector.addEventListener("change", () => {
 document.getElementById("send_one").onclick = () => socket.emit('send_more', true)
 
 var interval
-document.getElementById("auto_send").onclick = () => { interval = setInterval(() => socket.emit('send_more', true), 110) }
+document.getElementById("auto_send").onclick = () => { interval = setInterval(() => socket.emit('send_more', true), 100) }
 document.getElementById("stop").onclick = () => clearInterval(interval)
 socket.on('done', () => clearInterval(interval))
 

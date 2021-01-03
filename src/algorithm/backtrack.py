@@ -29,8 +29,8 @@ def _backtrack(
         callback,
         get_var,
         connected_terminals):
-    callback(assignments)
     if assignment_complete(assignments, inp):
+        callback(assignments, None, None, None)
         return assignments
     v_tuple = get_var(initial_state, assignments, inp, connected_terminals)
     if v_tuple == case.failure:
@@ -39,6 +39,7 @@ def _backtrack(
     if var == None:
         return case.failure
     for value in order_domain_values(initial_state, assignments, inp, var, variables_domain):
+        callback(assignments, variables_domain, var, value)
         assignments[var] = value
         if is_consistant(initial_state, {var: value},  assignments, inp, connected_terminals):
             connected_terminals = refresh_connected_terminals(

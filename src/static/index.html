@@ -16,13 +16,21 @@
   <style>
     canvas {
       position: absolute;
-      left: 40px;
+      left: 40;
       /* display: block; */
     }
-
+    #variable_selection{
+      position: absolute;
+    }
     .back_canv {
       z-index: -2;
       background: rgb(223 201 201 / 0%);
+    }
+    table{
+      background: rgb(209, 207, 202);
+    }
+    td, th {
+      border: 1px solid #858383;
     }
   </style>
 </head>
@@ -57,11 +65,28 @@
     <option value="animate">animation</option>
     <option value="sol">sol</option>
   </select>
+<br>
+<br>
 
-  <h1 id="distance_cost">...</h1>
   <button id="send_one">next</button>
   <button id="auto_send">auto send</button>
   <button id="stop">stop</button>
+
+  <br>
+  <br>
+  
+  
+  <div id="variable_selection">
+  
+    <b id="select_point">(0 ,0) X</b>
+  
+    <table id="colors_table">
+      <tr>
+        <th>point</th>
+        <th colspan="12">colors</th>
+      </tr>
+    </table>
+  </div>
 
   <div id="canvas_container"></div>
   <script type="module" src="./static/index.js"></script>
