@@ -15,7 +15,6 @@ from utils.paths.initial_state import get_initial_state
 from utils.formater import formatter, formatter
 from random import seed
 from time import sleep
-import threading
 from enum import Enum
 
 app = Flask(__name__)
