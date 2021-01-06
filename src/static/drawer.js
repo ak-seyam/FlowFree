@@ -1,4 +1,3 @@
-
 var colors = {
   A: "AntiqueWhite",
   B: "Blue",
@@ -22,18 +21,17 @@ var colors = {
   V: "Violet",
   W: "Gainsboro",
   Y: "Yellow",
-  RANDOM: getRandomColor
+  RANDOM: getRandomColor,
 };
 
 function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
+  var letters = "0123456789ABCDEF";
+  var color = "#";
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
 }
-
 
 function draw_map_element_arc(x, y, x_size, y_size, color, canv) {
   (x = x * x_size), (y = y * y_size);
@@ -46,10 +44,8 @@ function draw_map_element_arc(x, y, x_size, y_size, color, canv) {
   canv.closePath();
 }
 
-
-
 function draw_map_element(x, y, x_size, y_size, color, canv) {
-  x = x * x_size, y = y * y_size;
+  (x = x * x_size), (y = y * y_size);
 
   canv.beginPath();
   canv.rect(x, y, x_size, y_size);
@@ -58,6 +54,5 @@ function draw_map_element(x, y, x_size, y_size, color, canv) {
   canv.fill();
   canv.closePath();
 }
-
 
 export { draw_map_element, draw_map_element_arc, getRandomColor, colors };
