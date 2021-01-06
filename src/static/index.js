@@ -122,7 +122,6 @@ async function main() {
   const animation_selection = animate_selector[animate_selector.selectedIndex].value;
 
   if (animation_selection == "animate") {
-    if (selected_sol == "smart") { }
     socket.emit("animate", { 'map_id': map_id, 'method': selected_sol })
   }
   else if (animation_selection == "sol") { 
