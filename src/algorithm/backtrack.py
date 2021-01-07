@@ -55,7 +55,7 @@ def _backtrack(
         assignments[var] = value
         if is_consistant(initial_state, {var: value},  assignments, inp, connected_terminals):
             before_assgen_connected_terminal = connected_terminals
-            connected_terminals = refresh_connected_terminals(
+            refreshed_connected_terminals = refresh_connected_terminals(
                 {var: value}, assignments, connected_terminals, initial_state, inp)
             inferences = get_inferences()
             if inferences != case.failure:
@@ -70,7 +70,7 @@ def _backtrack(
                 is_consistant,
                 callback,
                 get_var,
-                connected_terminals,
+                refreshed_connected_terminals,
                 variables_domain,
                 var,
                 value,
