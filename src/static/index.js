@@ -29,6 +29,8 @@ function create_canvas(height, width) {
 }
 
 function draw_map(map_meta, canv) {
+  for (let x of Array(map_meta.width).keys()) {
+    for (let y of Array(map_meta.height).keys()) {
       draw_map_element(x, y, step_x, step_y, "w", canv);
     }
   }
