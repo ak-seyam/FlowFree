@@ -41,8 +41,6 @@ for path in paths:
         dum.inference,
         dum.is_consistant,
         lambda *args: 1,
-    lambda *args: 1, 
-        lambda *args: 1,
         smart.get_var
     )
     print(f'map {path} solution time = {time.time()-start} sec')
