@@ -15,6 +15,7 @@ Picking a random value and random variable each time check whether or not this a
 **5x5:**
 
 This algorithm worked flawlessly with 5x5 input
+
 ![55dmb](assets/55dumb.png)
 ![55dmbterm](assets/dmb55term.png)
 
