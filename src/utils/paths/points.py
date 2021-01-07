@@ -44,13 +44,13 @@ def get_constrained_nighbours(coord,inp, assignments):
 
 def get_neighbors_coords(coord, inp):
     res = []
-    if coord[0] > 0:  # north
+    if coord[0] > 0:  # west <-
         res.append((coord[0]-1, coord[1]))
-    if coord[0] < len(inp) - 1:  # south
+    if coord[0] < len(inp[0]) - 1:  # east ->
         res.append((coord[0]+1, coord[1]))
-    if coord[1] < len(inp) - 1:  # east
+    if coord[1] < len(inp) - 1:  # south 🔽
         res.append((coord[0], coord[1]+1))
-    if coord[1] > 0:  # west
+    if coord[1] > 0:  # north 🔼
         res.append((coord[0], coord[1]-1))
     return res
 
