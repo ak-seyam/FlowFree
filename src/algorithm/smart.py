@@ -4,8 +4,15 @@ from typing import List, Tuple, Dict
 from algorithm.dummy import is_consistant
 from model.case import case
 from utils.paths.points import get_constrained_nighbours
+from utils.paths.modifiers import refresh_connected_terminals
 import copy
 
+config ={
+    'MRV':True,
+    # 'least_constraining_value':True,
+    # 'degree_heuristic':True,
+    # 'weak_looker':True,
+}
 
 def order_domain_values(initial_state, assignments, inp, var, variables_domain):
     """ return the available values, order with least-constaining-value heuristic """
@@ -61,8 +68,11 @@ def select_unassigned_variable(variables_domain , assignments: dict, inp):
     Return:
         coords : return coordinatation with mrv
     """
-    smallest_domains = MRV(variables_domain)
-    return smallest_domains[0]
+    coords_smallest_domains = MRV(variables_domain)
+    if config.get('degree_heuristic',False):
+        return degree_heuristic(coords_smallest_domains,inp, assignments)
+    else:
+        return coords_smallest_domains[0]
 
 
 def forward_check(variables_domain):
@@ -85,8 +95,9 @@ def get_available_domain_multiple(initial_state, variables, assignments, inp, co
                 initial_state, coord, assignments, inp,connected_terminals)
             variables_domain[coord] = domain
     else:
-        variables_domain = copy.deepcopy(prev_domain)
-        del variables_domain[prev_variable]
+        if not config.get('weak_looker',False):
+            variables_domain = copy.deepcopy(prev_domain)
+            del variables_domain[prev_variable]
         big_nighbours = get_constrained_nighbours(prev_variable,inp,assignments )
         for coord in big_nighbours:
             domain = get_available_domain(
