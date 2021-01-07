@@ -41,7 +41,7 @@ def _backtrack(
         prev_value,
         prev_connected_terminal):
     if assignment_complete(assignments, inp):
-        callback(assignments, None, None, None)
+        callback(assignments, {}, None, None)
         return assignments
     v_tuple = get_var(initial_state, assignments, inp, connected_terminals,
                       variables_domain, prev_variable, prev_value, prev_connected_terminal)
