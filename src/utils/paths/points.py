@@ -33,6 +33,9 @@ def search_around(coord, inp, assignment, search_criteria):
 
 
 def get_constrained_nighbours(coord,inp, assignments):
+    """
+    
+    """
     constrained_nighbours = []
     constrained_nighbours += search_around(coord, inp, assignments,is_empty)
     
@@ -43,6 +46,13 @@ def get_constrained_nighbours(coord,inp, assignments):
     return constrained_nighbours
 
 def get_neighbors_coords(coord, inp):
+    """
+    Gives the available neighbors coordinates 
+
+    input: 
+        coord: the node of interest coordinates
+        inp: the input sample to take information form it
+    """
     res = []
     if coord[0] > 0:  # west <-
         res.append((coord[0]-1, coord[1]))

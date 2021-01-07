@@ -72,7 +72,7 @@ def select_unassigned_variable(variables_domain , assignments: dict, inp):
         coords : return coordinatation with mrv
     """
     coords_smallest_domains = MRV(variables_domain)
-    if config.get('degree_heuristic',False):
+    if config.get('degree_heuristic',False) and len(coords_smallest_domains) > 1:
         return degree_heuristic(coords_smallest_domains,inp, assignments)
     else:
         return coords_smallest_domains[0]
