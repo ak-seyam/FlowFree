@@ -12,9 +12,10 @@ paths = [
 ]
 
 inp = read_inputfile(paths[0])
-print(inp)
+# print(inp)
 
 initial_state = get_initial_state(inp)
+# print(initial_state[1])
 
 res = backtrack(
     initial_state,

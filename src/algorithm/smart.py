@@ -1,3 +1,4 @@
+from pprint import pprint
 import math
 from typing import List, Tuple, Dict
 from algorithm.dummy import is_consistant
@@ -24,8 +25,8 @@ def free_vars(assignments, inp):
     available_vars = []
     for i in range(len(inp)):
         for j in range(len(inp[0])):
-            if assignments.get((i, j)) == None:
-                available_vars.append((i, j))
+            if assignments.get((j, i)) == None:
+                available_vars.append((j, i))
     return available_vars
 
 def inference():
@@ -49,6 +50,9 @@ def get_var(initial_state , assignments, inp, connected_terminals ,prev_domain,p
         
     var = select_unassigned_variable(variables_domain,
                                      assignments, inp)  
+    if var[0] == 12 : 
+        pprint(variables_domain) 
+        print('BAD FROM get var')
     return var, variables_domain
 
 def select_unassigned_variable(variables_domain , assignments: dict, inp):

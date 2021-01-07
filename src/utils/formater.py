@@ -1,7 +1,7 @@
+from pprint import pprint
 def formatter(inp:dict, width, height, init=None):
+    pprint(inp)
     res = [[init for i in range(width)] for j in range(height)] 
-    print(len(res), len(res[0]))
-    print('height', height, 'width', width)
     for key in inp :
         print('key 1', key[1], 'key 0', key[0])
         res[key[1]][key[0]] = inp[key]
@@ -12,12 +12,12 @@ def formatter(inp:dict, width, height, init=None):
         print()
 
 # testing example
-example = {
-	(0,0) : 'a',
-	(0,1) : 'b',
-	(0,2) : 'c',
-	(1,0) : 'd',
-	(1,1) : 'e',
-	(1,2) : 'f'
-}
-formatter(example,2,3)
+# example = {
+# 	(0,0) : 'a',
+# 	(0,1) : 'b',
+# 	(0,2) : 'c',
+# 	(1,0) : 'd',
+# 	(1,1) : 'e',
+# 	(1,2) : 'f'
+# }
+# formatter(example,2,3)
