@@ -9,7 +9,7 @@ import pickle
 
 config ={
     'MRV':True,
-    # 'least_constraining_value':True,
+    'least_constraining_value':True,
     # 'degree_heuristic':True,
     # 'weak_looker':True,
 }
