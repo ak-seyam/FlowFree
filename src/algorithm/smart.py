@@ -169,7 +169,7 @@ def MRV(variables_domain: Dict[Tuple[int, int], List[str]]) -> List[Tuple[int, i
     return selected_coords
 
 
-def least_constraining_value(initial_state, assignments, coord, variables_domain, inp):
+def least_constraining_value(initial_state, assignments, coord, variables_domain, inp, connected_terminals):
     ''' value selection heuristic whitch count the order the values by number of constrains with 
     smallest first  
     '''
@@ -180,10 +180,13 @@ def least_constraining_value(initial_state, assignments, coord, variables_domain
     variables = free_vars({**{coord: 'holder'}, **assignments}, inp)
     domain = variables_domain[coord]
     for value in domain:
-
+        updated_connected_terminals = connected_terminals = refresh_connected_terminals(
+                {coord: value}, {**{coord: value}, **assignments}, connected_terminals, initial_state, inp)
         updated_variable_domains = get_available_domain_multiple(
-            initial_state, variables, assignments, inp)
+            initial_state, variables, {**{coord: value}, **assignments}, inp, updated_connected_terminals,
+             variables_domain, coord, None, connected_terminals)
         count_constrained = 0
+        
         for coord in updated_variable_domains:
             if len(updated_variable_domains[coord]) < len(variables_domain[coord]):
                 count_constrained += 1
