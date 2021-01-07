@@ -82,7 +82,7 @@ def solution(map_num):
         dum.assignment_complete,
         dum.inference,
         dum.is_consistant,
-        lambda assignments: 1,
+        lambda *args: 1,
         smart.get_var
     )
     point_list = coord_dict_to_point(res)
