@@ -5,7 +5,7 @@ from algorithm.dummy import is_consistant
 from model.case import case
 from utils.paths.points import get_constrained_nighbours
 from utils.paths.modifiers import refresh_connected_terminals
-import copy
+import pickle
 
 config ={
     'MRV':True,
@@ -98,7 +98,7 @@ def get_available_domain_multiple(initial_state, variables, assignments, inp, co
             variables_domain[coord] = domain
     else:
         if not config.get('weak_looker',False):
-            variables_domain = copy.deepcopy(prev_domain)
+            variables_domain = pickle.loads(pickle.dumps(prev_domain))
             del variables_domain[prev_variable]
         big_nighbours = get_constrained_nighbours(prev_variable,inp,assignments )
         for coord in big_nighbours:
