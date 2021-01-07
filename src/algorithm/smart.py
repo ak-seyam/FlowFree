@@ -50,9 +50,6 @@ def get_var(initial_state , assignments, inp, connected_terminals ,prev_domain,p
         
     var = select_unassigned_variable(variables_domain,
                                      assignments, inp)  
-    if var[0] == 12 : 
-        pprint(variables_domain) 
-        print('BAD FROM get var')
     return var, variables_domain
 
 def select_unassigned_variable(variables_domain , assignments: dict, inp):
