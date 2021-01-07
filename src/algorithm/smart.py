@@ -4,21 +4,30 @@ from typing import List, Tuple, Dict
 from algorithm.dummy import is_consistant
 from model.case import case
 from utils.paths.points import get_constrained_nighbours
+from utils.paths.modifiers import refresh_connected_terminals
 import copy
 
+config ={
+    'MRV':True,
+    # 'least_constraining_value':True,
+    # 'degree_heuristic':True,
+    # 'weak_looker':True,
+}
 
-def order_domain_values(initial_state, assignments, inp, var, variables_domain):
+def order_domain_values(initial_state, assignments, inp, var, variables_domain, connected_terminals):
     """ return the available values, order with least-constaining-value heuristic """
-    return variables_domain[var]
+    if config.get('least_constraining_value',False):
+        # use least-constaining-value
+        # is actully slower 🤷‍♀
+        if len(variables_domain[var]) > 1:
+            ordered_domain = least_constraining_value(initial_state, assignments,
+                                                    var, variables_domain, inp, connected_terminals)
+            return ordered_domain
+        else:
+            return variables_domain[var]
+    else:
+        return variables_domain[var]
     
-    # use least-constaining-value
-    # is actully slower 🤷‍♀
-    # if len(variables_domain[var]) > 1:
-    #     ordered_domain = least_constraining_value(initial_state, assignments,
-    #                                               var, variables_domain, inp)
-    #     return ordered_domain
-    # else:
-    #     return variables_domain[var]
 
 
 def free_vars(assignments, inp):
@@ -61,8 +70,11 @@ def select_unassigned_variable(variables_domain , assignments: dict, inp):
     Return:
         coords : return coordinatation with mrv
     """
-    smallest_domains = MRV(variables_domain)
-    return smallest_domains[0]
+    coords_smallest_domains = MRV(variables_domain)
+    if config.get('degree_heuristic',False):
+        return degree_heuristic(coords_smallest_domains,inp, assignments)
+    else:
+        return coords_smallest_domains[0]
 
 
 def forward_check(variables_domain):
@@ -85,8 +97,9 @@ def get_available_domain_multiple(initial_state, variables, assignments, inp, co
                 initial_state, coord, assignments, inp,connected_terminals)
             variables_domain[coord] = domain
     else:
-        variables_domain = copy.deepcopy(prev_domain)
-        del variables_domain[prev_variable]
+        if not config.get('weak_looker',False):
+            variables_domain = copy.deepcopy(prev_domain)
+            del variables_domain[prev_variable]
         big_nighbours = get_constrained_nighbours(prev_variable,inp,assignments )
         for coord in big_nighbours:
             domain = get_available_domain(
@@ -124,7 +137,7 @@ def get_available_domain(initial_state, coord, assignments, inp, connected_termi
     return point_domain
 
 
-def degree_heuristic(variables: List) -> List[Tuple[int, int]]:
+def degree_heuristic(variables: List,inp , assignments) -> List[Tuple[int, int]]:
     ''' variable selection heuristic witch choose the variable witch involve in
     most number of variables _ maybe used as tie breaker
 
@@ -140,6 +153,14 @@ def degree_heuristic(variables: List) -> List[Tuple[int, int]]:
     # loop throw variables
     # get the number of constrains
     # choose the variable with largest number of constrains
+    most_constraining_var = variables[0]
+    most_constraining_count = -math.inf
+    for coord in variables:
+        constrained_count = len(get_constrained_nighbours(coord,inp, assignments))
+        if constrained_count > most_constraining_count:
+            most_constraining_count = constrained_count
+            most_constraining_var = coord
+    return most_constraining_var
 
 
 def MRV(variables_domain: Dict[Tuple[int, int], List[str]]) -> List[Tuple[int, int]]:
@@ -169,7 +190,7 @@ def MRV(variables_domain: Dict[Tuple[int, int], List[str]]) -> List[Tuple[int, i
     return selected_coords
 
 
-def least_constraining_value(initial_state, assignments, coord, variables_domain, inp):
+def least_constraining_value(initial_state, assignments, coord, variables_domain, inp, connected_terminals):
     ''' value selection heuristic whitch count the order the values by number of constrains with 
     smallest first  
     '''
@@ -180,10 +201,13 @@ def least_constraining_value(initial_state, assignments, coord, variables_domain
     variables = free_vars({**{coord: 'holder'}, **assignments}, inp)
     domain = variables_domain[coord]
     for value in domain:
-
+        updated_connected_terminals = connected_terminals = refresh_connected_terminals(
+                {coord: value}, {**{coord: value}, **assignments}, connected_terminals, initial_state, inp)
         updated_variable_domains = get_available_domain_multiple(
-            initial_state, variables, assignments, inp)
+            initial_state, variables, {**{coord: value}, **assignments}, inp, updated_connected_terminals,
+             variables_domain, coord, None, connected_terminals)
         count_constrained = 0
+        
         for coord in updated_variable_domains:
             if len(updated_variable_domains[coord]) < len(variables_domain[coord]):
                 count_constrained += 1

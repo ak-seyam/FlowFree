@@ -50,7 +50,7 @@ def _backtrack(
     var, variables_domain = v_tuple
     if var == None:
         return case.failure
-    for value in order_domain_values(initial_state, assignments, inp, var, variables_domain):
+    for value in order_domain_values(initial_state, assignments, inp, var, variables_domain,connected_terminals):
         callback(assignments, variables_domain, var, value)
         assignments[var] = value
         if is_consistant(initial_state, {var: value},  assignments, inp, connected_terminals):
