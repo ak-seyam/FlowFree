@@ -2,6 +2,8 @@ import math
 from typing import List, Tuple, Dict
 from algorithm.dummy import is_consistant
 from model.case import case
+from utils.paths.points import get_constrained_nighbours
+import copy
 
 
 def order_domain_values(initial_state, assignments, inp, var, variables_domain):
@@ -34,14 +36,14 @@ def inference():
     return case.failure
 
 
-def get_var(initial_state , assignments, inp, connected_terminals ):
+def get_var(initial_state , assignments, inp, connected_terminals ,prev_domain,prev_variable,prev_value,prev_connected_terminal):
     """
     docstring
     """
     fv = free_vars(assignments, inp)
     variables_domain = get_available_domain_multiple(
-        initial_state, fv, assignments, inp, connected_terminals)
-
+        initial_state, fv, assignments, inp, connected_terminals,prev_domain,prev_variable,prev_value,prev_connected_terminal)
+    
     if not forward_check(variables_domain):
         return case.failure
         
@@ -71,13 +73,24 @@ def forward_check(variables_domain):
     return True
 
 
-def get_available_domain_multiple(initial_state, variables, assignments, inp, connected_terminals):
+def get_available_domain_multiple(initial_state, variables, assignments, inp, connected_terminals,prev_domain,prev_variable,prev_value,prev_connected_terminal):
     variables_domain = {}
-    for coord in variables:
-        domain = get_available_domain(
-            initial_state, coord, assignments, inp,connected_terminals)
-        variables_domain[coord] = domain
-
+    connection_changed = len(connected_terminals) < len(prev_connected_terminal)
+    first_run = prev_variable == None
+    if connection_changed or first_run:
+        # update all variables
+        for coord in variables:
+            domain = get_available_domain(
+                initial_state, coord, assignments, inp,connected_terminals)
+            variables_domain[coord] = domain
+    else:
+        variables_domain = copy.deepcopy(prev_domain)
+        del variables_domain[prev_variable]
+        big_nighbours = get_constrained_nighbours(prev_variable,inp,assignments )
+        for coord in big_nighbours:
+            domain = get_available_domain(
+                initial_state, coord, assignments, inp,connected_terminals)
+            variables_domain[coord] = domain
     return variables_domain
 
 

@@ -12,6 +12,8 @@ def get_item_in_coord(mat, coord: Tuple[int, int]):
 def is_empty(assignment, coord):
     return assignment.get(coord) == None
 
+def is_not_empty(assignment, coord):
+    return not is_empty(assignment, coord)
 
 def search_around(coord, inp, assignment, search_criteria):
     """
@@ -29,6 +31,16 @@ def search_around(coord, inp, assignment, search_criteria):
             res.append(n_coord)
     return res
 
+
+def get_constrained_nighbours(coord,inp, assignments):
+    constrained_nighbours = []
+    constrained_nighbours += search_around(coord, inp, assignments,is_empty)
+    
+    neighbors_chain = search_around(coord, inp, assignments,is_not_empty)
+    for coord in neighbors_chain:
+        constrained_nighbours += search_around(coord, inp, assignments,is_empty)
+    
+    return constrained_nighbours
 
 def get_neighbors_coords(coord, inp):
     res = []

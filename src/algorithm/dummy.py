@@ -19,7 +19,7 @@ def assignment_complete(assignments, inp):
     return len(assignments) >= (len(inp) * len(inp[0]))
 
 
-def get_var(initial_state, assignments, inp, connected_terminals):
+def get_var(initial_state, assignments, inp, connected_terminals,*args):
     var = select_unassigned_variable(None,
                                      assignments, inp)  # TODO Room for improvement
     return var, None
