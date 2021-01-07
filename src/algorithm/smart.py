@@ -14,18 +14,20 @@ config ={
     # 'weak_looker':True,
 }
 
-def order_domain_values(initial_state, assignments, inp, var, variables_domain):
+def order_domain_values(initial_state, assignments, inp, var, variables_domain, connected_terminals):
     """ return the available values, order with least-constaining-value heuristic """
-    return variables_domain[var]
+    if config.get('least_constraining_value',False):
+        # use least-constaining-value
+        # is actully slower 🤷‍♀
+        if len(variables_domain[var]) > 1:
+            ordered_domain = least_constraining_value(initial_state, assignments,
+                                                    var, variables_domain, inp, connected_terminals)
+            return ordered_domain
+        else:
+            return variables_domain[var]
+    else:
+        return variables_domain[var]
     
-    # use least-constaining-value
-    # is actully slower 🤷‍♀
-    # if len(variables_domain[var]) > 1:
-    #     ordered_domain = least_constraining_value(initial_state, assignments,
-    #                                               var, variables_domain, inp)
-    #     return ordered_domain
-    # else:
-    #     return variables_domain[var]
 
 
 def free_vars(assignments, inp):

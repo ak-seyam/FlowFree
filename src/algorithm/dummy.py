@@ -45,7 +45,7 @@ def select_unassigned_variable(variables_domain, assignments: dict, inp):
 
     return _tmp[rand_index]
 
-def order_domain_values(initial_state, assignments, inp, var, variables_domain):
+def order_domain_values(initial_state, assignments, inp, var, variables_domain,*arg):
     """
     return the available values, in the dummy case return all values
     """
