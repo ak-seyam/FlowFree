@@ -8,10 +8,11 @@ from random import seed
 seed(0)
 
 paths = [
-    "../input/input10102.txt"
+    "../input/input1214.txt"
 ]
 
 inp = read_inputfile(paths[0])
+print(inp)
 
 initial_state = get_initial_state(inp)
 
@@ -26,4 +27,4 @@ res = backtrack(
     lambda *args: 1, 
     smart.get_var
 )
-formatter(res, len(inp), len(inp[0]))
+formatter(res, len(inp[0]), len(inp))

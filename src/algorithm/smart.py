@@ -75,7 +75,7 @@ def forward_check(variables_domain):
 
 def get_available_domain_multiple(initial_state, variables, assignments, inp, connected_terminals,prev_domain,prev_variable,prev_value,prev_connected_terminal):
     variables_domain = {}
-    connection_changed = len(connected_terminals) < len(prev_connected_terminal)
+    connection_changed = len(connected_terminals) > len(prev_connected_terminal)
     first_run = prev_variable == None
     if connection_changed or first_run:
         # update all variables
