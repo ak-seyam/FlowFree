@@ -19,7 +19,8 @@ var colors = {
   T: "Tan",
   Q: "Turquoise",
   V: "Violet",
-  W: "Gainsboro",
+  W: "white",
+  w: "Gainsboro",
   Y: "Yellow",
   RANDOM: getRandomColor,
 };
