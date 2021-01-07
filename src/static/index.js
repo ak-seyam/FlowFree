@@ -22,16 +22,25 @@ function create_canvas(height, width) {
   container.appendChild(canvas_flow);
   var ctx_flow = canvas_flow.getContext("2d");
 
+  var canvas_locations = document.createElement("canvas");
+  canvas_locations.setAttribute("width", width);
+  canvas_locations.setAttribute("height", height);
+  container.appendChild(canvas_locations);
+  var ctx_locations = canvas_locations.getContext("2d");
+
   document.getElementById("variable_selection").style.left = `${
     canvas_back.width + 50
   }px`;
-  return [ctx_back, ctx_flow];
+  return [ctx_back, ctx_flow,ctx_locations];
 }
 
-function draw_map(map_meta, canv) {
+function draw_map(map_meta, canv_back,canv_label) {
   for (let x of Array(map_meta.width).keys()) {
     for (let y of Array(map_meta.height).keys()) {
-      draw_map_element(x, y, step_x, step_y, "w", canv);
+      draw_map_element(x, y, step_x, step_y, "w", canv_back);
+      canv_label.fillStyle = "black";
+      canv_label.fillText(`${x},${y}`, (x+.4)*step_x, (y+0.6)*step_y);
+
     }
   }
 }
@@ -75,12 +84,12 @@ async function main() {
     `http://127.0.0.1:5000/map/${map_id}`
   ).then((res) => res.json());
 
-  const [ctx_back, ctx_flow] = create_canvas(
+  const [ctx_back, ctx_flow,ctx_locations] = create_canvas(
     map_meta.height * step_y,
     map_meta.width * step_x
   );
 
-  draw_map(map_meta, ctx_back);
+  draw_map(map_meta, ctx_back,ctx_locations);
 
   const sol_selector = document.getElementById("sloution_method");
   const selected_sol = sol_selector[sol_selector.selectedIndex].value;
