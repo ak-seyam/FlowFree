@@ -124,7 +124,7 @@ def get_available_domain(initial_state, coord, assignments, inp, connected_termi
     return point_domain
 
 
-def degree_heuristic(variables: List) -> List[Tuple[int, int]]:
+def degree_heuristic(variables: List,inp , assignments) -> List[Tuple[int, int]]:
     ''' variable selection heuristic witch choose the variable witch involve in
     most number of variables _ maybe used as tie breaker
 
@@ -140,6 +140,14 @@ def degree_heuristic(variables: List) -> List[Tuple[int, int]]:
     # loop throw variables
     # get the number of constrains
     # choose the variable with largest number of constrains
+    most_constraining_var = variables[0]
+    most_constraining_count = -math.inf
+    for coord in variables:
+        constrained_count = len(get_constrained_nighbours(coord,inp, assignments))
+        if constrained_count > most_constraining_count:
+            most_constraining_count = constrained_count
+            most_constraining_var = coord
+    return most_constraining_var
 
 
 def MRV(variables_domain: Dict[Tuple[int, int], List[str]]) -> List[Tuple[int, int]]:
