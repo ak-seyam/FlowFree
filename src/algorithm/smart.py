@@ -5,6 +5,7 @@ from algorithm.dummy import is_consistant
 from model.case import case
 from utils.paths.points import get_constrained_nighbours
 from utils.paths.modifiers import refresh_connected_terminals
+
 import pickle
 
 config ={
