@@ -1,3 +1,5 @@
-src/main.prof
-src/main_smart_fast.prof
-src/main_smart.prof
+*.prof
+input/extra
+src/app.log
+.vscode/settings.json
+src/debug.txt
