@@ -7,3 +7,4 @@ def formatter(inp:dict, width, height, init=None):
         for j in range(len(res[0])):
             print(res[i][j],end="")
         print()
+    print("-------------------")
