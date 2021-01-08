@@ -19,6 +19,7 @@ What we mean by good combination here the state of the selected assignment don't
 |2 or higher              | Not needed                  | True                |
 |1                        | 1                           | True                |
 | Otherwise               |                             | False               |
+
 \
 \
 `Is_neighbors_terminals_have_valid_path`
