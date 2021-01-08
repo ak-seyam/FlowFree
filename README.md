@@ -33,11 +33,12 @@ Use the cached on demand updated terminals to check if the same `value` terminal
 ### Dumb algorithm
 Picking a random value and random variable each time check whether or not this assignment is consultant. If it was consistent move to the next assignment in a _DFS-styled_ backtracking.
 
-**Solution:**
-
+#### Results
+\
+\
 **5x5:**
 
-This algorithm worked flawlessly with 5x5 input
+For graphical results see figure 1.
 
 ![5x5 solution graphical](assets/55dumb.png)
 
@@ -60,11 +61,79 @@ TimeOut!
 ### Smart Algorithm
 Using a combination of helping heuristics and approaches that can be controlled via `config` dict in `src/algorithms/smart.py` including **MRV** to chose the next variable, **LCV** for choosing the value, **Degree Heuristics** as a tie breaker and **Weak locker** these heuristic are _"togglable"_ due to optimization issues, check optimization labeled PRs for more information.
 
-## Results
+#### Results
+\
+\
+**5x5**
 
-### Dumb algorithm
+For graphical See the results in figure 1.
 
-### Smart Algorithm
+**Output**
+```
+map ../input/input55.txt solution time = 0.0058176517486572266 sec
+BrrRO
+bryYo
+brYoo
+bROoG
+bBGgg
+```
+
+**7x7**
+
+for graphical results see figure 2.
+
+![7x7 output of smart algorithm](assets/77smrt.png)
+
+**Output**
+```
+map ../input/input77.txt solution time = 0.026373863220214844 sec
+gggOooo
+gBggGYo
+gbbBRyo
+gyyYryo
+gyrrryo
+gyRyyyo
+GyyyOoo
+```
+
+**8x8**
+
+for graphical results see figure 3.
+
+![8x8 output of smart algorithm](assets/88smrt.png)
+
+```
+map ../input/input88.txt solution time = 0.0460352897644043 sec
+yyyRrrGg
+yBYPprrg
+yboOpGRg
+yboPpggg
+ybooooYy
+ybbbBOQy
+yQqqqqqy
+yyyyyyyy
+```
+
+**9x9**
+
+for graphical results see figure 4.
+
+![9x9 output of smart algorithm](assets/99smrt.png)
+
+```
+map ../input/input991.txt solution time = 0.07780814170837402 sec
+DbbBOKkkk
+dbOooRrrk
+dbRQqqQrk
+DBrrrrrrk
+gGkkkkkkk
+gkkPppppG
+gkYyyyYpg
+gkkkkkKPg
+ggggggggg
+```
+
+**10x10**
 
 ## Getting started
 
