@@ -1,4 +1,3 @@
-// import { wall_img, player_img, space_img, box_img } from "./assets_loader.js";
 import { draw_map_element, draw_map_element_arc, colors } from "./drawer.js";
 
 const step_x = 50,
