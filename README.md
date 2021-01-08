@@ -43,8 +43,6 @@ For graphical results see figure 1.
 ![5x5 solution graphical](assets/55dumb.png)
 
 \
-**Output**
-
 ```
 map ../input/input55.txt solution time = 0.0074388980865478516 sec
 BrrRO
@@ -68,7 +66,6 @@ Using a combination of helping heuristics and approaches that can be controlled 
 
 For graphical See the results in figure 1.
 
-**Output**
 ```
 map ../input/input55.txt solution time = 0.0058176517486572266 sec
 BrrRO
@@ -84,7 +81,6 @@ for graphical results see figure 2.
 
 ![7x7 output of smart algorithm](assets/77smrt.png)
 
-**Output**
 ```
 map ../input/input77.txt solution time = 0.026373863220214844 sec
 gggOooo
@@ -133,7 +129,70 @@ gkkkkkKPg
 ggggggggg
 ```
 
-**10x10**
+**10x10 1**
+
+for graphical results see figure 5.
+
+![10x10_1 output of smart algorithm](assets/10101smrt.png)
+
+```
+map ../input/input10101.txt solution time = 0.20352673530578613 sec
+RGgggggggg
+rrrrOoooOg
+yYPrQqqqQg
+ypprrrrrrg
+ypGgbbbbrg
+yppgbrRbrg
+yypgbrBbrg
+Pypgbrrrrg
+pYpgbbbbBg
+pppggggggg
+```
+
+**10x10 2**
+
+for graphical results see figure 6.
+
+![10x10_2 output of smart algorithm](assets/10102smrt.png)
+
+```
+map ../input/input10102.txt solution time = 0.30385804176330566 sec
+tttppppppp
+tBtpfffffp
+tbTPFBTVfp
+tbbbbbtvfp
+tttttttvfP
+Fnnnnnnvff
+fnssssnvvf
+fnSNHSNHvf
+fnnnhhhhVf
+ffffffffff
+```
+
+**12x12**
+
+for graphical results see figure 7.
+
+![12x12 output of smart algorithm](assets/1212smrt.png)
+
+```
+map ../input/input1212.txt solution time = 0.9785003662109375 sec
+kkkkkkkkkkkk
+kooooooooook
+kokkkKyYgGok
+kokYyyyGgook
+kOkPpoooooQk
+kkkRpOQqqqqk
+rrrrPaARKkkk
+rDddDaWrrrrr
+raaaaawwwwWr
+raBbbbbbbbBr
+raaaaaaaaaAr
+rrrrrrrrrrrr
+```
+
+
+
 
 ## Getting started
 
