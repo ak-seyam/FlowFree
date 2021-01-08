@@ -4,6 +4,23 @@ A solver for Flow Free puzzles using _back tracking_ search for CSPs.
 ## The problem
 Boards are typically a square grid with any number of colors to connect. A _well-designed_ board (an assumption made by this solver) has a unique solution, and requires the entire board to be filled in without any "zig-zagging" paths. A consequence of being an NP-complete puzzle is that, although solutions can be verified quickly, there is no known efficient algorithm to find a solution, and the time required to solve the problem increases very quickly as the board size grows. How do we leverage a computer to quickly find the solution to a given board? We can devise a metric to score potential paths towards the solution, and we investigate the paths that maximize this function first.
 
+## Getting started
+### From terminal
+```bash
+cd ./src
+python main_dumb.py # for the dumb heuristic
+python main_smart.py # for the smart heuristic
+```
+
+### Graphical
+
+```bash
+# It is recommended to create a separate environment before you install the requirements
+pip install -r requirements.txt
+cd ./src
+python app.py
+```
+
 ## Approaches 
 These are approaches we took to solve these puzzles, few notes need to be taken before reading. We consider the map as matrix where each element in this matrix is a _variable_ and these variables are coordinates in xy plan, where y grows downwards starting from the top left corner. Assignments are stored in a dictionary-styled data structure where keys are coordinates and values are colors for each coordinate, we use uppercase letters for terminals and lowercase for pipes.
 
@@ -20,8 +37,6 @@ What we mean by good combination here the state of the selected assignment don't
 |1                        | 1                           | True                |
 | Otherwise               |                             | False               |
 
-\
-\
 `Is_neighbors_terminals_have_valid_path`
 
 Checks weather or not any neighboring terminal in _locked out_, in other word if our newly assigned `var : value` causes any problem.
@@ -239,6 +254,5 @@ grrrrKkkkkkkkg
 gggggggggggggg
 ```
 
-## Getting started
-
 ## References
+Russell, S. J. (2016). Artificial intelligence: A modern approach. Harlow: Pearson.
