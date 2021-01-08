@@ -191,8 +191,53 @@ raaaaaaaaaAr
 rrrrrrrrrrrr
 ```
 
+**12x14**
 
+for graphical results see figure 8.
 
+![12x14 output of smart algorithm](assets/1214smrt.png)
+
+```
+map ../input/input1214.txt solution time = 0.17871904373168945 sec
+pppPkkkkkkkK
+pggGkggGaaaA
+pgkkkgPaaYyY
+pgkqQgpaBbbb
+pgKqggpADddb
+pggqgNpDOodB
+ppgqgnpddodd
+WpgQgnppdoRd
+wpgggnNpdord
+wpppppppdord
+wwwwwwwWdord
+dddddddddOrd
+dRrrrrrrrrrd
+dddddddddddd
+```
+
+**14x14**
+
+for graphical results see figure 9.
+
+![14x14 output of smart algorithm](assets/1414smrt.png)
+
+```
+map ../input/input1414.txt solution time = 2.6907079219818115 sec
+oooowwwwwkkkkk
+oBbowAaawkpppk
+oobowwWawkpRPk
+DobooAaaWkprkk
+dobboooOBkprkG
+dOYbbbbbbKprkg
+ddyyyyyyyDprkg
+Gdddddddydprkg
+grrrrrRdYdprkg
+grqqqqQdddprkg
+grqpppppppprkg
+grQPrrrrrrrrkg
+grrrrKkkkkkkkg
+gggggggggggggg
+```
 
 ## Getting started
 
