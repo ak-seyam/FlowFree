@@ -41,6 +41,9 @@ This algorithm worked flawlessly with 5x5 input
 
 ![5x5 solution graphical](assets/55dumb.png)
 
+\
+**Output**
+
 ```
 map ../input/input55.txt solution time = 0.0074388980865478516 sec
 BrrRO
@@ -55,6 +58,7 @@ bBGgg
 TimeOut!
 
 ### Smart Algorithm
+Using a combination of helping heuristics and approaches that can be controlled via `config` dict in `src/algorithms/smart.py` including **MRV** to chose the next variable, **LCV** for choosing the value, **Degree Heuristics** as a tie breaker and **Weak locker** these heuristic are _"togglable"_ due to optimization issues, check optimization labeled PRs for more information.
 
 ## Results
 
@@ -64,3 +68,4 @@ TimeOut!
 
 ## Getting started
 
+## References
