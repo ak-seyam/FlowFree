@@ -9,6 +9,7 @@ These are approaches we took to solve these puzzles, few notes need to be taken 
 
 ### Constraints
 These are the procedures we took to check the consistency of any new assignments.
+
 `Is_good_combination`
 
 What we mean by good combination here the state of the selected assignment don't/won't cause any problems. we can wrap them up in the following table
@@ -18,6 +19,8 @@ What we mean by good combination here the state of the selected assignment don't
 |2 or higher              | Not needed                  | True                |
 |1                        | 1                           | True                |
 | Otherwise               |                             | False               |
+\
+\
 `Is_neighbors_terminals_have_valid_path`
 
 Checks weather or not any neighboring terminal in _locked out_, in other word if our newly assigned `var : value` causes any problem.
