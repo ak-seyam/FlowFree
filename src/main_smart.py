@@ -26,10 +26,10 @@ for path in paths:
     initial_state = get_initial_state(inp)
     # print(initial_state[1])
 
-    def debug_print(assignments,domain,var,val):
-        print(f'{var} ,{val}')
-        print(f'domain {domain[var]}')
-        formatter(assignments,len(inp[0]), len(inp),init="_")
+    # def debug_print(assignments,domain,var,val):
+    #     print(f'{var} ,{val}')
+    #     print(f'domain {domain[var]}')
+    #     formatter(assignments,len(inp[0]), len(inp),init="_")
 
     start = time.time()
     res = backtrack(
