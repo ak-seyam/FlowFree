@@ -17,6 +17,9 @@ from random import seed
 from time import sleep
 from enum import Enum
 
+import logging
+print("* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)")
+logging.basicConfig(filename="app.log",filemode='w',force=True,level=logging.ERROR)
 app = Flask(__name__)
 socketio = SocketIO(app)
 
