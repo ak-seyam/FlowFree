@@ -31,6 +31,10 @@ for path in paths:
     #     print(f'domain {domain[var]}')
     #     formatter(assignments,len(inp[0]), len(inp),init="_")
 
+    c=[1]
+    def increase(c,*args):
+        c[0]+=1
+    
     start = time.time()
     res = backtrack(
         initial_state,
@@ -40,8 +44,9 @@ for path in paths:
         dum.assignment_complete,
         dum.inference,
         dum.is_consistant,
-        lambda *args: 1,
+        lambda *args: increase(c,*args),
         smart.get_var
     )
     print(f'map {path} solution time = {time.time()-start} sec')
+    print(f'map {path} number of hits = {c} ')
     formatter(res, len(inp[0]), len(inp))
