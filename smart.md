@@ -40,14 +40,14 @@ for value in full_domain:
 
 return point_domain
 ```
---
+--v
 
 ## variable domain    
 example 
 
 ![](images/5x5_with_domain.png)
 <!-- .element class="r-stretch" -->
---
+--v
 
 <!-- .slide:  data-transition="none" -->
 ## variable domain    
@@ -55,7 +55,7 @@ example
 
 ![](images/choose_first.png)
 <!-- .element class="r-stretch" -->
---
+--v
 
 <!-- .slide:  data-transition="none" -->
 ## variable domain    
@@ -63,7 +63,7 @@ example
 
 ![](images/5x5_selected_box.png)
 <!-- .element class="r-stretch" -->
---
+--v
 
 <!-- .slide:  data-transition="none" -->
 ## variable domain    
@@ -71,13 +71,13 @@ example
 
 ![](images/choose_second.png)
 <!-- .element class="r-stretch" -->
----
+---n
 
 # forward checking 
 * find domain for variables
 * if variable has zero domain 
 * return case failure
---
+--v
 
 ## forward checking 
 ```python [|3]
@@ -87,7 +87,7 @@ def forward_check(variables_domain):
             return False
     return True
 ```
---
+--v
 
 <!-- .slide: data-auto-animate -->
 ## results
@@ -95,7 +95,7 @@ def forward_check(variables_domain):
   | map​ | time​ | Number of hits​ |
   |------|-------|-----------------|
   | 5x5​ | 7 ms​ | 443             |
---
+--v
 
 <!-- .slide: data-auto-animate -->
 ## results
@@ -110,13 +110,13 @@ def forward_check(variables_domain):
   | map​ | time​ | Number of hits​ |
   |------|-------|-----------------|
   | 5x5​ | 9 ms​ | 28​ <!-- .element: class="fragment  highlight-blue" -->             |
----
+---n
 
 <!-- .slide: data-auto-animate -->
 # MRV
 * find domain for variables
 * choose variables with smallest domain
---
+--v
 
 <!-- .slide: data-auto-animate -->
 # MRV
@@ -135,7 +135,7 @@ def forward_check(variables_domain):
 
     return selected_coords
 ```
---
+--v
 
 <!-- .slide: data-auto-animate -->
 # MRV
@@ -143,7 +143,7 @@ applying to 5x5
 
 ![](images/mrv_5x5.png)
 <!-- .element class="r-stretch" -->
---
+--v
 
 <!-- .slide: data-auto-animate -->
 # MRV
@@ -151,27 +151,27 @@ applying to 5x5
 
 ![](images/mrv_5x5_select.png)
 <!-- .element class="r-stretch" -->
---
+--v
 
 #### results *
---
+--v
 
 #### limitation
 - complexty increase with map size (give example)
----
+---n
 
 ### improvment in constrains
 - https://github.com/A-Siam/FlowFree/pull/7
---
+--v
 
 ### dynamic domain-upgrade
 - https://github.com/A-Siam/FlowFree/pull/15
---
+--v
 
 #### explain
 - the constrained variables (what they are how to get them)
 - tease for degree heuristic
---
+--v
 
 <style>
     #result_table > tbody > tr >td {
@@ -192,24 +192,24 @@ applying to 5x5
 | 12x14​     | 193ms​   | 148​            |
 | 14x14​     | 78750ms​ | 10309​          |
 <!-- .element: class="r-stretch" id="result_table"-->
----
+---n
 
 ## degree heuristic
 - explain
 - relation to constrained variables
---
+--v
 
 ### results
 - blaim implementaion
 - we will get better without it
----
+---n
 
 ## least constraing value
 - explain
---
+--v
 
 #### result 
---
+--v
 
 ### special credit for 1414
 - explain the initial choice
