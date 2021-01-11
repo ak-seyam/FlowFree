@@ -41,7 +41,8 @@ for value in full_domain:
 return point_domain
 ```
 --v
-
+<!-- TODO use r-stack -->
+<!-- .slide:  data-transition="none" -->
 ## variable domain    
 example 
 
@@ -154,10 +155,28 @@ applying to 5x5
 --v
 
 #### results *
---v
+<!-- https://github.com/A-Siam/FlowFree/pull/2 -->
+| map  | time (s) |
+| ---- | -------- |
+| 7x7  |  1.87    |
+| 8x8  |  1.73    |
+| 9x9  |  6.87    |
 
-#### limitation
-- complexty increase with map size (give example)
+--v
+<!-- .slide: data-auto-animate -->
+### limitation
+* variable domain calculation increase with map size
+  * example 
+    * 14x14 every time caluclate domain 
+      for (<span class="fragment highlight-blue">196 </span> terminals) variable
+* solution
+<!-- .element: class="fragment" -->
+--v
+<!-- .slide: data-auto-animate -->
+### limitation
+* variable domain calculation increase with map size
+  
+* constrain takes lots of time
 ---n
 
 ### improvment in constrains
