@@ -161,37 +161,168 @@ applying to 5x5
 | 7x7  |  1.87    |
 | 8x8  |  1.73    |
 | 9x9  |  6.87    |
+| 10x10  |  ?.??    |
+
 
 --v
 <!-- .slide: data-auto-animate -->
 ### limitation
 * variable domain calculation increase with map size
+
   * example 
-    * 14x14 every time caluclate domain 
-      for (<span class="fragment highlight-blue">196 </span> terminals) variable
-* solution
 <!-- .element: class="fragment" -->
+    * 14x14 every time caluclate domain <br/>
+      for (<span class="fragment highlight-blue">196 </span> -  terminals) variable
+  * solution
+<!-- .element: class="fragment" -->
+    * update only constrained varialbes
 --v
 <!-- .slide: data-auto-animate -->
 ### limitation
 * variable domain calculation increase with map size
   
-* constrain takes lots of time
+* consistency check represent the bottleneck
+  * <span class="fragment"> check <span class="fragment highlight-blue">profile </span>analysis and improve as possible </span>
+
+  
 ---n
-
-### improvment in constrains
-- https://github.com/A-Siam/FlowFree/pull/7
+# optimization
+<!-- .element: class="r-fit-text" -->
 --v
 
+<!-- https://github.com/A-Siam/FlowFree/pull/7 -->
+<!-- .slide: data-auto-animate -->
+### improvement in constrains
+profile for 991
+![](images/bad_constrain.png)
+
+<span> terminal constrain was checking <span class="fragment highlight-red"> every </span>terminal has only on path </span>
+--v
+<!-- .slide: data-auto-animate -->
+### improvement in constrains
+profile for 991
+![](images/good_constrain.png)
+
+<span> check only <span class="fragment highlight-blue"> neighbor </span> terminals </span>
+--v
+
+#### results
+<!-- https://github.com/A-Siam/FlowFree/pull/2 -->
+| map  | time (s) |
+| ---- | -------- |
+| 7x7  |  0.085    |
+| 8x8  |  0.157    |
+| 9x9  |  0.858    |
+| 10x10(1)  |  3.300    |
+| 10x10(2)  |  1.680    |
+| 12x12  |  14.971    |
+| 12x14  |  ??.???    |
+<!-- .element: class="r-stretch" -->
+--v
+
+<!-- .slide: data-auto-animate -->
 ### dynamic domain-upgrade
-- https://github.com/A-Siam/FlowFree/pull/15
+
+* save variable domain
+* only update constrained variables
 --v
 
-#### explain
-- the constrained variables (what they are how to get them)
-- tease for degree heuristic
+<!-- .slide: data-auto-animate -->
+### dynamic domain-upgrade
+
+* the constrained variables
+
+  * are variables who share constrain with last updated variable
+
 --v
 
+<!-- .slide: data-auto-animate -->
+### dynamic domain-upgrade
+
+* the constrained variables
+
+  *  are empty neighbor </span> <span class="fragment highlight-blue"> (point good combination) 
+--v
+<!-- .slide: data-auto-animate -->
+### dynamic domain-upgrade
+
+* the constrained variables
+
+![](images/5x5_constrained_add.svg)
+
+--v
+<!-- .slide: data-auto-animate -->
+### dynamic domain-upgrade
+
+* the constrained variables
+
+![](images/5x5_constrained.svg)
+
+--v
+
+<!-- .slide: data-auto-animate -->
+### dynamic domain-upgrade
+
+* the constrained variables
+  
+  * are empty neighbor (point good combination) 
+  * are empty neighbor for occupied neighbor 
+  
+    <span class="fragment highlight-blue"> (neighbors/terminal good combination) </span>
+
+--v
+<!-- .slide: data-auto-animate -->
+### dynamic domain-upgrade
+
+* the constrained variables
+
+![](images/5x5_constrained_2_add.svg)
+
+--v
+
+<!-- .slide: data-auto-animate -->
+### dynamic domain-upgrade
+
+* the constrained variables
+
+![](images/5x5_constrained_2.svg)
+
+--v
+<!-- .slide: data-auto-animate -->
+### dynamic domain-upgrade
+
+* the constrained variables
+  *  are empty neighbor  (point good combination) 
+  * are empty neighbor for occupied neighbor 
+  
+    (point neighbors/terminal combination)
+  * every point when terminal is connected <span class="fragment highlight-blue"> (terminal connected) </span>
+
+--v
+### dynamic domain-upgrade
+implementation
+```python [2|5,6|11,12|13|14]
+variables_domain = {}
+connection_changed = len(connected_terminals)>len(prev_connected_terminal)
+first_run = prev_variable == None
+if connection_changed or first_run:
+    # update all variables
+    for coord in variables:
+        domain = get_available_domain(coord,
+        assignments,connected_terminals)
+        variables_domain[coord] = domain
+else:
+    variables_domain = pickle.loads(pickle.dumps(prev_domain))
+    del variables_domain[prev_variable]
+    big_neighbors = get_constrained_neighbors(prev_variable,inp,assignments )
+    for coord in big_neighbors:
+        domain = get_available_domain(coord, assignments, inp,connected_terminals)
+        variables_domain[coord] = domain
+return variables_domain
+```
+<!-- .element: class="r-stretch" -->
+
+--v
 <style>
     #result_table > tbody > tr >td {
         font-size: 25px;
