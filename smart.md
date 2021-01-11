@@ -176,13 +176,16 @@ applying to 5x5
   * solution
 <!-- .element: class="fragment" -->
     * update only constrained varialbes
+
+* consistency check represent the bottleneck
 --v
 <!-- .slide: data-auto-animate -->
 ### limitation
 * variable domain calculation increase with map size
   
 * consistency check represent the bottleneck
-  * <span class="fragment"> check <span class="fragment highlight-blue">profile </span>analysis and improve as possible </span>
+  
+  <span class="fragment"> check <span class="fragment highlight-blue">profile </span>analysis and improve as possible </span>
 
   
 ---n
@@ -224,7 +227,7 @@ profile for 991
 ### dynamic domain-upgrade
 
 * save variable domain
-* only update constrained variables
+* only update <span class="fragment highlight-blue">constrained variables</span>
 --v
 
 <!-- .slide: data-auto-animate -->
@@ -241,7 +244,7 @@ profile for 991
 
 * the constrained variables
 
-  *  are empty neighbor </span> <span class="fragment highlight-blue"> (point good combination) 
+  *  are empty neighbor  <span class="fragment highlight-blue"> (point good combination) </span>
 --v
 <!-- .slide: data-auto-animate -->
 ### dynamic domain-upgrade
@@ -266,9 +269,9 @@ profile for 991
 * the constrained variables
   
   * are empty neighbor (point good combination) 
-  * are empty neighbor for occupied neighbor 
   
-    <span class="fragment highlight-blue"> (neighbors/terminal good combination) </span>
+  * <span class="fragment"> empty neighbor for occupied neighbor 
+    <span class="fragment highlight-blue"> (neighbors/terminal good combination) </span> </span> 
 
 --v
 <!-- .slide: data-auto-animate -->
@@ -293,15 +296,15 @@ profile for 991
 
 * the constrained variables
   *  are empty neighbor  (point good combination) 
-  * are empty neighbor for occupied neighbor 
-  
-    (point neighbors/terminal combination)
-  * every point when terminal is connected <span class="fragment highlight-blue"> (terminal connected) </span>
+  * are empty neighbor for occupied neighbor   
+      (point neighbors/terminal combination)
+  * <span class="fragment" > every point when terminal is connected 
+      <span class="fragment highlight-blue"> (terminal connected) </span> </span>
 
 --v
 ### dynamic domain-upgrade
 implementation
-```python [2|5,6|11,12|13|14]
+```python [2,4|5,6|11,12|13|14]
 variables_domain = {}
 connection_changed = len(connected_terminals)>len(prev_connected_terminal)
 first_run = prev_variable == None
@@ -354,13 +357,86 @@ return variables_domain
 - we will get better without it
 ---n
 
-## least constraing value
-- explain
+## least constraining value
+- choose value that doesn't affect domains
 --v
 
-#### result 
+## least constraining value
+implementation
+<!-- TODO simplify this -->
+```python
+smallest_number_of_constraints = math.inf
+count_value_ordered = []
+
+variables = free_vars({**{coord: 'holder'}, **assignments}, inp)
+domain = variables_domain[coord]
+for value in domain:
+    updated_connected_terminals = connected_terminals = refresh_connected_terminals(
+            {coord: value}, {**{coord: value}, **assignments}, connected_terminals, initial_state, inp)
+    updated_variable_domains = get_available_domain_multiple(
+        initial_state, variables, {**{coord: value}, **assignments}, inp, updated_connected_terminals,
+         variables_domain, coord, None, connected_terminals)
+    count_constrained = 0
+    
+    for coord in updated_variable_domains:
+        if len(updated_variable_domains[coord]) < len(variables_domain[coord]):
+            count_constrained += 1
+
+    count_value_ordered.append((count_constrained, value))
+
+count_value_ordered.sort()
+order_domain_values = []
+for count, value in count_value_ordered:
+    order_domain_values += value
+
+return order_domain_values
+```
 --v
 
-### special credit for 1414
+### for 1414
 - explain the initial choice
 ---
+--v
+<!-- .slide:  data-transition="none" -->
+#### results
+| map​       | time​    | Number of hits​ |
+|------------|----------|-----------------|
+| 5x5​       | 6 ms​    | 17​             |
+| 7x7​       | 16 ms​    | 41​             |
+| 8x8​       | 30 ms​   | 52​             |
+| 9x9 (1)​   | 57 ms​    | 67​             |
+| 10x10 (1)​ | 189 ms​   | 320​            |
+| 10x10(2)​  | 93 ms​    | 139​            |
+| 12x12​     | 290 ms​   | 331​            |
+| 12x14​     | 193 ms​   | 148​            |
+| 14x14​     | 7875 ms​ | 10309​          |
+<!-- .element: class="r-stretch result_table" data-id="table"-->
+<style>
+    .result_table > tbody > tr >td {
+        font-size: 25px;
+    }
+
+</style>
+--v
+
+<!-- .slide:  data-transition="none" -->
+#### results
+| map​       | time​    | Number of hits​ |
+|------------|----------|-----------------|
+| 5x5​       | 5 ms​    | 17​             |
+| 7x7​       | 16 ms     | 56​             |
+| 8x8​       | 23 ms​    | 52​             |
+| 9x9 (1)​   | 65 ms​    | 100             |
+| 10x10 (1)​ | 166 ms​   | 330​            |
+| 10x10(2)​  |<span style="color:red"> 240 ms​    | 482           |
+| 12x12​     |<span style="color:red"> 838 ms​    | 1178            |
+| 12x14​     |<span style="color:aqua"> 163 ms​   | 146​            |
+| 14x14​     |<span style="color:aqua"> 2230 ms​| 2374​          |
+<!-- .element: class="r-stretch result_table"  data-id="table"-->
+<style>
+    .result_table > tbody > tr >td {
+        font-size: 25px;
+    }
+
+</style>
+---n
