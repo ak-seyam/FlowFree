@@ -25,50 +25,6 @@
     <div class="reveal">
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
-         <!-- <section>
-          <h1>smart solver</h1>
-          <img src="images/5x5_domain.png" />
-        </section> -->
-<!--
-        <section>
-          <section>
-            <h1>variable domain</h1>
-            <ul>
-              <li>forward checking</li>
-              <li>MRV (minimum remaining value)</li>
-            </ul>
-          </section>
-
-          <section>
-            <h1>variable domain</h1>
-            <pre>
-				<code data-line-numbers="[1|4,5|]" data-trim data-noescape>
-					for value in full_domain:
-						# add val to check constrain
-						assignments[coord] = value
-						if is_consistant(initial_state, {coord: value},  assignments, inp, connected_terminals ):
-							point_domain += value
-						del assignments[coord]
-					return point_domain				
-				</code>
-			</pre>
-          </section>
-        </section>
-
-        <section data-auto-animate>
-          <h2 id="forward-checking">forward checking</h2>
-          <ul>
-            <li>find domain for variables</li>
-            <li>if variable has zero domain</li>
-            <li>return case failure</li>
-          </ul>
-        </section>
-        <section data-auto-animate>
-          <h2 id="forward-checking">forward checking</h2>
-          <ul>
-            <li>find domain for variables</li>
-          </ul>
-        </section> -->
         <section
           data-markdown="smart.md"
           data-separator="^---n"
