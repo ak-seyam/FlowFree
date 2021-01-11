@@ -29,13 +29,12 @@ These are the procedures we took to check the consistency of any new assignments
 
 `Is_good_combination`
 
-What we mean by good combination here the state of the selected assignment don't/won't cause any problems. we can wrap them up in the following table
+What we mean by good combination here the state of the selected assignment don't/won't cause any problems. we can wrap them up in the following points
 
-|Number of free neighbors | Number of similar neighbors | is good combination | 
-|:-----------------------:|:---------------------------:| :-----------------: |
-|2 or higher              | Not needed                  | True                |
-|1                        | 1                           | True                |
-| Otherwise               |                             | False               |
+- Number of free neighbors >= 2 => true
+- Number of similar neighbors == 1 and Number of similar neighbors == 1 => true
+- Number of similar neighbors == 2 and not(is surrounding square filled) => true
+- Otherwise => false
 
 `Is_neighbors_terminals_have_valid_path`
 
