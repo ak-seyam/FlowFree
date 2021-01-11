@@ -2,27 +2,27 @@
 <!-- .element: class="fragment  highlight-blue" --> 
 
 ## flow free
----
+---n
 
 ## main components
 * Forward checking ​
 * MRV (minimum remaining value)​
 * Degree heuristic​
 * Least constraining value​
----
+---n
 
 <!-- .slide: data-auto-animate -->
 ## variable domain 
 * forward checking
 * MRV (minimum remaining value)
---
+--v
 
 <!-- .slide: data-auto-animate -->
 ## variable domain
 ![domain in 5x5 table](images/5x5_domain.png)
 
 example in 5x5
---
+--v
 
 ## variable domain
 code implementation 
