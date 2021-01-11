@@ -10,3 +10,15 @@ tmp/**
 node_modules/
 .sass-cache
 dist/*.map
+test
+js
+css
+.github
+examples
+.npmignore
+gulpfile.js
+readme.md
+package*
+output.html
+demo.html
+CONTRIBUTING.md
