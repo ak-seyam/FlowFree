@@ -1,11 +1,10 @@
 from pprint import pprint
 import math
 from typing import List, Tuple, Dict
-from algorithm.dummy import is_consistant
+from algorithm.dummy import is_consistant,select_unassigned_variable as dummy_select_unassigned_variable
 from model.case import case
 from utils.paths.points import get_constrained_nighbours
 from utils.paths.modifiers import refresh_connected_terminals
-
 import pickle
 
 config ={
@@ -71,12 +70,14 @@ def select_unassigned_variable(variables_domain , assignments: dict, inp):
     Return:
         coords : return coordinatation with mrv
     """
-    coords_smallest_domains = MRV(variables_domain)
-    if config.get('degree_heuristic',False) and len(coords_smallest_domains) > 1:
-        return degree_heuristic(coords_smallest_domains,inp, assignments)
+    if(config.get('MRV',False)):
+        coords_smallest_domains = MRV(variables_domain)
+        if config.get('degree_heuristic',False) and len(coords_smallest_domains) > 1:
+            return degree_heuristic(coords_smallest_domains,inp, assignments)
+        else:
+            return coords_smallest_domains[0]
     else:
-        return coords_smallest_domains[0]
-
+        return dummy_select_unassigned_variable(variables_domain,assignments,inp)
 
 def forward_check(variables_domain):
     ''' forward check for empty domains return true if no empty domains'''
