@@ -308,6 +308,35 @@ profile for 991
 <!-- .element: class="r-stretch" -->
 --v
 
+<!-- https://github.com/A-Siam/FlowFree/pull/8 -->
+<!-- .slide: data-auto-animate -->
+### lazy surrounding squares
+<span> check surrounding squares "zigzag" only when have<span style="color: #1B91FF "> 2 same color neighbors. </span>Because if we have a good combination we are in one of these two cases</span>
+
+*  only <span style="color: #1B91FF ">one free neighbor and same color neighbor</span> (no squares)
+*  only <span style="color: #1B91FF ">2 or more free neighbors</span> (no squares)
+--v
+<!-- .slide: data-auto-animate -->
+### lazy surrounding squares
+#### implementation
+```python
+
+```
+
+--v
+<!-- .slide: data-auto-animate -->
+### lazy surrounding squares
+#### Results
+| map      | time (s) |
+| -------- | -------- |
+| 10x10(1) | 2.26    |
+| 10x10(2) | 1.09    |
+| 12x12    | 8.72   |
+| 12x14    | ??.???   |
+<!-- .element: class="r-stretch" -->
+
+--v
+
 <!-- .slide: data-auto-animate -->
 ### dynamic domain-upgrade
 
