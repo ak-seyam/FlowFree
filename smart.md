@@ -68,7 +68,7 @@ The current assignment shouldn't block the neighboring terminals or be the same 
 # Dumb Solver 
 <!-- .element: class="fragment highlight-blue" --> 
 
----n
+--v
 <!-- .slide: data-auto-animate -->
 # Dumb Solver 
 <!-- .element: class="fragment highlight-blue" --> 
