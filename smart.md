@@ -523,13 +523,27 @@ return variables_domain
 ---n
 
 ## degree heuristic
-- explain
-- relation to constrained variables
+- use as tie breaker
+- choose variable that constrain others
 --v
 
+## degree heuristic
+implementation
+```python [2|5|8]
+most_constraining_count = -math.inf
+for coord in variables:
+    constrained_count = len(
+        get_constrained_neighbors(coord,inp, assignments))
+    if constrained_count > most_constraining_count:
+        most_constraining_count = constrained_count
+        most_constraining_var = coord
+return most_constraining_var
+```
+--v
 ### results
-- blaim implementaion
-- we will get better without it
+- didn't improve
+- made heuristic optional
+
 ---n
 
 ## least constraining value
@@ -539,18 +553,11 @@ return variables_domain
 ## least constraining value
 implementation
 <!-- TODO simplify this -->
-```python
-smallest_number_of_constraints = math.inf
+```python [2|3,4|8,9|11|12|17]
 count_value_ordered = []
-
-variables = free_vars({**{coord: 'holder'}, **assignments}, inp)
-domain = variables_domain[coord]
 for value in domain:
-    updated_connected_terminals = connected_terminals = refresh_connected_terminals(
-            {coord: value}, {**{coord: value}, **assignments}, connected_terminals, initial_state, inp)
     updated_variable_domains = get_available_domain_multiple(
-        initial_state, variables, {**{coord: value}, **assignments}, inp, updated_connected_terminals,
-         variables_domain, coord, None, connected_terminals)
+        {**{coord: value}, **assignments}, inp, coord,)
     count_constrained = 0
     
     for coord in updated_variable_domains:
@@ -558,7 +565,6 @@ for value in domain:
             count_constrained += 1
 
     count_value_ordered.append((count_constrained, value))
-
 count_value_ordered.sort()
 order_domain_values = []
 for count, value in count_value_ordered:
@@ -566,11 +572,19 @@ for count, value in count_value_ordered:
 
 return order_domain_values
 ```
+<!-- .element: class="r-stretch" style="font-size: 20px" -->
 --v
-
 ### for 1414
-- explain the initial choice
----
+![](images/14x14_initial.png)
+--v
+### for 1414
+![](images/14x14_point_of_interset.svg)
+--v
+### for 1414
+![](images\14x14_choose_white.svg)
+--v
+### for 1414
+![](images/14x14_choose_a.svg)
 --v
 <!-- .slide:  data-transition="none" -->
 #### results
@@ -586,6 +600,7 @@ return order_domain_values
 | 12x14​     | 193 ms​  | 148​            |
 | 14x14​     | 7875 ms​ | 10309​          |
 <!-- .element: class="r-stretch result_table" data-id="table"-->
+times maybe different from pc to another
 <style>
     .result_table > tbody > tr >td {
         font-size: 25px;
@@ -608,6 +623,7 @@ return order_domain_values
 | 12x14​     | <span style="color:aqua"> 163 ms​  | 146​            |
 | 14x14​     | <span style="color:aqua"> 2230 ms​ | 2374​           |
 <!-- .element: class="r-stretch result_table"  data-id="table"-->
+times maybe different from pc to another
 <style>
     .result_table > tbody > tr >td {
         font-size: 25px;
@@ -617,6 +633,13 @@ return order_domain_values
 ---n
 
 # animation
+--v
+# animation
+run flask app
+```bash
+cd src
+python -m flask run
+```
 --v
 <iframe src="http://127.0.0.1:5000/" class="r-stretch"></iframe>
 ---n
