@@ -1,3 +1,69 @@
+# Flow Free
+<!-- .element: class="fragment  highlight-blue" --> 
+By\
+Abdulrahman Ragab\
+Abdullah Khaled\
+Saleh Mahmoud
+---n
+## Project Structure
+![Project Structure](images/codestruct.png)
+---n
+## Coding Style and Considerations 
+We decided to separate our codebase into **very small manageable functions (pure functional programming).**
+### But Why?
+<!-- .element: class="fragment  highlight-blue" --> 
+* Easier to test and track single elements
+* More beneficial _Profiling_
+---n
+## Constraints
+--v
+## Is good combination, not the best name 😅
+Describes if putting the next assignment will be a good idea!  For its position and the neighboring ones
+--v
+## “Good” Combinations
+```[1|2|3|4-5|6]
+Number of free neighbors >= 2 => TRUE
+Number of similar neighbors == 1 
+and Number of similar neighbors == 1 => TRUE
+Number of similar neighbors == 1 and 
+Number of similar neighbors == 1 => TRUE
+Otherwise => FALSE
+```
+--v 
+
+<!-- .slide: data-auto-animate -->
+## THE “good“ combinations?
+1. Higher than 2 free “not assigned” neighbors for the current assignments and the neighboring assignments too.\
+![goodcomb1](images/goodcomb1.png)
+--v
+
+<!-- .slide: data-auto-animate -->
+## THE “good“ combinations?
+2. Single free and single same color neighbor 
+![goodcomb2](images/goodcomb2.png)
+--v
+
+<!-- .slide: data-auto-animate -->
+## THE “good“ combinations?
+3. If we have similar color nodes surrounding our node we make sure that the surrounding square is not filled
+![goodcomb3](images/goodcomb3.png)
+--v
+
+<!-- .slide: data-auto-animate -->
+## Otherwise, we have a mess 😞
+![badcombmess](images/badcombmess.png)
+--v
+## Free neighboring terminals
+The current assignment shouldn't block the neighboring terminals or be the same color if there is a similar color already next to the terminal.
+![bad terminal state](images/bad3.png)
+--v
+## Same color terminals are not connected
+![bad terminal connected](images/badtermcon.png)
+---n
+## Backtracking
+
+---n
+
 # smart solver
 <!-- .element: class="fragment  highlight-blue" --> 
 
