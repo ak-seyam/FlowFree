@@ -61,13 +61,32 @@ The current assignment shouldn't block the neighboring terminals or be the same 
 ![bad terminal connected](images/badtermcon.png)
 ---n
 ## Backtracking
+![backtrack book](images/backtrackbook.png)
+---n
+
+<!-- .slide: data-auto-animate -->
+# Dumb Solver 
+<!-- .element: class="fragment highlight-blue" --> 
+
+---n
+<!-- .slide: data-auto-animate -->
+# Dumb Solver 
+<!-- .element: class="fragment highlight-blue" --> 
+
+```[1|2-3|4|5-6]
+Choose a random value for a random point and check 
+	if it is consistent:
+		assign 
+	otherwise see the next variable 
+	if all variables are not consistent 
+		then return failure, and hence backtrack
+```
 
 ---n
 
 # smart solver
 <!-- .element: class="fragment  highlight-blue" --> 
 
-## flow free
 ---n
 
 ## main components
@@ -160,23 +179,23 @@ def forward_check(variables_domain):
 ## results
 * without forward_check
   | map​ | time​ | Number of hits​ |
-  |------|-------|-----------------|
+  | ---- | ----- | --------------- |
   | 5x5​ | 7 ms​ | 443             |
 --v
 
 <!-- .slide: data-auto-animate -->
 ## results
 * without forward_check
-  | map​ | time​ | Number of hits​ |
-  |------|-------|-----------------|
-  | 5x5​ | 7 ms​ | 443 <!-- .element: class="fragment  highlight-red" -->            |
+  | map​ | time​ | Number of hits​                                        |
+  | ---- | ----- | ------------------------------------------------------ |
+  | 5x5​ | 7 ms​ | 443 <!-- .element: class="fragment  highlight-red" --> |
 
 
 * with forward_check
  <!-- .element: style="margin-top:100px" -->
-  | map​ | time​ | Number of hits​ |
-  |------|-------|-----------------|
-  | 5x5​ | 9 ms​ | 28​ <!-- .element: class="fragment  highlight-blue" -->             |
+  | map​ | time​ | Number of hits​                                         |
+  | ---- | ----- | ------------------------------------------------------- |
+  | 5x5​ | 9 ms​ | 28​ <!-- .element: class="fragment  highlight-blue" --> |
 ---n
 
 <!-- .slide: data-auto-animate -->
@@ -222,12 +241,12 @@ applying to 5x5
 
 #### results *
 <!-- https://github.com/A-Siam/FlowFree/pull/2 -->
-| map  | time (s) |
-| ---- | -------- |
-| 7x7  |  1.87    |
-| 8x8  |  1.73    |
-| 9x9  |  6.87    |
-| 10x10  |  ?.??    |
+| map   | time (s) |
+| ----- | -------- |
+| 7x7   | 1.87     |
+| 8x8   | 1.73     |
+| 9x9   | 6.87     |
+| 10x10 | ?.??     |
 
 
 --v
@@ -277,15 +296,15 @@ profile for 991
 
 #### results
 <!-- https://github.com/A-Siam/FlowFree/pull/2 -->
-| map  | time (s) |
-| ---- | -------- |
-| 7x7  |  0.085    |
-| 8x8  |  0.157    |
-| 9x9  |  0.858    |
-| 10x10(1)  |  3.300    |
-| 10x10(2)  |  1.680    |
-| 12x12  |  14.971    |
-| 12x14  |  ??.???    |
+| map      | time (s) |
+| -------- | -------- |
+| 7x7      | 0.085    |
+| 8x8      | 0.157    |
+| 9x9      | 0.858    |
+| 10x10(1) | 3.300    |
+| 10x10(2) | 1.680    |
+| 12x12    | 14.971   |
+| 12x14    | ??.???   |
 <!-- .element: class="r-stretch" -->
 --v
 
@@ -400,15 +419,15 @@ return variables_domain
 </style>
 #### results
 | map​       | time​    | Number of hits​ |
-|------------|----------|-----------------|
+| ---------- | -------- | --------------- |
 | 5x5​       | 6 ms​    | 17​             |
-| 7x7​       | 16 ms​    | 41​             |
+| 7x7​       | 16 ms​   | 41​             |
 | 8x8​       | 30 ms​   | 52​             |
-| 9x9 (1)​   | 57 ms​    | 67​             |
-| 10x10 (1)​ | 189 ms​   | 320​            |
-| 10x10(2)​  | 93 ms​    | 139​            |
-| 12x12​     | 290 ms​   | 331​            |
-| 12x14​     | 193 ms​   | 148​            |
+| 9x9 (1)​   | 57 ms​   | 67​             |
+| 10x10 (1)​ | 189 ms​  | 320​            |
+| 10x10(2)​  | 93 ms​   | 139​            |
+| 12x12​     | 290 ms​  | 331​            |
+| 12x14​     | 193 ms​  | 148​            |
 | 14x14​     | 7875 ms​ | 10309​          |
 <!-- .element: class="r-stretch" id="result_table"-->
 ---n
@@ -466,15 +485,15 @@ return order_domain_values
 <!-- .slide:  data-transition="none" -->
 #### results
 | map​       | time​    | Number of hits​ |
-|------------|----------|-----------------|
+| ---------- | -------- | --------------- |
 | 5x5​       | 6 ms​    | 17​             |
-| 7x7​       | 16 ms​    | 41​             |
+| 7x7​       | 16 ms​   | 41​             |
 | 8x8​       | 30 ms​   | 52​             |
-| 9x9 (1)​   | 57 ms​    | 67​             |
-| 10x10 (1)​ | 189 ms​   | 320​            |
-| 10x10(2)​  | 93 ms​    | 139​            |
-| 12x12​     | 290 ms​   | 331​            |
-| 12x14​     | 193 ms​   | 148​            |
+| 9x9 (1)​   | 57 ms​   | 67​             |
+| 10x10 (1)​ | 189 ms​  | 320​            |
+| 10x10(2)​  | 93 ms​   | 139​            |
+| 12x12​     | 290 ms​  | 331​            |
+| 12x14​     | 193 ms​  | 148​            |
 | 14x14​     | 7875 ms​ | 10309​          |
 <!-- .element: class="r-stretch result_table" data-id="table"-->
 <style>
@@ -487,17 +506,17 @@ return order_domain_values
 
 <!-- .slide:  data-transition="none" -->
 #### results
-| map​       | time​    | Number of hits​ |
-|------------|----------|-----------------|
-| 5x5​       | 5 ms​    | 17​             |
-| 7x7​       | 16 ms     | 56​             |
-| 8x8​       | 23 ms​    | 52​             |
-| 9x9 (1)​   | 65 ms​    | 100             |
-| 10x10 (1)​ | 166 ms​   | 330​            |
-| 10x10(2)​  |<span style="color:red"> 240 ms​    | 482           |
-| 12x12​     |<span style="color:red"> 838 ms​    | 1178            |
-| 12x14​     |<span style="color:aqua"> 163 ms​   | 146​            |
-| 14x14​     |<span style="color:aqua"> 2230 ms​| 2374​          |
+| map​       | time​                              | Number of hits​ |
+| ---------- | ---------------------------------- | --------------- |
+| 5x5​       | 5 ms​                              | 17​             |
+| 7x7​       | 16 ms                              | 56​             |
+| 8x8​       | 23 ms​                             | 52​             |
+| 9x9 (1)​   | 65 ms​                             | 100             |
+| 10x10 (1)​ | 166 ms​                            | 330​            |
+| 10x10(2)​  | <span style="color:red"> 240 ms​   | 482             |
+| 12x12​     | <span style="color:red"> 838 ms​   | 1178            |
+| 12x14​     | <span style="color:aqua"> 163 ms​  | 146​            |
+| 14x14​     | <span style="color:aqua"> 2230 ms​ | 2374​           |
 <!-- .element: class="r-stretch result_table"  data-id="table"-->
 <style>
     .result_table > tbody > tr >td {
