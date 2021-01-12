@@ -643,3 +643,29 @@ python -m flask run
 --v
 <iframe src="http://127.0.0.1:5000/" class="r-stretch"></iframe>
 ---n
+
+# <span class="fragment highlight-blue"> Smarter solver <span>
+using directions
+--v
+* We used direction values instead of color values.
+* Directions offers better arc consistency
+* Values domain is 
+    
+  `{'└', '┌', '│', '┘', '─', '┐'}`
+* We can use initially_forced constrains
+--v
+* Four corners have initial single domain value propagating until hitting a number.
+* Border variables has three values domain.
+![](images/smarter_1.png)
+![](images/smarter_2.png)
+--v
+* Directions have powerful arc consistency that can be used initially to eliminate domain values.
+![](images/smarter_3.png)
+--v
+* After forced elimination of domain values we can start assignment.
+* We should start by one-domain-value variables
+* After every assignment, the neighbor variables domains is affected 
+--v
+* We should add variables for colors to check that the correct colors are connected together.
+* The directions method solver have almost 3 values domain after initial eliminations
+* This is very good branch factor compared to other methods.
