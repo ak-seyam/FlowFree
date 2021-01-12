@@ -649,10 +649,11 @@ using directions
 --v
 * We used direction values instead of color values.
 * Directions offers better arc consistency
-* Values domain is 
-    
-  `{'└', '┌', '│', '┘', '─', '┐'}`
+<!-- .element: class="fragment" -->
+* Values domain is <!-- .element: class="fragment" --><br/>`{'└', '┌', '│', '┘', '─', '┐'}`
+<!-- .element: class="fragment" -->
 * We can use initially_forced constrains
+<!-- .element: class="fragment" -->
 --v
 * Four corners have initial single domain value propagating until hitting a number.
 * Border variables has three values domain.
@@ -664,8 +665,14 @@ using directions
 --v
 * After forced elimination of domain values we can start assignment.
 * We should start by one-domain-value variables
+<!-- .element: class="fragment" -->
 * After every assignment, the neighbor variables domains is affected 
+<!-- .element: class="fragment" -->
+
 --v
 * We should add variables for colors to check that the correct colors are connected together.
 * The directions method solver have almost 3 values domain after initial eliminations
+<!-- .element: class="fragment" -->
+
 * This is very good branch factor compared to other methods.
+<!-- .element: class="fragment" -->
