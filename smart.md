@@ -319,10 +319,21 @@ profile for 991
 <!-- .slide: data-auto-animate -->
 ### lazy surrounding squares
 #### implementation
-```python
-
+```python[7-10]
+def check_for_good_combinations(coord, current_color, assignments, inp):
+    empty_neighbors = search_around(coord, inp, assignments, is_empty)
+    if len(empty_neighbors) >= 2:
+        return True
+    same_color_neighbors = get_same_color_neighbors(
+        coord, current_color, assignments, inp)
+    if len(same_color_neighbors) == 2:
+        # we don't need is surrounding square anywhere but here
+        ssf = is_surrounding_square_filled(assignments,inp,coord)
+        return not ssf
+    if len(empty_neighbors) == 1 and len(same_color_neighbors) == 1:
+        return True
+    return False
 ```
-
 --v
 <!-- .slide: data-auto-animate -->
 ### lazy surrounding squares
@@ -336,6 +347,56 @@ profile for 991
 <!-- .element: class="r-stretch" -->
 
 --v
+<!-- .slide: data-auto-animate -->
+### Cache connected terminals
+We can cache connected terminals to quickly check whether or not the selected value is consistent\
+Using a shared object between backtracks that gets updated only when a variable is consistent 
+
+--v 
+<!-- .slide: data-auto-animate -->
+### Cache connected terminals
+<!-- .slide: data-auto-animate -->
+#### Implementation
+Inside backtrack 
+
+```python
+if is_consistant(initial_state, {var: value},  assignments, inp, connected_terminals):
+    before_assgen_connected_terminal = connected_terminals
+    refreshed_connected_terminals = refresh_connected_terminals( {var: value}, assignments, connected_terminals, initial_state, inp)
+```
+--v
+<!-- .slide: data-auto-animate -->
+### Cache connected terminals
+<!-- .slide: data-auto-animate -->
+#### Implementation
+Refreshing procedure
+```python[1-3|5-12]
+def refresh_connected_terminals(current_assignment, assignments, connected_terminals, initial_state, inp) -> set:
+    current_assignment_coord = list(current_assignment.keys())[0]
+    current_assignment_color = current_assignment[current_assignment_coord]
+
+    terminal_connected = is_terminals_connect(
+        initial_state, current_assignment_color, inp, assignments)
+    if terminal_connected:
+        connected_terminals = connected_terminals.copy()
+        connected_terminals.add(current_assignment_color.upper())
+        return connected_terminals
+
+    return connected_terminals
+```
+--v
+<!-- .slide: data-auto-animate -->
+### Cache connected terminals
+#### Results
+| map      | time (s) |
+| -------- | -------- |
+| 10x10(1) | 1.49    |
+| 10x10(2) | 0.728    |
+| 12x12    | 5.38   |
+| 12x14    | ??.???   |
+<!-- .element: class="r-stretch" -->
+
+--v 
 
 <!-- .slide: data-auto-animate -->
 ### dynamic domain-upgrade
