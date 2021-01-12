@@ -632,18 +632,6 @@ times maybe different from pc to another
 </style>
 ---n
 
-# animation
---v
-# animation
-run flask app
-```bash
-cd src
-python -m flask run
-```
---v
-<iframe src="http://127.0.0.1:5000/" class="r-stretch"></iframe>
----n
-
 # <span class="fragment highlight-blue"> Smarter solver <span>
 using directions
 --v
@@ -676,3 +664,38 @@ using directions
 
 * This is very good branch factor compared to other methods.
 <!-- .element: class="fragment" -->
+---n
+# animation
+--v
+# animation
+run flask app
+```bash
+cd src
+python -m flask run
+```
+--v
+<iframe src="http://127.0.0.1:5000/" class="r-stretch"></iframe>
+
+--v
+<!-- .slide:  data-transition="none" -->
+#### results
+configuration {colors, MRV ,LCV}
+
+| map​       | time​                              | Number of hits​ |
+| ---------- | ---------------------------------- | --------------- |
+| 5x5​       | 5 ms​                              | 17​             |
+| 7x7​       | 16 ms                              | 56​             |
+| 8x8​       | 23 ms​                             | 52​             |
+| 9x9 (1)​   | 65 ms​                             | 100             |
+| 10x10 (1)​ | 166 ms​                            | 330​            |
+| 10x10(2)​  | 240 ms​   | 482             |
+| 12x12​     | 838 ms​   | 1178            |
+| 12x14​     | 163 ms​  | 146​            |
+| 14x14​     | 2230 ms​ | 2374​           |
+<!-- .element: class="r-stretch result_table"  data-id="table"-->
+<style>
+    .result_table > tbody > tr >td {
+        font-size: 25px;
+    }
+
+</style>
