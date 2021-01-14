@@ -17,12 +17,12 @@ We decided to separate our codebase into **very small manageable functions (pure
 ---n
 ## Constraints
 --v
-## Is surrounded squre filled
+## Is surrounded square filled
 ```
-Number of nieghbours with the same color < 4
+Number of neighbors with the same color < 4
 ```
 ![ss](./images/Picture1.png)
-
+<!-- .element: class="r-stretch"-->
 --v
 ## Is good combination, not the best name 😅
 Describes if putting the next assignment will be a good idea!  For its position and the neighboring ones
@@ -42,18 +42,21 @@ Otherwise => FALSE
 ## THE “good“ combinations?
 1. Higher than 2 free “not assigned” neighbors for the current assignments and the neighboring assignments too.\
 ![goodcomb1](images/goodcomb1.png)
+
 --v
 
 <!-- .slide: data-auto-animate -->
 ## THE “good“ combinations?
 2. Single free and single same color neighbor 
 ![goodcomb2](images/goodcomb2.png)
+
 --v
 
 <!-- .slide: data-auto-animate -->
 ## THE “good“ combinations?
 3. If we have similar color nodes surrounding our node we make sure that the surrounding square is not filled
 ![goodcomb3](images/goodcomb3.png)
+
 --v
 
 <!-- .slide: data-auto-animate -->
@@ -63,6 +66,8 @@ Otherwise => FALSE
 ## Free neighboring terminals
 The current assignment shouldn't block the neighboring terminals or be the same color if there is a similar color already next to the terminal.
 ![bad terminal state](images/bad3.png)
+<!-- .element: class="r-stretch"-->
+
 --v
 ## Same color terminals are not connected
 ![bad terminal connected](images/badtermcon.png)
