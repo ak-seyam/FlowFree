@@ -1,0 +1,116 @@
+map ../input/input55.txt solution time = 0.005002737045288086 sec
+map ../input/input55.txt number of hits = [17] 
+BrrRO
+bryYo
+brYoo
+bROoG
+bBGgg
+-------------------
+map ../input/input77.txt solution time = 0.01697063446044922 sec
+map ../input/input77.txt number of hits = [56] 
+gggOooo
+gBggGYo
+gbbBRyo
+gyyYryo
+gyrrryo
+gyRyyyo
+GyyyOoo
+-------------------
+map ../input/input88.txt solution time = 0.023000001907348633 sec
+map ../input/input88.txt number of hits = [52] 
+yyyRrrGg
+yBYPprrg
+yboOpGRg
+yboPpggg
+ybooooYy
+ybbbBOQy
+yQqqqqqy
+yyyyyyyy
+-------------------
+map ../input/input991.txt solution time = 0.06594991683959961 sec
+map ../input/input991.txt number of hits = [100] 
+DbbBOKkkk
+dbOooRrrk
+dbRQqqQrk
+DBrrrrrrk
+gGkkkkkkk
+gkkPppppG
+gkYyyyYpg
+gkkkkkKPg
+ggggggggg
+-------------------
+map ../input/input10101.txt solution time = 0.16699814796447754 sec
+map ../input/input10101.txt number of hits = [330] 
+RGgggggggg
+rrrrOoooOg
+yYPrQqqqQg
+ypprrrrrrg
+ypGgbbbbrg
+yppgbrRbrg
+yypgbrBbrg
+Pypgbrrrrg
+pYpgbbbbBg
+pppggggggg
+-------------------
+map ../input/input10102.txt solution time = 0.24605417251586914 sec
+map ../input/input10102.txt number of hits = [482] 
+tttppppppp
+tBtpfffffp
+tbTPFBTVfp
+tbbbbbtvfp
+tttttttvfP
+Fnnnnnnvff
+fnssssnvvf
+fnSNHSNHvf
+fnnnhhhhVf
+ffffffffff
+-------------------
+map ../input/input1212.txt solution time = 0.8389444351196289 sec
+map ../input/input1212.txt number of hits = [1178] 
+kkkkkkkkkkkk
+kooooooooook
+kokkkKyYgGok
+kokYyyyGgook
+kOkPpoooooQk
+kkkRpOQqqqqk
+rrrrPaARKkkk
+rDddDaWrrrrr
+raaaaawwwwWr
+raBbbbbbbbBr
+raaaaaaaaaAr
+rrrrrrrrrrrr
+-------------------
+map ../input/input1214.txt solution time = 0.16399812698364258 sec
+map ../input/input1214.txt number of hits = [146] 
+pppPkkkkkkkK
+pggGkggGaaaA
+pgkkkgPaaYyY
+pgkqQgpaBbbb
+pgKqggpADddb
+pggqgNpDOodB
+ppgqgnpddodd
+WpgQgnppdoRd
+wpgggnNpdord
+wpppppppdord
+wwwwwwwWdord
+dddddddddOrd
+dRrrrrrrrrrd
+dddddddddddd
+-------------------
+map ../input/input1414.txt solution time = 2.230055093765259 sec
+map ../input/input1414.txt number of hits = [2374] 
+oooowwwwwkkkkk
+oBbowAaawkpppk
+oobowwWawkpRPk
+DobooAaaWkprkk
+dobboooOBkprkG
+dOYbbbbbbKprkg
+ddyyyyyyyDprkg
+Gdddddddydprkg
+grrrrrRdYdprkg
+grqqqqQdddprkg
+grqpppppppprkg
+grQPrrrrrrrrkg
+grrrrKkkkkkkkg
+gggggggggggggg
+-------------------
