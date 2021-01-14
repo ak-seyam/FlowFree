@@ -83,7 +83,7 @@ used combination:
 * find domain for variables
 * if variable has zero domain 
 * return case failure
-```python [|3]
+```python
 def forward_check(variables_domain):
     for coords in variables_domain:
         if len(variables_domain[coords]) == 0:
@@ -95,6 +95,7 @@ def forward_check(variables_domain):
 **5x5**
 ## results
 * without forward_check
+
   | map​ | time​ | Number of hits​                                        |
   | ---- | ----- | ------------------------------------------------------ |
   | 5x5​ | 7 ms​ | 443  |
@@ -107,18 +108,13 @@ def forward_check(variables_domain):
   | 5x5​ | 9 ms​ | 28​ 
 
 
-
-
-
-
-
-
 ## MRV
+
 * find domain for variables
 * choose variables with smallest domain
 
 * implementation pseudo code
-```python [1-2|3|5|9,10]
+```python
     smallest_domain = math.inf
     selected_coords = []
     for coord in variables_domain:
@@ -187,7 +183,7 @@ profile for 991
 
 
 #### implementation
-```python[7-10]
+```python
 def check_for_good_combinations(coord, current_color, assignments, inp):
     empty_neighbors = search_around(coord, inp, assignments, is_empty)
     if len(empty_neighbors) >= 2:
@@ -212,6 +208,7 @@ def check_for_good_combinations(coord, current_color, assignments, inp):
 | 12x14    | ??.???   |
 
 --------
+
 ## Cache connected terminals
 We can cache connected terminals to quickly check whether or not the selected value is consistent\
 Using a shared object between backtracks that gets updated only when a variable is consistent 
@@ -248,7 +245,7 @@ if is_consistant(initial_state, {var: value},  assignments, inp, connected_termi
       <span class="fragment highlight-blue"> (terminal connected) </span> </span>
 
 implementation
-```python [2,4|5,6|11,12|13|14]
+```python 
 variables_domain = {}
 connection_changed = len(connected_terminals)>len(prev_connected_terminal)
 first_run = prev_variable == None
@@ -286,7 +283,7 @@ return variables_domain
 - use as tie breaker
 - choose variable that constrain others
 implementation
-```python [2|5|8]
+```python
 most_constraining_count = -math.inf
 for coord in variables:
     constrained_count = len(
@@ -306,7 +303,7 @@ return most_constraining_var
 
 implementation
 <!-- TODO simplify this -->
-```python [2|3,4|8,9|11|12|17]
+```python 
 count_value_ordered = []
 for value in domain:
     updated_variable_domains = get_available_domain_multiple(
