@@ -55,7 +55,6 @@ For graphical results see figure 1.
 
 ![5x5 solution graphical](assets/55dumb.png)
 
-\
 ```
 map ../input/input55.txt solution time = 0.005998373031616211 sec
 map ../input/input55.txt number of hits = [443] 
@@ -336,161 +335,6 @@ return order_domain_values
 | 12x14​     | <span style="color:aqua"> 163 ms​  | 146​            |
 | 14x14​     | <span style="color:aqua"> 2230 ms​ | 2374​           |
 
-**7x7**
-
-for graphical results see figure 2.
-
-![7x7 output of smart algorithm](assets/77smrt.png)
-
-```
-gggOooo
-gBggGYo
-gbbBRyo
-gyyYryo
-gyrrryo
-gyRyyyo
-GyyyOoo
-```
-
-**8x8**
-
-for graphical results see figure 3.
-
-![8x8 output of smart algorithm](assets/88smrt.png)
-
-```
-yyyRrrGg
-yBYPprrg
-yboOpGRg
-yboPpggg
-ybooooYy
-ybbbBOQy
-yQqqqqqy
-yyyyyyyy
-```
-
-**9x9**
-
-for graphical results see figure 4.
-
-![9x9 output of smart algorithm](assets/99smrt.png)
-
-```
-DbbBOKkkk
-dbOooRrrk
-dbRQqqQrk
-DBrrrrrrk
-gGkkkkkkk
-gkkPppppG
-gkYyyyYpg
-gkkkkkKPg
-ggggggggg
-```
-
-**10x10 1**
-
-for graphical results see figure 5.
-
-![10x10_1 output of smart algorithm](assets/10101smrt.png)
-
-```
-RGgggggggg
-rrrrOoooOg
-yYPrQqqqQg
-ypprrrrrrg
-ypGgbbbbrg
-yppgbrRbrg
-yypgbrBbrg
-Pypgbrrrrg
-pYpgbbbbBg
-pppggggggg
-```
-
-**10x10 2**
-
-for graphical results see figure 6.
-
-![10x10_2 output of smart algorithm](assets/10102smrt.png)
-
-```
-tttppppppp
-tBtpfffffp
-tbTPFBTVfp
-tbbbbbtvfp
-tttttttvfP
-Fnnnnnnvff
-fnssssnvvf
-fnSNHSNHvf
-fnnnhhhhVf
-ffffffffff
-```
-
-**12x12**
-
-for graphical results see figure 7.
-
-![12x12 output of smart algorithm](assets/1212smrt.png)
-
-```
-kkkkkkkkkkkk
-kooooooooook
-kokkkKyYgGok
-kokYyyyGgook
-kOkPpoooooQk
-kkkRpOQqqqqk
-rrrrPaARKkkk
-rDddDaWrrrrr
-raaaaawwwwWr
-raBbbbbbbbBr
-raaaaaaaaaAr
-rrrrrrrrrrrr
-```
-
-**12x14**
-
-for graphical results see figure 8.
-
-![12x14 output of smart algorithm](assets/1214smrt.png)
-
-```
-pppPkkkkkkkK
-pggGkggGaaaA
-pgkkkgPaaYyY
-pgkqQgpaBbbb
-pgKqggpADddb
-pggqgNpDOodB
-ppgqgnpddodd
-WpgQgnppdoRd
-wpgggnNpdord
-wpppppppdord
-wwwwwwwWdord
-dddddddddOrd
-dRrrrrrrrrrd
-dddddddddddd
-```
-
-**14x14**
-
-for graphical results see figure 9.
-
-![14x14 output of smart algorithm](assets/1414smrt.png)
-
-```
-oooowwwwwkkkkk
-oBbowAaawkpppk
-oobowwWawkpRPk
-DobooAaaWkprkk
-dobboooOBkprkG
-dOYbbbbbbKprkg
-ddyyyyyyyDprkg
-Gdddddddydprkg
-grrrrrRdYdprkg
-grqqqqQdddprkg
-grqpppppppprkg
-grQPrrrrrrrrkg
-grrrrKkkkkkkkg
-gggggggggggggg
-```
 
 # <span class="fragment highlight-blue"> Smarter solver <span>
 using directions
@@ -524,8 +368,203 @@ using directions
 
 * This is very good branch factor compared to other methods.
 
-# animation
-5x5
+# final results
+| map​       | time​                              | Number of hits​ |
+| ---------- | ---------------------------------- | --------------- |
+| 5x5​       | 5 ms​                              | 17​             |
+| 7x7​       | 16 ms                              | 56​             |
+| 8x8​       | 23 ms​                             | 52​             |
+| 9x9 (1)​   | 65 ms​                             | 100             |
+| 10x10 (1)​ | 166 ms​                            | 330​            |
+| 10x10(2)​  |  240 ms​   | 482             |
+| 12x12​     |  838 ms​   | 1178            |
+| 12x14​     |  163 ms​  | 146​            |
+| 14x14​     |  2230 ms​ | 2374​           |
+
+
+## **5x5:**
+
+For graphical results see figure 1.
+```
+map ../input/input55.txt solution time = 0.005002737045288086 sec
+map ../input/input55.txt number of hits = [17] 
+BrrRO
+bryYo
+brYoo
+bROoG
+bBGgg
+```
+![5x5 solution graphical](assets/55dumb.png)
+
+
+## **7x7**
+
+for graphical results see figure 2.
+
+```
+map ../input/input77.txt solution time = 0.01697063446044922 sec
+map ../input/input77.txt number of hits = [56] 
+gggOooo
+gBggGYo
+gbbBRyo
+gyyYryo
+gyrrryo
+gyRyyyo
+GyyyOoo
+```
+![7x7 output of smart algorithm](assets/77smrt.png)
+
+## **8x8**
+
+for graphical results see figure 3.
+
+```
+map ../input/input88.txt solution time = 0.023000001907348633 sec
+map ../input/input88.txt number of hits = [52] 
+yyyRrrGg
+yBYPprrg
+yboOpGRg
+yboPpggg
+ybooooYy
+ybbbBOQy
+yQqqqqqy
+yyyyyyyy
+```
+![8x8 output of smart algorithm](assets/88smrt.png)
+
+## **9x9**
+
+for graphical results see figure 4.
+
+```
+map ../input/input991.txt solution time = 0.06594991683959961 sec
+map ../input/input991.txt number of hits = [100] 
+DbbBOKkkk
+dbOooRrrk
+dbRQqqQrk
+DBrrrrrrk
+gGkkkkkkk
+gkkPppppG
+gkYyyyYpg
+gkkkkkKPg
+ggggggggg
+```
+![9x9 output of smart algorithm](assets/99smrt.png)
+
+## **10x10 1**
+
+for graphical results see figure 5.
+
+
+```
+map ../input/input10101.txt solution time = 0.16699814796447754 sec
+map ../input/input10101.txt number of hits = [330] 
+RGgggggggg
+rrrrOoooOg
+yYPrQqqqQg
+ypprrrrrrg
+ypGgbbbbrg
+yppgbrRbrg
+yypgbrBbrg
+Pypgbrrrrg
+pYpgbbbbBg
+pppggggggg
+```
+![10x10_1 output of smart algorithm](assets/10101smrt.png)
+
+## **10x10 2**
+
+for graphical results see figure 6.
+
+
+```
+map ../input/input10102.txt solution time = 0.24605417251586914 sec
+map ../input/input10102.txt number of hits = [482] 
+tttppppppp
+tBtpfffffp
+tbTPFBTVfp
+tbbbbbtvfp
+tttttttvfP
+Fnnnnnnvff
+fnssssnvvf
+fnSNHSNHvf
+fnnnhhhhVf
+ffffffffff
+```
+![10x10_2 output of smart algorithm](assets/10102smrt.png)
+
+## **12x12**
+
+for graphical results see figure 7.
+
+![12x12 output of smart algorithm](assets/1212smrt.png)
+
+```
+map ../input/input1212.txt solution time = 0.8389444351196289 sec
+map ../input/input1212.txt number of hits = [1178] 
+kkkkkkkkkkkk
+kooooooooook
+kokkkKyYgGok
+kokYyyyGgook
+kOkPpoooooQk
+kkkRpOQqqqqk
+rrrrPaARKkkk
+rDddDaWrrrrr
+raaaaawwwwWr
+raBbbbbbbbBr
+raaaaaaaaaAr
+rrrrrrrrrrrr
+```
+
+## **12x14**
+
+for graphical results see figure 8.
+
+
+```
+map ../input/input1214.txt solution time = 0.16399812698364258 sec
+map ../input/input1214.txt number of hits = [146] 
+pppPkkkkkkkK
+pggGkggGaaaA
+pgkkkgPaaYyY
+pgkqQgpaBbbb
+pgKqggpADddb
+pggqgNpDOodB
+ppgqgnpddodd
+WpgQgnppdoRd
+wpgggnNpdord
+wpppppppdord
+wwwwwwwWdord
+dddddddddOrd
+dRrrrrrrrrrd
+dddddddddddd
+```
+![12x14 output of smart algorithm](assets/1214smrt.png)
+
+**14x14**
+
+for graphical results see figure 9.
+
+
+```
+map ../input/input1414.txt solution time = 2.230055093765259 sec
+map ../input/input1414.txt number of hits = [2374] 
+oooowwwwwkkkkk
+oBbowAaawkpppk
+oobowwWawkpRPk
+DobooAaaWkprkk
+dobboooOBkprkG
+dOYbbbbbbKprkg
+ddyyyyyyyDprkg
+Gdddddddydprkg
+grrrrrRdYdprkg
+grqqqqQdddprkg
+grqpppppppprkg
+grQPrrrrrrrrkg
+grrrrKkkkkkkkg
+gggggggggggggg
+```
+![14x14 output of smart algorithm](assets/1414smrt.png)
 
 ## References
 Russell, S. J. (2016). Artificial intelligence: A modern approach. Harlow: Pearson.
