@@ -31,9 +31,9 @@ Describes if putting the next assignment will be a good idea!  For its position 
 ```[1|2|3|4-5|6]
 Number of free neighbors >= 2 => TRUE
 Number of similar neighbors == 1 
-and Number of similar neighbors == 1 => TRUE
-Number of similar neighbors == 1 and 
-Number of similar neighbors == 1 => TRUE
+and Number of empty neighbors == 1 => TRUE
+Number of same color neighbours == 1 and 
+No surrounded square filled => TRUE
 Otherwise => FALSE
 ```
 --v 
