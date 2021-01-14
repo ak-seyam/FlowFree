@@ -49,7 +49,6 @@ Picking a random value and random variable each time check whether or not this a
 
 #### Results
 \
-\
 **5x5:**
 
 For graphical results see figure 1.
@@ -58,7 +57,8 @@ For graphical results see figure 1.
 
 \
 ```
-map ../input/input55.txt solution time = 0.0074388980865478516 sec
+map ../input/input55.txt solution time = 0.005998373031616211 sec
+map ../input/input55.txt number of hits = [443] 
 BrrRO
 bryYo
 brYoo
@@ -73,21 +73,271 @@ TimeOut!
 ### Smart Algorithm
 Using a combination of helping heuristics and approaches that can be controlled via `config` dict in `src/algorithms/smart.py` including **MRV** to chose the next variable, **LCV** for choosing the value, **Degree Heuristics** as a tie breaker and **Weak locker** these heuristic are _"togglable"_ due to optimization issues, check optimization labeled PRs for more information.
 
+used combination:
+* Forward checking ​
+* MRV (minimum remaining value)​
+* Degree heuristic​
+* Least constraining value​
+
+# forward checking
+* find domain for variables
+* if variable has zero domain 
+* return case failure
+```python [|3]
+def forward_check(variables_domain):
+    for coords in variables_domain:
+        if len(variables_domain[coords]) == 0:
+            return False
+    return True
+```
 #### Results
 \
-\
 **5x5**
+## results
+* without forward_check
+  | map​ | time​ | Number of hits​                                        |
+  | ---- | ----- | ------------------------------------------------------ |
+  | 5x5​ | 7 ms​ | 443  |
 
-For graphical See the results in figure 1.
 
+* with forward_check
+ 
+  | map​ | time​ | Number of hits​                                         |
+  | ---- | ----- | ------------------------------------------------------- |
+  | 5x5​ | 9 ms​ | 28​ 
+
+
+
+
+
+
+
+
+## MRV
+* find domain for variables
+* choose variables with smallest domain
+
+* implementation pseudo code
+```python [1-2|3|5|9,10]
+    smallest_domain = math.inf
+    selected_coords = []
+    for coord in variables_domain:
+        domain_len = len(variables_domain[coord])
+        if domain_len < smallest_domain:
+            selected_coords = []
+            smallest_domain = domain_len
+
+        if smallest_domain == domain_len:
+            selected_coords.append(coord)
+
+    return selected_coords
 ```
-map ../input/input55.txt solution time = 0.0058176517486572266 sec
-BrrRO
-bryYo
-brYoo
-bROoG
-bBGgg
+
+#### initial results * 
+<!-- https://github.com/A-Siam/FlowFree/pull/2 -->
+| map   | time (s) |
+| ----- | -------- |
+| 7x7   | 1.87     |
+| 8x8   | 1.73     |
+| 9x9   | 6.87     |
+| 10x10 | ?.??     |
+
+# optimization
+### limitation
+* variable domain calculation increase with map size
+
+  * example 
+    * 14x14 every time calculate domain <br/>
+      for (196 - terminals) variable
+  * solution
+
+    * update only constrained variables
+
+* consistency check represent the bottleneck
+
+## improvement in constrains
+profile for 991
+![](doc/presentaion/smart_reveal/images/bad_constrain.png)
+
+<span> terminal constrain was checking <span class="fragment highlight-red"> every </span>terminal has only on path </span>
+
+### update
+<span> check only <span class="fragment highlight-blue"> neighbor </span> terminals </span>
+this improved performance significantly
+
+profile for 991
+![](doc/presentaion/smart_reveal/images/good_constrain.png)
+
+#### results
+| map      | time (s) |
+| -------- | -------- |
+| 7x7      | 0.085    |
+| 8x8      | 0.157    |
+| 9x9      | 0.858    |
+| 10x10(1) | 3.300    |
+| 10x10(2) | 1.680    |
+| 12x12    | 14.971   |
+| 12x14    | ??.???   |
+
+## lazy surrounding squares
+<span> check surrounding squares "zigzag" only when have<span style="color: #1B91FF "> 2 same color neighbors. </span>Because if we have a good combination we are in one of these two cases</span>
+
+*  only <span style="color: #1B91FF ">one free neighbor and same color neighbor</span> (no squares)
+*  only <span style="color: #1B91FF ">2 or more free neighbors</span> (no squares)
+
+
+#### implementation
+```python[7-10]
+def check_for_good_combinations(coord, current_color, assignments, inp):
+    empty_neighbors = search_around(coord, inp, assignments, is_empty)
+    if len(empty_neighbors) >= 2:
+        return True
+    same_color_neighbors = get_same_color_neighbors(
+        coord, current_color, assignments, inp)
+    if len(same_color_neighbors) == 2:
+        # we don't need is surrounding square anywhere but here
+        ssf = is_surrounding_square_filled(assignments,inp,coord)
+        return not ssf
+    if len(empty_neighbors) == 1 and len(same_color_neighbors) == 1:
+        return True
+    return False
 ```
+
+#### Results
+| map      | time (s) |
+| -------- | -------- |
+| 10x10(1) | 2.26    |
+| 10x10(2) | 1.09    |
+| 12x12    | 8.72   |
+| 12x14    | ??.???   |
+
+--------
+## Cache connected terminals
+We can cache connected terminals to quickly check whether or not the selected value is consistent\
+Using a shared object between backtracks that gets updated only when a variable is consistent 
+
+#### Implementation
+Inside backtrack 
+
+```python
+if is_consistant(initial_state, {var: value},  assignments, inp, connected_terminals):
+    before_assgen_connected_terminal = connected_terminals
+    refreshed_connected_terminals = refresh_connected_terminals( {var: value}, assignments, connected_terminals, initial_state, inp)
+```
+#### Results
+| map      | time (s) |
+| -------- | -------- |
+| 10x10(1) | 1.49    |
+| 10x10(2) | 0.728    |
+| 12x12    | 5.38   |
+| 12x14    | ??.???   |
+
+-------
+
+### dynamic domain-upgrade
+
+* save variable domain
+* only update <span class="fragment highlight-blue">constrained variables</span>
+
+#### the constrained variables
+  
+  *  are empty neighbor  (point good combination) 
+  * are empty neighbor for occupied neighbor   
+      (point neighbors/terminal combination)
+  * <span class="fragment" > every point when terminal is connected 
+      <span class="fragment highlight-blue"> (terminal connected) </span> </span>
+
+implementation
+```python [2,4|5,6|11,12|13|14]
+variables_domain = {}
+connection_changed = len(connected_terminals)>len(prev_connected_terminal)
+first_run = prev_variable == None
+if connection_changed or first_run:
+    # update all variables
+    for coord in variables:
+        domain = get_available_domain(coord,
+        assignments,connected_terminals)
+        variables_domain[coord] = domain
+else:
+    variables_domain = pickle.loads(pickle.dumps(prev_domain))
+    del variables_domain[prev_variable]
+    big_neighbors = get_constrained_neighbors(prev_variable,inp,assignments )
+    for coord in big_neighbors:
+        domain = get_available_domain(coord, assignments, inp,connected_terminals)
+        variables_domain[coord] = domain
+return variables_domain
+```
+
+#### results
+| map​       | time​    | Number of hits​ |
+| ---------- | -------- | --------------- |
+| 5x5​       | 6 ms​    | 17​             |
+| 7x7​       | 16 ms​   | 41​             |
+| 8x8​       | 30 ms​   | 52​             |
+| 9x9 (1)​   | 57 ms​   | 67​             |
+| 10x10 (1)​ | 189 ms​  | 320​            |
+| 10x10(2)​  | 93 ms​   | 139​            |
+| 12x12​     | 290 ms​  | 331​            |
+| 12x14​     | 193 ms​  | 148​            |
+| 14x14​     | 7875 ms​ | 10309​          |
+
+
+# degree heuristic
+- use as tie breaker
+- choose variable that constrain others
+implementation
+```python [2|5|8]
+most_constraining_count = -math.inf
+for coord in variables:
+    constrained_count = len(
+        get_constrained_neighbors(coord,inp, assignments))
+    if constrained_count > most_constraining_count:
+        most_constraining_count = constrained_count
+        most_constraining_var = coord
+return most_constraining_var
+```
+### results
+- didn't improve
+- made heuristic optional
+
+# least constraining value
+- choose value that doesn't affect domains
+
+
+implementation
+<!-- TODO simplify this -->
+```python [2|3,4|8,9|11|12|17]
+count_value_ordered = []
+for value in domain:
+    updated_variable_domains = get_available_domain_multiple(
+        {**{coord: value}, **assignments}, inp, coord,)
+    count_constrained = 0
+    
+    for coord in updated_variable_domains:
+        if len(updated_variable_domains[coord]) < len(variables_domain[coord]):
+            count_constrained += 1
+
+    count_value_ordered.append((count_constrained, value))
+count_value_ordered.sort()
+order_domain_values = []
+for count, value in count_value_ordered:
+    order_domain_values += value
+
+return order_domain_values
+```
+
+#### results
+| map​       | time​                              | Number of hits​ |
+| ---------- | ---------------------------------- | --------------- |
+| 5x5​       | 5 ms​                              | 17​             |
+| 7x7​       | 16 ms                              | 56​             |
+| 8x8​       | 23 ms​                             | 52​             |
+| 9x9 (1)​   | 65 ms​                             | 100             |
+| 10x10 (1)​ | 166 ms​                            | 330​            |
+| 10x10(2)​  | <span style="color:red"> 240 ms​   | 482             |
+| 12x12​     | <span style="color:red"> 838 ms​   | 1178            |
+| 12x14​     | <span style="color:aqua"> 163 ms​  | 146​            |
+| 14x14​     | <span style="color:aqua"> 2230 ms​ | 2374​           |
 
 **7x7**
 
@@ -96,7 +346,6 @@ for graphical results see figure 2.
 ![7x7 output of smart algorithm](assets/77smrt.png)
 
 ```
-map ../input/input77.txt solution time = 0.026373863220214844 sec
 gggOooo
 gBggGYo
 gbbBRyo
@@ -113,7 +362,6 @@ for graphical results see figure 3.
 ![8x8 output of smart algorithm](assets/88smrt.png)
 
 ```
-map ../input/input88.txt solution time = 0.0460352897644043 sec
 yyyRrrGg
 yBYPprrg
 yboOpGRg
@@ -131,7 +379,6 @@ for graphical results see figure 4.
 ![9x9 output of smart algorithm](assets/99smrt.png)
 
 ```
-map ../input/input991.txt solution time = 0.07780814170837402 sec
 DbbBOKkkk
 dbOooRrrk
 dbRQqqQrk
@@ -150,7 +397,6 @@ for graphical results see figure 5.
 ![10x10_1 output of smart algorithm](assets/10101smrt.png)
 
 ```
-map ../input/input10101.txt solution time = 0.20352673530578613 sec
 RGgggggggg
 rrrrOoooOg
 yYPrQqqqQg
@@ -170,7 +416,6 @@ for graphical results see figure 6.
 ![10x10_2 output of smart algorithm](assets/10102smrt.png)
 
 ```
-map ../input/input10102.txt solution time = 0.30385804176330566 sec
 tttppppppp
 tBtpfffffp
 tbTPFBTVfp
@@ -190,7 +435,6 @@ for graphical results see figure 7.
 ![12x12 output of smart algorithm](assets/1212smrt.png)
 
 ```
-map ../input/input1212.txt solution time = 0.9785003662109375 sec
 kkkkkkkkkkkk
 kooooooooook
 kokkkKyYgGok
@@ -212,7 +456,6 @@ for graphical results see figure 8.
 ![12x14 output of smart algorithm](assets/1214smrt.png)
 
 ```
-map ../input/input1214.txt solution time = 0.17871904373168945 sec
 pppPkkkkkkkK
 pggGkggGaaaA
 pgkkkgPaaYyY
@@ -236,7 +479,6 @@ for graphical results see figure 9.
 ![14x14 output of smart algorithm](assets/1414smrt.png)
 
 ```
-map ../input/input1414.txt solution time = 2.6907079219818115 sec
 oooowwwwwkkkkk
 oBbowAaawkpppk
 oobowwWawkpRPk
@@ -252,6 +494,41 @@ grQPrrrrrrrrkg
 grrrrKkkkkkkkg
 gggggggggggggg
 ```
+
+# <span class="fragment highlight-blue"> Smarter solver <span>
+using directions
+
+* We used direction values instead of color values.
+* Directions offers better arc consistency
+<!-- .element: class="fragment" -->
+* Values domain is <!-- .element: class="fragment" --><br/>`{'└', '┌', '│', '┘', '─', '┐'}`
+<!-- .element: class="fragment" -->
+* We can use initially_forced constrains
+<!-- .element: class="fragment" -->
+
+* Four corners have initial single domain value propagating until hitting a number.
+* Border variables has three values domain.
+![](doc/presentaion/smart_reveal/images/smarter_1.png)
+![](doc/presentaion/smart_reveal/images/smarter_2.png)
+
+* Directions have powerful arc consistency that can be used initially to eliminate domain values.
+![](doc/presentaion/smart_reveal/images/smarter_3.png)
+
+* After forced elimination of domain values we can start assignment.
+* We should start by one-domain-value variables
+<!-- .element: class="fragment" -->
+* After every assignment, the neighbor variables domains is affected 
+<!-- .element: class="fragment" -->
+
+
+* We should add variables for colors to check that the correct colors are connected together.
+* The directions method solver have almost 3 values domain after initial eliminations
+<!-- .element: class="fragment" -->
+
+* This is very good branch factor compared to other methods.
+
+# animation
+5x5
 
 ## References
 Russell, S. J. (2016). Artificial intelligence: A modern approach. Harlow: Pearson.
