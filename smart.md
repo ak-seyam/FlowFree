@@ -17,6 +17,11 @@ We decided to separate our codebase into **very small manageable functions (pure
 ---n
 ## Constraints
 --v
+## Is surrounded squre filled
+```
+Number of nieghbours with the same color < 4
+```
+--v
 ## Is good combination, not the best name 😅
 Describes if putting the next assignment will be a good idea!  For its position and the neighboring ones
 --v
