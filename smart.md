@@ -685,6 +685,7 @@ run flask app
 cd src
 python -m flask run
 ```
+> refresh the page 🔃
 --v
 <iframe src="http://127.0.0.1:5000/" class="r-stretch"></iframe>
 
