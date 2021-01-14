@@ -74,7 +74,7 @@ bBGgg
 
 ## **7x7 and higher:**
 
-TimeOut!
+TimeOut! more than (30s)
 
 ### Smart Algorithm
 Using a combination of helping heuristics and approaches that can be controlled via `config` dict in `src/algorithms/smart.py` including **MRV** to chose the next variable, **LCV** for choosing the value, **Degree Heuristics** as a tie breaker and **Weak locker** these heuristic are _"togglable"_ due to optimization issues, check optimization labeled PRs for more information.
