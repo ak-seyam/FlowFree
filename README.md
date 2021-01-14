@@ -47,9 +47,16 @@ Use the cached on demand updated terminals to check if the same `value` terminal
 ### Dumb algorithm
 Picking a random value and random variable each time check whether or not this assignment is consultant. If it was consistent move to the next assignment in a _DFS-styled_ backtracking.
 
-#### Results
-\
-**5x5:**
+#### Results for dump
+
+| map​ | time​ | Number of hits​                                        |
+| ---- | ----- | ------------------------------------------------------ |
+| 5x5​ | 7 ms​ | 443  |
+| 7x7​ | ? ms​ | ???  |
+| ... | ? ms | ???  |
+
+
+## **5x5:**
 
 For graphical results see figure 1.
 
@@ -65,7 +72,7 @@ bROoG
 bBGgg
 ```
 
-**7x7 and higher:**
+## **7x7 and higher:**
 
 TimeOut!
 
@@ -368,7 +375,7 @@ using directions
 
 * This is very good branch factor compared to other methods.
 
-# final results
+# final results for smart
 | map​       | time​                              | Number of hits​ |
 | ---------- | ---------------------------------- | --------------- |
 | 5x5​       | 5 ms​                              | 17​             |
