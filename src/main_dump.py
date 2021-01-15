@@ -8,12 +8,12 @@ import time
 seed(0)
 
 paths = [
-    "../input/input55.txt",
+    # "../input/input55.txt",
     # "../input/input77.txt",
     # "../input/input88.txt",
     # "../input/input991.txt",
     # "../input/input10101.txt",
-    # "../input/input10102.txt",
+    "../input/input10102.txt",
     # "../input/input1212.txt",
     # "../input/input1214.txt",
     # "../input/input1414.txt",

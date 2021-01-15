@@ -19,7 +19,7 @@ def assignment_complete(assignments, inp):
     return len(assignments) >= (len(inp) * len(inp[0]))
 
 
-def get_var(initial_state, assignments, inp, connected_terminals,*args):
+def get_var(initial_state, assignments, inp, connected_terminals, *args):
     var = select_unassigned_variable(None,
                                      assignments, inp)  # TODO Room for improvement
     return var, None
@@ -40,12 +40,14 @@ def select_unassigned_variable(variables_domain, assignments: dict, inp):
     for i in range(len(inp)):
         for j in range(len(inp[0])):
             if assignments.get((i, j)) == None:
-                _tmp.append((i, j))
-    rand_index = int(random()*len(_tmp) // 1)
+                # _tmp.append((i, j))
+                return (i,j)
+    # rand_index = int(random()*len(_tmp) // 1)
 
-    return _tmp[rand_index]
+    # return _tmp[rand_index]
 
-def order_domain_values(initial_state, assignments, inp, var, variables_domain,*arg):
+
+def order_domain_values(initial_state, assignments, inp, var, variables_domain, *arg):
     """
     return the available values, in the dummy case return all values
     """
@@ -95,7 +97,7 @@ def is_consistant(initial_state, current_assignment: dict, assignments: List[dic
     if not is_neighbors_terminal_have_vaild_path(
             current_assignment_coord, initial_state, assignments, inp):
         return False
-    
+
     terminal_connected = current_assignment_color.upper() in connected_terminals
 
     if terminal_connected:
