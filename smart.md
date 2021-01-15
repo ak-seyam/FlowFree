@@ -676,6 +676,29 @@ using directions
 
 * This is very good branch factor compared to other methods.
 <!-- .element: class="fragment" -->
+--v
+### results
+
+|Map     |time|Number of assignments(hits)|
+|--------|--------|---------------------------|
+|5X5     |0.6 ms      |15                         |
+|7x7     |1 ms      |39                         |
+|8x8     |1 ms      |50                         |
+|9x9     |7 ms      |75                         |
+|10x10(1)|10 ms      |102                         |
+|10x10(2)|10 ms      |126                        |
+|12x12   |24 ms     |177                        |
+|12x14   |24 ms     |186                        |
+|14x14   |24 ms     |193                        |
+
+<!-- .element: class="r-stretch result_table"  data-id="table"-->
+<style>
+    .result_table > tbody > tr >td {
+        font-size: 25px;
+    }
+
+</style>
+
 ---n
 # animation
 --v
@@ -688,27 +711,3 @@ python -m flask run
 > refresh the page 🔃
 --v
 <iframe src="http://127.0.0.1:5000/" class="r-stretch"></iframe>
-
---v
-<!-- .slide:  data-transition="none" -->
-#### results
-configuration {colors, MRV ,LCV}
-
-| map​       | time​                              | Number of hits​ |
-| ---------- | ---------------------------------- | --------------- |
-| 5x5​       | 5 ms​                              | 17​             |
-| 7x7​       | 16 ms                              | 56​             |
-| 8x8​       | 23 ms​                             | 52​             |
-| 9x9 (1)​   | 65 ms​                             | 100             |
-| 10x10 (1)​ | 166 ms​                            | 330​            |
-| 10x10(2)​  | 240 ms​   | 482             |
-| 12x12​     | 838 ms​   | 1178            |
-| 12x14​     | 163 ms​  | 146​            |
-| 14x14​     | 2230 ms​ | 2374​           |
-<!-- .element: class="r-stretch result_table"  data-id="table"-->
-<style>
-    .result_table > tbody > tr >td {
-        font-size: 25px;
-    }
-
-</style>
