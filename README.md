@@ -13,6 +13,7 @@ Supervisor: Dr. Mahmoud Atef
 
 - [Flow Free Solver](#flow-free-solver)
   - [team:](#team)
+- [table of content](#table-of-content)
 - [Flow Free Solver](#flow-free-solver-1)
   - [The problem](#the-problem)
   - [Getting started](#getting-started)
@@ -56,16 +57,10 @@ Supervisor: Dr. Mahmoud Atef
     - [results](#results-7)
   - [least constraining value](#least-constraining-value)
       - [results](#results-8)
+  - [Best Smart results](#best-smart-results)
 - [<span class="fragment highlight-blue"> Smarter solver <span>](#span-classfragment-highlight-blue-smarter-solver-span)
-- [final results best results](#final-results-best-results)
-  - [**5x5:**](#5x5)
-  - [**7x7**](#7x7)
-  - [**8x8**](#8x8)
-  - [**9x9**](#9x9)
-  - [**10x10 1**](#10x10-1)
-  - [**10x10 2**](#10x10-2)
-  - [**12x12**](#12x12)
-  - [**12x14**](#12x14)
+  - [Smarter Results](#smarter-results)
+- [Graphical Results](#graphical-results)
   - [References](#references)
 
 
@@ -602,7 +597,150 @@ return order_domain_values
 | 12x14​     | <span style="color:aqua"> 163 ms​  | 146​            |
 | 14x14​     | <span style="color:aqua"> 2230 ms​ | 2374​           |
 
-# Best results
+## Best Smart results
+
+**5x5**
+```
+map ../input/input55.txt solution time = 0.005002737045288086 sec
+map ../input/input55.txt number of hits = [17] 
+BrrRO
+bryYo
+brYoo
+bROoG
+bBGgg
+```
+
+**7x7**
+```
+map ../input/input77.txt solution time = 0.01697063446044922 sec
+map ../input/input77.txt number of hits = [56] 
+gggOooo
+gBggGYo
+gbbBRyo
+gyyYryo
+gyrrryo
+gyRyyyo
+GyyyOoo
+```
+
+**8x8**
+```
+map ../input/input88.txt solution time = 0.023000001907348633 sec
+map ../input/input88.txt number of hits = [52] 
+yyyRrrGg
+yBYPprrg
+yboOpGRg
+yboPpggg
+ybooooYy
+ybbbBOQy
+yQqqqqqy
+yyyyyyyy
+```
+
+**9x9**
+```
+map ../input/input991.txt solution time = 0.06594991683959961 sec
+map ../input/input991.txt number of hits = [100] 
+DbbBOKkkk
+dbOooRrrk
+dbRQqqQrk
+DBrrrrrrk
+gGkkkkkkk
+gkkPppppG
+gkYyyyYpg
+gkkkkkKPg
+ggggggggg
+```
+
+**10x10 1**
+```
+map ../input/input10101.txt solution time = 0.16699814796447754 sec
+map ../input/input10101.txt number of hits = [330] 
+RGgggggggg
+rrrrOoooOg
+yYPrQqqqQg
+ypprrrrrrg
+ypGgbbbbrg
+yppgbrRbrg
+yypgbrBbrg
+Pypgbrrrrg
+pYpgbbbbBg
+pppggggggg
+```
+
+**10x10 2**
+```
+map ../input/input10102.txt solution time = 0.24605417251586914 sec
+map ../input/input10102.txt number of hits = [482] 
+tttppppppp
+tBtpfffffp
+tbTPFBTVfp
+tbbbbbtvfp
+tttttttvfP
+Fnnnnnnvff
+fnssssnvvf
+fnSNHSNHvf
+fnnnhhhhVf
+ffffffffff
+```
+
+**12x12**
+```
+map ../input/input1212.txt solution time = 0.8389444351196289 sec
+map ../input/input1212.txt number of hits = [1178] 
+kkkkkkkkkkkk
+kooooooooook
+kokkkKyYgGok
+kokYyyyGgook
+kOkPpoooooQk
+kkkRpOQqqqqk
+rrrrPaARKkkk
+rDddDaWrrrrr
+raaaaawwwwWr
+raBbbbbbbbBr
+raaaaaaaaaAr
+rrrrrrrrrrrr
+```
+
+**12x14**
+```
+map ../input/input1214.txt solution time = 0.16399812698364258 sec
+map ../input/input1214.txt number of hits = [146] 
+pppPkkkkkkkK
+pggGkggGaaaA
+pgkkkgPaaYyY
+pgkqQgpaBbbb
+pgKqggpADddb
+pggqgNpDOodB
+ppgqgnpddodd
+WpgQgnppdoRd
+wpgggnNpdord
+wpppppppdord
+wwwwwwwWdord
+dddddddddOrd
+dRrrrrrrrrrd
+dddddddddddd
+```
+
+**14x14**
+```
+map ../input/input1414.txt solution time = 2.230055093765259 sec
+map ../input/input1414.txt number of hits = [2374] 
+oooowwwwwkkkkk
+oBbowAaawkpppk
+oobowwWawkpRPk
+DobooAaaWkprkk
+dobboooOBkprkG
+dOYbbbbbbKprkg
+ddyyyyyyyDprkg
+Gdddddddydprkg
+grrrrrRdYdprkg
+grqqqqQdddprkg
+grqpppppppprkg
+grQPrrrrrrrrkg
+grrrrKkkkkkkkg
+gggggggggggggg
+```
 
 # <span class="fragment highlight-blue"> Smarter solver <span>
 using directions
@@ -831,188 +969,41 @@ map ../input/input1414.txt solution time = 0.022409439086914062 sec
 
 # Graphical Results
 
-## **5x5:**
+**5x5:**
 
-For graphical results see figure 1.
-```
-map ../input/input55.txt solution time = 0.005002737045288086 sec
-map ../input/input55.txt number of hits = [17] 
-BrrRO
-bryYo
-brYoo
-bROoG
-bBGgg
-```
 ![5x5 solution graphical](assets/55dumb.png)
 
 
-## **7x7**
+**7x7**
 
-for graphical results see figure 2.
-
-```
-map ../input/input77.txt solution time = 0.01697063446044922 sec
-map ../input/input77.txt number of hits = [56] 
-gggOooo
-gBggGYo
-gbbBRyo
-gyyYryo
-gyrrryo
-gyRyyyo
-GyyyOoo
-```
 ![7x7 output of smart algorithm](assets/77smrt.png)
 
-## **8x8**
+**8x8**
 
-for graphical results see figure 3.
-
-```
-map ../input/input88.txt solution time = 0.023000001907348633 sec
-map ../input/input88.txt number of hits = [52] 
-yyyRrrGg
-yBYPprrg
-yboOpGRg
-yboPpggg
-ybooooYy
-ybbbBOQy
-yQqqqqqy
-yyyyyyyy
-```
 ![8x8 output of smart algorithm](assets/88smrt.png)
 
-## **9x9**
+**9x9**
 
-for graphical results see figure 4.
-
-```
-map ../input/input991.txt solution time = 0.06594991683959961 sec
-map ../input/input991.txt number of hits = [100] 
-DbbBOKkkk
-dbOooRrrk
-dbRQqqQrk
-DBrrrrrrk
-gGkkkkkkk
-gkkPppppG
-gkYyyyYpg
-gkkkkkKPg
-ggggggggg
-```
 ![9x9 output of smart algorithm](assets/99smrt.png)
 
-## **10x10 1**
-
-for graphical results see figure 5.
-
-
-```
-map ../input/input10101.txt solution time = 0.16699814796447754 sec
-map ../input/input10101.txt number of hits = [330] 
-RGgggggggg
-rrrrOoooOg
-yYPrQqqqQg
-ypprrrrrrg
-ypGgbbbbrg
-yppgbrRbrg
-yypgbrBbrg
-Pypgbrrrrg
-pYpgbbbbBg
-pppggggggg
-```
+**10x10 1**
+ 
 ![10x10_1 output of smart algorithm](assets/10101smrt.png)
 
-## **10x10 2**
+**10x10 2**
 
-for graphical results see figure 6.
-
-
-```
-map ../input/input10102.txt solution time = 0.24605417251586914 sec
-map ../input/input10102.txt number of hits = [482] 
-tttppppppp
-tBtpfffffp
-tbTPFBTVfp
-tbbbbbtvfp
-tttttttvfP
-Fnnnnnnvff
-fnssssnvvf
-fnSNHSNHvf
-fnnnhhhhVf
-ffffffffff
-```
 ![10x10_2 output of smart algorithm](assets/10102smrt.png)
 
-## **12x12**
-
-for graphical results see figure 7.
+**12x12**
 
 ![12x12 output of smart algorithm](assets/1212smrt.png)
 
-```
-map ../input/input1212.txt solution time = 0.8389444351196289 sec
-map ../input/input1212.txt number of hits = [1178] 
-kkkkkkkkkkkk
-kooooooooook
-kokkkKyYgGok
-kokYyyyGgook
-kOkPpoooooQk
-kkkRpOQqqqqk
-rrrrPaARKkkk
-rDddDaWrrrrr
-raaaaawwwwWr
-raBbbbbbbbBr
-raaaaaaaaaAr
-rrrrrrrrrrrr
-```
+**12x14**
 
-## **12x14**
-
-for graphical results see figure 8.
-
-
-```
-map ../input/input1214.txt solution time = 0.16399812698364258 sec
-map ../input/input1214.txt number of hits = [146] 
-pppPkkkkkkkK
-pggGkggGaaaA
-pgkkkgPaaYyY
-pgkqQgpaBbbb
-pgKqggpADddb
-pggqgNpDOodB
-ppgqgnpddodd
-WpgQgnppdoRd
-wpgggnNpdord
-wpppppppdord
-wwwwwwwWdord
-dddddddddOrd
-dRrrrrrrrrrd
-dddddddddddd
-```
 ![12x14 output of smart algorithm](assets/1214smrt.png)
 
 **14x14**
 
-for graphical results see figure 9.
-
-
-```
-map ../input/input1414.txt solution time = 2.230055093765259 sec
-map ../input/input1414.txt number of hits = [2374] 
-oooowwwwwkkkkk
-oBbowAaawkpppk
-oobowwWawkpRPk
-DobooAaaWkprkk
-dobboooOBkprkG
-dOYbbbbbbKprkg
-ddyyyyyyyDprkg
-Gdddddddydprkg
-grrrrrRdYdprkg
-grqqqqQdddprkg
-grqpppppppprkg
-grQPrrrrrrrrkg
-grrrrKkkkkkkkg
-gggggggggggggg
-```
 ![14x14 output of smart algorithm](assets/1414smrt.png)
 
 ## References
