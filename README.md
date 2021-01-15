@@ -45,6 +45,9 @@ Checks weather or not any neighboring terminal in _locked out_, in other word if
 Use the cached on demand updated terminals to check if the same `value` terminals are already connected, because if so, it doesn't make sense to assign that value to a variable again
 
 ### Dumb algorithm
+For dumb algorithm we used 2 alternative approuches for picking the random variable, totally random variable and the next free variable.
+
+#### Totally random
 Picking a random value and random variable each time check whether or not this assignment is consultant. If it was consistent move to the next assignment in a _DFS-styled_ backtracking.
 
 #### Results for dump
@@ -52,16 +55,27 @@ Picking a random value and random variable each time check whether or not this a
 | map​ | time​ | Number of hits​                                        |
 | ---- | ----- | ------------------------------------------------------ |
 | 5x5​ | 7 ms​ | 443  |
-| 7x7​ | ? ms​ | ???  |
+| 7x7​ | +24hrs​ | ???  |
 | ... | ? ms | ???  |
 
+### Next free variable
+For you free variables pick the first one as my next variable starting from (0,0)
 
-## **5x5:**
+| map​ | time​ | Number of hits​                                        |
+| ---- | ----- | ------------------------------------------------------ |
+| 5x5​ | 2 ms​ | 124  |
+| 7x7​ | 7 ms​ | 452  |
+| 8x8​ | 200 ms​ | 15695  |
+| 9x9​ | 80 ms​ | 6208  |
+| 10x10 1​ | 200 ms​ | 13396  |
+| 10x10 2​ | 3 s​ | 255112  |
+| 12x12​ | 158 s​ | 12903209  |
+| 12x14 | ? ms | ???  |
 
-For graphical results see figure 1.
+#### Results
+##### Totally random
 
-![5x5 solution graphical](assets/55dumb.png)
-
+**5x5:**
 ```
 map ../input/input55.txt solution time = 0.005998373031616211 sec
 map ../input/input55.txt number of hits = [443] 
@@ -72,9 +86,115 @@ bROoG
 bBGgg
 ```
 
-## **7x7 and higher:**
+**7x7 and higher:**
 
-TimeOut! more than (30s)
+TimeOut! more than (24hrs)
+
+##### First free variable
+
+**5x5:**
+```
+map ../input/input55.txt solution time = 0.002267599105834961 sec
+map ../input/input55.txt number of hits = [124] 
+BrrRO
+bryYo
+brYoo
+bROoG
+bBGgg
+```
+
+**7x7:**
+```
+map ../input/input77.txt solution time = 0.007232666015625 sec
+map ../input/input77.txt number of hits = [452] 
+gggOooo
+gBggGYo
+gbbBRyo
+gyyYryo
+gyrrryo
+gyRyyyo
+GyyyOoo
+```
+
+**8x8**
+```
+map ../input/input88.txt solution time = 0.20182538032531738 sec
+map ../input/input88.txt number of hits = [15695] 
+yyyRrrGg
+yBYPprrg
+yboOpGRg
+yboPpggg
+ybooooYy
+ybbbBOQy
+yQqqqqqy
+yyyyyyyy
+```
+
+**9x9**
+```
+map ../input/input991.txt solution time = 0.0804746150970459 sec
+map ../input/input991.txt number of hits = [6208] 
+DbbBOKkkk
+dbOooRrrk
+dbRQqqQrk
+DBrrrrrrk
+gGkkkkkkk
+gkkPppppG
+gkYyyyYpg
+gkkkkkKPg
+ggggggggg
+```
+
+**10x10 1**
+```
+map ../input/input10101.txt solution time = 0.22327589988708496 sec
+map ../input/input10101.txt number of hits = [13396] 
+RGgggggggg
+rrrrOoooOg
+yYPrQqqqQg
+ypprrrrrrg
+ypGgbbbbrg
+yppgbrRbrg
+yypgbrBbrg
+Pypgbrrrrg
+pYpgbbbbBg
+pppggggggg
+```
+
+**10x10 2**
+```
+map ../input/input10102.txt solution time = 3.133574962615967 sec
+map ../input/input10102.txt number of hits = [255112] 
+tttppppppp
+tBtpfffffp
+tbTPFBTVfp
+tbbbbbtvfp
+tttttttvfP
+Fnnnnnnvff
+fnssssnvvf
+fnSNHSNHvf
+fnnnhhhhVf
+ffffffffff
+```
+
+**12x12**
+```
+map ../input/input1212.txt solution time = 148.92762875556946 sec
+map ../input/input1212.txt number of hits = [12903209] 
+kkkkkkkkkkkk
+kooooooooook
+kokkkKyYgGok
+kokYyyyGgook
+kOkPpoooooQk
+kkkRpOQqqqqk
+rrrrPaARKkkk
+rDddDaWrrrrr
+raaaaawwwwWr
+raBbbbbbbbBr
+raaaaaaaaaAr
+rrrrrrrrrrrr
+```
+
 
 ### Smart Algorithm
 Using a combination of helping heuristics and approaches that can be controlled via `config` dict in `src/algorithms/smart.py` including **MRV** to chose the next variable, **LCV** for choosing the value, **Degree Heuristics** as a tie breaker and **Weak locker** these heuristic are _"togglable"_ due to optimization issues, check optimization labeled PRs for more information.
