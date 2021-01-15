@@ -157,7 +157,7 @@ def is_good_combination(current_assignment_coord, assignments, inp):
     """
     comb_points_of_interest = [current_assignment_coord]
     comb_points_of_interest.extend(
-        get_neighbors_coords(current_assignment_coord, inp))
+        get_neighbors_coords(current_assignment_coord,len(inp),len(inp[0])))
     for coord in comb_points_of_interest:
         if is_empty(assignments, coord) or assignments[coord].isupper():
             continue
