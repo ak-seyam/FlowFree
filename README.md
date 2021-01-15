@@ -811,8 +811,6 @@ B┌─RO
 ││Y┌┘
 │RO┘G
 └BG─┘
-Number of Assigns:  15
-number of variables:  15
 ---------------------------------
 map ../input/input55.txt solution time = 0.0006902217864990234 sec
 number of variables:  39
@@ -829,8 +827,6 @@ Result:
 ││┌─┘││
 ││R┌─┘│
 G└─┘O─┘
-Number of Assigns:  39
-number of variables:  39
 ---------------------------------
 map ../input/input77.txt solution time = 0.0016269683837890625 sec
 ```
@@ -846,8 +842,6 @@ Result:
 │└──BOQ│
 │Q────┘│
 └──────┘
-Number of Assigns:  50
-number of variables:  50
 ---------------------------------
 map ../input/input88.txt solution time = 0.001096487045288086 sec
 ```
@@ -865,8 +859,6 @@ DB└────┘│
 ││Y───Y││
 │└────KP│
 └───────┘
-Number of Assigns:  63
-number of variables:  63
 ---------------------------------
 map ../input/input991.txt solution time = 0.007530689239501953 sec
 ```
@@ -885,8 +877,6 @@ RG───────┐
 P││││└──┘│
 │Y││└───B│
 └─┘└─────┘
-Number of Assigns:  86
-number of variables:  86
 ---------------------------------
 map ../input/input10101.txt solution time = 0.009502649307250977 sec
 ```
@@ -905,8 +895,6 @@ F┌────┐│└┐
 ││SNHSNH││
 │└─┘└──┘V│
 └────────┘
-Number of Assigns:  84
-number of variables:  84
 ---------------------------------
 map ../input/input10102.txt solution time = 0.010317087173461914 sec
 ```
@@ -927,8 +915,6 @@ Result:
 ││B───────B│
 │└────────A│
 └──────────┘
-Number of Assigns:  122
-number of variables:  122
 ---------------------------------
 map ../input/input1212.txt solution time = 0.023624420166015625 sec
 ```
@@ -951,8 +937,6 @@ W││Q││└┐││R│
 ┌───────┘O││
 │R────────┘│
 └──────────┘
-Number of Assigns:  144
-number of variables:  144
 ---------------------------------
 map ../input/input1214.txt solution time = 0.023621559143066406 sec
 ```
@@ -974,8 +958,6 @@ G└─────┐││││││
 ││QP┌──────┘││
 │└──┘K──────┘│
 └────────────┘
-Number of Assigns:  174
-number of variables:  174
 ---------------------------------
 map ../input/input1414.txt solution time = 0.022409439086914062 sec
 ```
