@@ -11,57 +11,7 @@ Supervisor: Dr. Mahmoud Atef
 
 # table of content
 
-- [Flow Free Solver](#flow-free-solver)
-  - [team:](#team)
-- [table of content](#table-of-content)
-- [Flow Free Solver](#flow-free-solver-1)
-  - [The problem](#the-problem)
-  - [Getting started](#getting-started)
-    - [From terminal](#from-terminal)
-    - [Graphical](#graphical)
-  - [Approaches](#approaches)
-- [problem formulation](#problem-formulation)
-    - [variables](#variables)
-    - [domains](#domains)
-      - [color based approach (dump/smart)](#color-based-approach-dumpsmart)
-    - [Constraints](#constraints)
-- [Dumb algorithm](#dumb-algorithm)
-    - [Totally random](#totally-random)
-      - [Results for dump](#results-for-dump)
-    - [Next free variable](#next-free-variable)
-      - [Results](#results)
-        - [Totally random](#totally-random-1)
-        - [First free variable](#first-free-variable)
-- [Smart Algorithm](#smart-algorithm)
-  - [forward checking](#forward-checking)
-      - [Results](#results-1)
-  - [results](#results-2)
-  - [MRV](#mrv)
-      - [initial results *](#initial-results-)
-- [optimization](#optimization)
-    - [limitation](#limitation)
-  - [improvement in constrains](#improvement-in-constrains)
-    - [update](#update)
-      - [results](#results-3)
-  - [lazy surrounding squares](#lazy-surrounding-squares)
-      - [implementation](#implementation)
-      - [Results](#results-4)
-  - [Cache connected terminals](#cache-connected-terminals)
-      - [Implementation](#implementation-1)
-      - [Results](#results-5)
-- [bonus work for bigger maps](#bonus-work-for-bigger-maps)
-    - [dynamic domain-upgrade](#dynamic-domain-upgrade)
-      - [the constrained variables](#the-constrained-variables)
-      - [results](#results-6)
-  - [degree heuristic](#degree-heuristic)
-    - [results](#results-7)
-  - [least constraining value](#least-constraining-value)
-      - [results](#results-8)
-  - [Best Smart results](#best-smart-results)
-- [<span class="fragment highlight-blue"> Smarter solver <span>](#span-classfragment-highlight-blue-smarter-solver-span)
-  - [Smarter Results](#smarter-results)
-- [Graphical Results](#graphical-results)
-  - [References](#references)
+[toc]
 
 
 # Flow Free Solver
@@ -742,7 +692,7 @@ grrrrKkkkkkkkg
 gggggggggggggg
 ```
 
-# <span class="fragment highlight-blue"> Smarter solver <span>
+#  Smarter solver 
 using directions
 
 * We used direction values instead of color values.
@@ -776,7 +726,7 @@ using directions
 
 ## Smarter Results
 
-|Map     |time (s)|Number of assignments(hits)|
+|Map     |time|Number of assignments(hits)|
 |--------|--------|---------------------------|
 |5X5     |0.6 ms      |15                         |
 |7x7     |1 ms      |39                         |
@@ -987,7 +937,7 @@ map ../input/input1414.txt solution time = 0.022409439086914062 sec
 ![9x9 output of smart algorithm](assets/99smrt.png)
 
 **10x10 1**
- 
+
 ![10x10_1 output of smart algorithm](assets/10101smrt.png)
 
 **10x10 2**
@@ -1006,5 +956,6 @@ map ../input/input1414.txt solution time = 0.022409439086914062 sec
 
 ![14x14 output of smart algorithm](assets/1414smrt.png)
 
-## References
+# Reference 
+
 Russell, S. J. (2016). Artificial intelligence: A modern approach. Harlow: Pearson.
