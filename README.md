@@ -27,8 +27,8 @@ These are approaches we took to solve these puzzles, few notes need to be taken 
 ## problem formulation
 ### variables 
 for the map input there are (`MxN`) variables each one indicate 
-* the color for it's box for the dump and smart solution 
-* the direction of movement in smarter solution 
+* the color for it's box for the **dump** and **smart** solution 
+* the direction of movement in **smarter** solution 
 
 ### domains
 #### color based approach (dump/smart)
