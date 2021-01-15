@@ -43,7 +43,9 @@ _RO_G
 _BG__
 ```
 * available value are `['_','b','r','o','y','g']` for each free variable
-* each terminal has domain of on value equal to its color example (0,0) has domain ['B']
+* each terminal has domain of value equal to its color,
+
+example (0,0) has domain ['B']
 here is an example for first five variables in `5X5`
 
 | variable  | domain                 |
