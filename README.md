@@ -125,6 +125,9 @@ Picking a random value and random variable each time check whether or not this a
 | ... | ? ms | ???  |
 
 ### Next free variable
+as seen in previous result the total random gave very bad times we tried the next dumpiest thing witch just take same order as the map and surpassingly we got some great results
+
+the order is 
 For you free variables pick the first one as my next variable starting from (0,0)
 
 | map​ | time​ | Number of hits​                                        |
