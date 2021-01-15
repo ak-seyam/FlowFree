@@ -86,7 +86,7 @@ Implies(x_0_1 == 'b', OR(
 and same implies for other colors and neighbor variables 
 
 despite being complex but we can easily check this constrain using a for loop and if condition 
-here is pseudo code for it
+here is python code for it
 ```python 
     comb_points_of_interest = [current_assignment_coord]
     comb_points_of_interest.extend(
