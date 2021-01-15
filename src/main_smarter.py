@@ -1194,9 +1194,7 @@ def solve(path):
             print(resu[i][j], end="")
         print()
 
-    print('Number of Assigns: ', len(Assigns))
-
-    print('number of variables: ', len(domains))
+    print('\n')
 
     print("---------------------------------")
 
