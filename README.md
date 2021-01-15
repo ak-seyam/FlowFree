@@ -602,6 +602,7 @@ return order_domain_values
 | 12x14​     | <span style="color:aqua"> 163 ms​  | 146​            |
 | 14x14​     | <span style="color:aqua"> 2230 ms​ | 2374​           |
 
+# Best results
 
 # <span class="fragment highlight-blue"> Smarter solver <span>
 using directions
@@ -635,19 +636,196 @@ using directions
 
 * This is very good branch factor compared to other methods.
 
-# final results best results
-| map​       | time​                              | Number of hits​ |
-| ---------- | ---------------------------------- | --------------- |
-| 5x5​       | 5 ms​                              | 17​             |
-| 7x7​       | 16 ms                              | 56​             |
-| 8x8​       | 23 ms​                             | 52​             |
-| 9x9 (1)​   | 65 ms​                             | 100             |
-| 10x10 (1)​ | 166 ms​                            | 330​            |
-| 10x10(2)​  |  240 ms​   | 482             |
-| 12x12​     |  838 ms​   | 1178            |
-| 12x14​     |  163 ms​  | 146​            |
-| 14x14​     |  2230 ms​ | 2374​           |
+## Smarter Results
 
+|Map     |time (s)|Number of assignments(hits)|
+|--------|--------|---------------------------|
+|5X5     |1 ms      |15                         |
+|7x7     |      |39                         |
+|8x8     |      |50                         |
+|9x9     |      |63                         |
+|10x10(1)|      |92                         |
+|10x10(2)|      |116                        |
+|12x12   |     |160                        |
+|12x14   |     |169                        |
+|14x14   |     |183                        |
+
+
+**5x5:**
+```
+B┌─RO
+││┌Y│
+││Y┌┘
+│RO┘G
+└BG─┘
+Number of Assigns:  15
+number of variables:  15
+---------------------------------
+map ../input/input55.txt solution time = 0.0013289451599121094 sec
+```
+
+**7x7:**
+```Result: 
+
+┌─┐O──┐
+│B└─GY│
+│└─BR││
+│┌─Y│││
+││┌─┘││
+││R┌─┘│
+G└─┘O─┘
+Number of Assigns:  39
+number of variables:  39
+---------------------------------
+map ../input/input77.txt solution time = 0.0016269683837890625 sec
+```
+**8x8:**
+```
+Result: 
+
+┌─┐R─┐G┐
+│BYP┐└┐│
+││┌O│GR│
+│││P┘└─┘
+││└──┐Y┐
+│└──BOQ│
+│Q────┘│
+└──────┘
+Number of Assigns:  50
+number of variables:  50
+---------------------------------
+map ../input/input88.txt solution time = 0.001096487045288086 sec
+```
+
+**9x9**
+```
+Result: 
+
+D┌─BOK──┐
+││O─┘R─┐│
+││RQ──Q││
+DB└────┘│
+┌G┌─────┘
+│┌┘P───┐G
+││Y───Y││
+│└────KP│
+└───────┘
+Number of Assigns:  63
+number of variables:  63
+---------------------------------
+map ../input/input991.txt solution time = 0.007530689239501953 sec
+```
+
+**10x10 1**
+```
+Result: 
+
+RG───────┐
+└──┐O───O│
+┌YP│Q───Q│
+│┌┘└────┐│
+││G┐┌──┐││
+│└┐││┌R│││
+└┐││││B┘││
+P││││└──┘│
+│Y││└───B│
+└─┘└─────┘
+Number of Assigns:  86
+number of variables:  86
+---------------------------------
+map ../input/input10101.txt solution time = 0.009502649307250977 sec
+```
+
+**10x10 2**
+```
+Result: 
+
+┌─┐┌─────┐
+│B││┌───┐│
+││TPFBTV││
+│└───┘││││
+└─────┘││P
+F┌────┐│└┐
+││┌──┐│└┐│
+││SNHSNH││
+│└─┘└──┘V│
+└────────┘
+Number of Assigns:  84
+number of variables:  84
+---------------------------------
+map ../input/input10102.txt solution time = 0.010317087173461914 sec
+```
+
+**12x12**
+```
+Result: 
+
+┌──────────┐
+│┌────────┐│
+││┌──K┌Y┌G││
+│││Y──┘G┘┌┘│
+│O│P┐┌───┘Q│
+└─┘R│OQ───┘│
+┌──┘P┌ARK──┘
+│D──D│W└───┐
+│┌───┘└───W│
+││B───────B│
+│└────────A│
+└──────────┘
+Number of Assigns:  122
+number of variables:  122
+---------------------------------
+map ../input/input1212.txt solution time = 0.023624420166015625 sec
+```
+
+**12x14**
+```
+Result: 
+
+┌──P┌──────K
+│┌─G│┌─G┌──A
+││┌─┘│P┌┘Y─Y
+│││┌Q│││B──┐
+││K│┌┘│AD─┐│
+│└┐││N│DO┐│B
+└┐│││││└┐│└┐
+W││Q││└┐││R│
+││└─┘└N│││││
+│└─────┘││││
+└──────W││││
+┌───────┘O││
+│R────────┘│
+└──────────┘
+Number of Assigns:  144
+number of variables:  144
+---------------------------------
+map ../input/input1214.txt solution time = 0.023621559143066406 sec
+```
+
+**14x14**
+Result: 
+```
+┌──┐┌───┐┌───┐
+│B┐││A─┐││┌─┐│
+└┐││└─W││││RP│
+D││└┐A─┘W│││┌┘
+││└┐└──OB││││G
+│OY└────┘K││││
+└┐└─────┐D││││
+G└─────┐││││││
+│┌────R│Y│││││
+││┌───Q└─┘││││
+│││┌──────┘│││
+││QP┌──────┘││
+│└──┘K──────┘│
+└────────────┘
+Number of Assigns:  174
+number of variables:  174
+---------------------------------
+map ../input/input1414.txt solution time = 0.022409439086914062 sec
+```
+
+# Graphical Results
 
 ## **5x5:**
 
