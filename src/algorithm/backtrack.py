@@ -10,7 +10,6 @@ def backtrack(
         inp,
         order_domain_values,
         assignment_complete,
-        get_inferences,
         is_consistant,
         callback,
         get_var):
@@ -21,7 +20,7 @@ def backtrack(
     prev_connected_terminal = set()
 
     return _backtrack(initial_state, initial_assignments, inp, order_domain_values,
-        assignment_complete, get_inferences, is_consistant, callback, get_var, connected_terminals,
+        assignment_complete, is_consistant, callback, get_var, connected_terminals,
         variables_domain, prev_variable, prev_value, prev_connected_terminal)
 
 
@@ -31,7 +30,6 @@ def _backtrack(
         inp,
         order_domain_values,
         assignment_complete,
-        get_inferences,
         is_consistant,
         callback,
         get_var,
@@ -57,16 +55,12 @@ def _backtrack(
             before_assgen_connected_terminal = connected_terminals
             refreshed_connected_terminals = refresh_connected_terminals(
                 {var: value}, assignments, connected_terminals, initial_state, inp)
-            inferences = get_inferences()
-            if inferences != case.failure:
-                assignments = {**assignments, **inferences}
             res = _backtrack(
                 initial_state,
                 assignments,
                 inp,
                 order_domain_values,
                 assignment_complete,
-                get_inferences,
                 is_consistant,
                 callback,
                 get_var,
@@ -78,9 +72,6 @@ def _backtrack(
             )
             if res != case.failure:
                 return res
-            if inferences != case.failure:
-                for key in inferences:
-                    del assignments[key]
 
         del assignments[var]
     return case.failure

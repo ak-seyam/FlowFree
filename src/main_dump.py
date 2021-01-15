@@ -40,7 +40,6 @@ for path in paths:
         inp,
         dum.order_domain_values,
         dum.assignment_complete,
-        dum.inference,
         dum.is_consistant,
         lambda *args: increase(c,*args),
         dum.get_var

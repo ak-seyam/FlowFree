@@ -64,13 +64,6 @@ def order_domain_values(initial_state, assignments, inp, var, variables_domain, 
     return colors
 
 
-def inference():
-    """
-    return inferences as list or state.faileur
-    """
-    return case.failure
-
-
 def is_consistant(initial_state, current_assignment: dict, assignments: List[dict], inp, connected_terminals):
     """
     input:
