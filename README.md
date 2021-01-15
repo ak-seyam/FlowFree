@@ -1,4 +1,19 @@
+# Flow Free Solver
+## team:
+* abd-Elrahman ragab hashem
+* Abd-Allah Khaled Kamal
+* Saleh Mahmoud Saleh
+
+
+Supervisor: Dr. Mahmoud Atef
+
+
+
+# table of content
+
 - [Flow Free Solver](#flow-free-solver)
+  - [team:](#team)
+- [Flow Free Solver](#flow-free-solver-1)
   - [The problem](#the-problem)
   - [Getting started](#getting-started)
     - [From terminal](#from-terminal)
@@ -353,7 +368,7 @@ def forward_check(variables_domain):
 
 
 * with forward_check
- 
+
   | map​ | time​ | Number of hits​                                         |
   | ---- | ----- | ------------------------------------------------------- |
   | 5x5​ | 9 ms​ | 28​ 
@@ -488,7 +503,7 @@ if is_consistant(initial_state, {var: value},  assignments, inp, connected_termi
 * only update <span class="fragment highlight-blue">constrained variables</span>
 
 #### the constrained variables
-  
+
   *  are empty neighbor  (point good combination) 
   * are empty neighbor for occupied neighbor   
       (point neighbors/terminal combination)
