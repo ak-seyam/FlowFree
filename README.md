@@ -640,19 +640,21 @@ using directions
 
 |Map     |time (s)|Number of assignments(hits)|
 |--------|--------|---------------------------|
-|5X5     |1 ms      |15                         |
-|7x7     |      |39                         |
-|8x8     |      |50                         |
-|9x9     |      |63                         |
-|10x10(1)|      |92                         |
-|10x10(2)|      |116                        |
-|12x12   |     |160                        |
-|12x14   |     |169                        |
-|14x14   |     |183                        |
+|5X5     |0.6 ms      |15                         |
+|7x7     |1 ms      |39                         |
+|8x8     |1 ms      |50                         |
+|9x9     |7 ms      |63                         |
+|10x10(1)|10 ms      |92                         |
+|10x10(2)|10 ms      |116                        |
+|12x12   |24 ms     |160                        |
+|12x14   |24 ms     |169                        |
+|14x14   |24 ms     |183                        |
 
 
 **5x5:**
 ```
+Result: 
+
 B┌─RO
 ││┌Y│
 ││Y┌┘
@@ -661,11 +663,13 @@ B┌─RO
 Number of Assigns:  15
 number of variables:  15
 ---------------------------------
-map ../input/input55.txt solution time = 0.0013289451599121094 sec
+map ../input/input55.txt solution time = 0.0006902217864990234 sec
+number of variables:  39
 ```
 
 **7x7:**
-```Result: 
+```
+Result: 
 
 ┌─┐O──┐
 │B└─GY│
