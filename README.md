@@ -24,6 +24,41 @@ python app.py
 ## Approaches 
 These are approaches we took to solve these puzzles, few notes need to be taken before reading. We consider the map as matrix where each element in this matrix is a _variable_ and these variables are coordinates in xy plan, where y grows downwards starting from the top left corner. Assignments are stored in a dictionary-styled data structure where keys are coordinates and values are colors for each coordinate, we use uppercase letters for terminals and lowercase for pipes.
 
+## problem formulation
+### variables 
+for the map input there are (`MxN`) variables each one indicate 
+* the color for it's box for the dump and smart solution 
+* the direction of movement in smarter solution 
+
+### domains
+#### color based approach (dump/smart)
+each variable is of type character and can take value as representing the color of it
+the value can be `_` , `lower case character` or `upper case character` and values itself depend on map
+for example in 5x5 
+```
+B__RO
+___Y_
+__Y__
+_RO_G
+_BG__
+```
+* available value are `['_','b','r','o','y','g']` for each free variable
+* each terminal has domain of on value equal to its color example (0,0) has domain ['B']
+here is an example for first five variables in `5X5`
+
+| variable  | domain                 |
+| -------|---------------------- |
+| (0 0)  | ['B']                 |
+| (0 1)  | ['_','b','r','o','y','g'] |
+| (0 2)  | ['_','b','r','o','y','g'] |
+| (0 3)  | ['_','b','r','o','y','g'] |
+| (0 4)  | ['R']                 |
+| (0 5)  | ['O']                 |
+
+> worth noting here we didn't use numerical representation so we can make the formulas easier to write and debug as formulas became smaller and their number reduced 
+
+> our approach may be converted to numerical by creating `MxN` variable for each color with domain [0,1]
+
 ### Constraints
 These are the procedures we took to check the consistency of any new assignments.
 
@@ -35,6 +70,35 @@ What we mean by good combination here the state of the selected assignment don't
 - Number of similar neighbors == 1 and Number of similar neighbors == 1 => true
 - Number of similar neighbors == 2 and not(is surrounding square filled) => true
 - Otherwise => false
+
+those constains are implemented easly for example for varialbe `(0 1)` in 5x5 map the first constrain would be
+with neighbors `x_1_1` and `x_0_2`
+```
+Implies(x_0_1 == 'b', OR(
+    x_1_1 == '_') + (x_0_2 == '_') == 2,
+    And(x_1_1 == '_')==1 ,(x_0_2 == 'b')==1),
+    (x_1_1 == 'b') + (x_0_2 == 'b') == 2))
+    )
+```
+
+and same implies for other colors and neighbor variables 
+
+despite being complex but we can easily check this constrain using a for loop and if condition 
+here is pseudo code for it
+```python 
+    comb_points_of_interest = [current_assignment_coord]
+    comb_points_of_interest.extend(
+        get_neighbors_coords(current_assignment_coord,len(inp),len(inp[0])))
+    for coord in comb_points_of_interest:
+        if is_empty(assignments, coord) or assignments[coord].isupper():
+            continue
+        good_comb = check_for_good_combinations(
+            coord, assignments[coord], assignments, inp)
+        if not good_comb:
+            return False
+
+    return True
+```
 
 `Is_neighbors_terminals_have_valid_path`
 
