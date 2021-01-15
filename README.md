@@ -1,20 +1,32 @@
-# Flow Free Solver
-## team:
-* abd-Elrahman ragab hashem
-* Abd-Allah Khaled Kamal
-* Saleh Mahmoud Saleh
+<h1 style="text-align:center;font-size:xx-large">Flow Free Solver</h1>
 
 
+
+
+<div style="margin: auto;">
+<h2> team :</h2>
+<ul>
+<li>abd-Elrahman ragab hashem
+<li>Abd-Allah Khaled Kamal
+<li>Saleh Mahmoud Saleh
+</ul>
+</div>
+
+<h1 style="text-align:center;font-size:larger">
 Supervisor: Dr. Mahmoud Atef
+</h1>
+
+
+
 
 
 
 # table of content
 
-- [Flow Free Solver](#flow-free-solver)
+- [](#)
   - [team:](#team)
 - [table of content](#table-of-content)
-- [Flow Free Solver](#flow-free-solver-1)
+- [Flow Free Solver](#flow-free-solver)
   - [The problem](#the-problem)
   - [Getting started](#getting-started)
     - [From terminal](#from-terminal)
@@ -191,10 +203,11 @@ Picking a random value and random variable each time check whether or not this a
 | ... | ? ms | ???  |
 
 ### Next free variable
-as seen in previous result the total random gave very bad times we tried the next dumpiest thing witch just take same order as the map and surpassingly we got some great results
+as seen in previous result the `total random` gave very long run times, so we tried the next dumpiest thing. by just takeing same order as the map, and surpassingly we got some great results .
 
-the order is 
-For you free variables pick the first one as my next variable starting from (0,0)
+so the order is:
+
+For free variables pick the first one as next variable starting from (0,0)
 
 | map​ | time​ | Number of hits​                                        |
 | ---- | ----- | ------------------------------------------------------ |
