@@ -1,3 +1,59 @@
+- [Flow Free Solver](#flow-free-solver)
+  - [The problem](#the-problem)
+  - [Getting started](#getting-started)
+    - [From terminal](#from-terminal)
+    - [Graphical](#graphical)
+  - [Approaches](#approaches)
+- [problem formulation](#problem-formulation)
+    - [variables](#variables)
+    - [domains](#domains)
+      - [color based approach (dump/smart)](#color-based-approach-dumpsmart)
+    - [Constraints](#constraints)
+- [Dumb algorithm](#dumb-algorithm)
+    - [Totally random](#totally-random)
+      - [Results for dump](#results-for-dump)
+    - [Next free variable](#next-free-variable)
+      - [Results](#results)
+        - [Totally random](#totally-random-1)
+        - [First free variable](#first-free-variable)
+- [Smart Algorithm](#smart-algorithm)
+  - [forward checking](#forward-checking)
+      - [Results](#results-1)
+  - [results](#results-2)
+  - [MRV](#mrv)
+      - [initial results *](#initial-results-)
+- [optimization](#optimization)
+    - [limitation](#limitation)
+  - [improvement in constrains](#improvement-in-constrains)
+    - [update](#update)
+      - [results](#results-3)
+  - [lazy surrounding squares](#lazy-surrounding-squares)
+      - [implementation](#implementation)
+      - [Results](#results-4)
+  - [Cache connected terminals](#cache-connected-terminals)
+      - [Implementation](#implementation-1)
+      - [Results](#results-5)
+- [bonus work for bigger maps](#bonus-work-for-bigger-maps)
+    - [dynamic domain-upgrade](#dynamic-domain-upgrade)
+      - [the constrained variables](#the-constrained-variables)
+      - [results](#results-6)
+  - [degree heuristic](#degree-heuristic)
+    - [results](#results-7)
+  - [least constraining value](#least-constraining-value)
+      - [results](#results-8)
+- [<span class="fragment highlight-blue"> Smarter solver <span>](#span-classfragment-highlight-blue-smarter-solver-span)
+- [final results best results](#final-results-best-results)
+  - [**5x5:**](#5x5)
+  - [**7x7**](#7x7)
+  - [**8x8**](#8x8)
+  - [**9x9**](#9x9)
+  - [**10x10 1**](#10x10-1)
+  - [**10x10 2**](#10x10-2)
+  - [**12x12**](#12x12)
+  - [**12x14**](#12x14)
+  - [References](#references)
+
+
 # Flow Free Solver
 A solver for Flow Free puzzles using _back tracking_ search for CSPs.
 
@@ -24,7 +80,7 @@ python app.py
 ## Approaches 
 These are approaches we took to solve these puzzles, few notes need to be taken before reading. We consider the map as matrix where each element in this matrix is a _variable_ and these variables are coordinates in xy plan, where y grows downwards starting from the top left corner. Assignments are stored in a dictionary-styled data structure where keys are coordinates and values are colors for each coordinate, we use uppercase letters for terminals and lowercase for pipes.
 
-## problem formulation
+# problem formulation
 ### variables 
 for the map input there are (`MxN`) variables each one indicate 
 * the color for it's box for the **dump** and **smart** solution 
@@ -110,10 +166,10 @@ Checks weather or not any neighboring terminal in _locked out_, in other word if
 
 Use the cached on demand updated terminals to check if the same `value` terminals are already connected, because if so, it doesn't make sense to assign that value to a variable again
 
-### Dumb algorithm
+# Dumb algorithm
 For dumb algorithm we used 2 alternative approuches for picking the random variable, totally random variable and the next free variable.
 
-#### Totally random
+### Totally random
 Picking a random value and random variable each time check whether or not this assignment is consultant. If it was consistent move to the next assignment in a _DFS-styled_ backtracking.
 
 #### Results for dump
@@ -265,7 +321,7 @@ rrrrrrrrrrrr
 ```
 
 
-### Smart Algorithm
+# Smart Algorithm
 Using a combination of helping heuristics and approaches that can be controlled via `config` dict in `src/algorithms/smart.py` including **MRV** to chose the next variable, **LCV** for choosing the value, **Degree Heuristics** as a tie breaker and **Weak locker** these heuristic are _"togglable"_ due to optimization issues, check optimization labeled PRs for more information.
 
 used combination:
@@ -274,7 +330,7 @@ used combination:
 * Degree heuristic​
 * Least constraining value​
 
-# forward checking
+## forward checking
 * find domain for variables
 * if variable has zero domain 
 * return case failure
@@ -425,7 +481,7 @@ if is_consistant(initial_state, {var: value},  assignments, inp, connected_termi
 | 12x14    | ??.???   |
 
 -------
-
+# bonus work for bigger maps
 ### dynamic domain-upgrade
 
 * save variable domain
@@ -474,7 +530,7 @@ return variables_domain
 | 14x14​     | 7875 ms​ | 10309​          |
 
 
-# degree heuristic
+## degree heuristic
 - use as tie breaker
 - choose variable that constrain others
 implementation
@@ -492,7 +548,7 @@ return most_constraining_var
 - didn't improve
 - made heuristic optional
 
-# least constraining value
+## least constraining value
 - choose value that doesn't affect domains
 
 
@@ -564,7 +620,7 @@ using directions
 
 * This is very good branch factor compared to other methods.
 
-# final results for smart
+# final results best results
 | map​       | time​                              | Number of hits​ |
 | ---------- | ---------------------------------- | --------------- |
 | 5x5​       | 5 ms​                              | 17​             |
