@@ -1,8 +1,5 @@
 <h1 style="text-align:center;font-size:xx-large">Flow Free Solver</h1>
 
-
-
-
 <div style="margin: auto;">
 <h2> team :</h2>
 <ul>
@@ -12,14 +9,7 @@
 </ul>
 </div>
 
-<h1 style="text-align:center;font-size:larger">
 Supervisor: Dr. Mahmoud Atef
-</h1>
-
-
-
-
-
 
 # table of content
 
