@@ -208,7 +208,9 @@ For free variables pick the first one as next variable starting from (0,0)
 | 10x10 1​ | 200 ms​ | 13396  |
 | 10x10 2​ | 3 s​ | 255112  |
 | 12x12​ | 158 s​ | 12903209  |
-| 12x14 | ? ms | ???  |
+| 12x14 | 5hr 16min | 1548384192  |
+| 14x14 | +24hrs | ???  |
+
 
 #### Results
 ##### Totally random
@@ -333,6 +335,25 @@ raaaaaaaaaAr
 rrrrrrrrrrrr
 ```
 
+**12x14**
+```
+map ../input/input1214.txt solution time = 18969.79822649236564258 sec
+map ../input/input1214.txt number of hits = [1548384192] 
+pppPkkkkkkkK
+pggGkggGaaaA
+pgkkkgPaaYyY
+pgkqQgpaBbbb
+pgKqggpADddb
+pggqgNpDOodB
+ppgqgnpddodd
+WpgQgnppdoRd
+wpgggnNpdord
+wpppppppdord
+wwwwwwwWdord
+dddddddddOrd
+dRrrrrrrrrrd
+dddddddddddd
+```
 
 # Smart Algorithm
 Using a combination of helping heuristics and approaches that can be controlled via `config` dict in `src/algorithms/smart.py` including **MRV** to chose the next variable, **LCV** for choosing the value, **Degree Heuristics** as a tie breaker and **Weak locker** these heuristic are _"togglable"_ due to optimization issues, check optimization labeled PRs for more information.
