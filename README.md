@@ -83,6 +83,8 @@ Boards are typically a square grid with any number of colors to connect. A _well
 cd ./src
 python main_dumb.py # for the dumb heuristic
 python main_smart.py # for the smart heuristic
+python main_smarter.py # for the directional based
+
 ```
 
 ### Graphical
