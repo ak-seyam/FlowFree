@@ -726,7 +726,7 @@ using directions
 
 --v
 ## number of hits
-| Map      | Number of assignments(dump) | Number of assignments(smart) | number of assignments(smarter) |
+| Map      | hits (dump) | hits (smart) | hits (smarter) |
 |----------|-----------------------------|------------------------------|--------------------------------|
 | 5X5      | 124                         | 17                           | 15                             |
 | 7x7      | 452                         | 56                           | 39                             |
