@@ -671,7 +671,7 @@ using directions
 
 --v
 * We should add variables for colors to check that the correct colors are connected together.
-* The directions method solver have almost 3 values domain after initial eliminations
+* There are squares have almost 2 values domain after initial eliminations
 <!-- .element: class="fragment" -->
 
 * This is very good branch factor compared to other methods.
