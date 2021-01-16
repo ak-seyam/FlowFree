@@ -83,7 +83,6 @@ def solution(map_num):
         inp,
         smart.order_domain_values,
         dum.assignment_complete,
-        dum.inference,
         dum.is_consistant,
         lambda *args: 1,
         smart.get_var
@@ -138,7 +137,6 @@ def solution_animated(request):
             inp,
             smart.order_domain_values,
             dum.assignment_complete,
-            dum.inference,
             dum.is_consistant,
             lambda assignments, variables_domain, var, value: draw_with_delay(
                 assignments, variables_domain, var, value, .1),
@@ -151,7 +149,6 @@ def solution_animated(request):
             inp,
             dum.order_domain_values,
             dum.assignment_complete,
-            dum.inference,
             dum.is_consistant,
             lambda assignments, variables_domain, var, value: draw_with_delay(
                 assignments, variables_domain, var, value, .1),
