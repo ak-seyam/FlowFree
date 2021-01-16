@@ -61,7 +61,12 @@ Supervisor: Dr. Mahmoud Atef
       - [results](#results-8)
   - [Best Smart results](#best-smart-results)
 - [Smarter solver](#smarter-solver)
-  - [Smarter Results](#smarter-results)
+  - [constraints](#constraints)
+  - [Sources constraints](#sources-constraints)
+  - [Improvement of performance](#improvement-of-performance)
+  - [Implementation](#implementation)
+  - [Advantages of using directions](#advantages-of-using-directions-approach-instead-of-colors-approach)
+  - [Smarter solver Results](#smarter-solver-results)
 - [Graphical Results](#graphical-results)
 - [Reference](#reference)
 
@@ -767,38 +772,189 @@ gggggggggggggg
 ```
 
 #  Smarter solver 
-using directions
+This is the final optimization. 
 
-* We used direction values instead of color values.
-* Directions offers better arc consistency
-<!-- .element: class="fragment" -->
-* Values domain is <!-- .element: class="fragment" --><br/>`{'└', '┌', '│', '┘', '─', '┐'}`
-<!-- .element: class="fragment" -->
-* We can use initially_forced constrains
-<!-- .element: class="fragment" -->
+In this part, we tried a totally different approach that is more efficient than all past approaches because it offers an excellent constraints propagation technique (arc consistency).  We used directions as a domain for all variables instead of colors. So we have 6 different directions:
 
-* Four corners have initial single domain value propagating until hitting a number.
-* Border variables has three values domain.
-![](doc/presentaion/smart_reveal/images/smarter_1.png)
-![](doc/presentaion/smart_reveal/images/smarter_2.png)
+* variables = all empty squares in HxW input matrix (Xij)     where ‘i = y-index &  j = x-index’   
 
-* Directions have powerful arc consistency that can be used initially to eliminate domain values.
-![](doc/presentaion/smart_reveal/images/smarter_3.png)
+* domain =  {'└', '┌', '│', '┘', '─', '┐'}
 
-* After forced elimination of domain values we can start assignment.
-* We should start by one-domain-value variables
-<!-- .element: class="fragment" -->
-* After every assignment, the neighbor variables domains is affected 
-<!-- .element: class="fragment" -->
+we had also assistant variables (colors : Cij, domain: input colors) used to check that the same colors sources are connected but in some simple cases (like 5x5 map) there is no need of them
+
+all border variables have special domains, four corner variables have one value domain and 
+other border variable have 3 values domain.
+
+```python[1-3|5-12]
+domain[(0, 0)] = {'┌'}
+domain[(h-1, 0)] = {'└'}
+domain[(h-1, w-1)] = {'┘'}
+domain[(0, w-1)] = {'┐'}
+domain[(0, i)] = {'┌', '┐', '─'}
+domain[(i, 0)] = {'└', '┌', '│'}
+domain[(h-1, i)] = {'└', '┘', '─'}
+domain[(i, w-1)] = {'┐', '┘', '│'}
+domain[(i, j)] = {'└', '┌', '│', '┘', '─', '┐'}
+```
+
+<!-- Image 1 -->
+![Image 1](assets/smater_1.jpg)
+
+<br/><br/>
+
+## constraints:
+
+#### there are a lot of assignment constraints. We will put here some examples of them, the rest of constraints are in the code and can be deducted also.
+
+1-If there is a square Xij that had value '┘' , then its upper square Xi-1,j (if it is not source square) must have the value '│', otherwise there will be a zigzag. This can be formed in pseudo-code:
+
+```
+constraint_1 = [ Implies(Xij == '┘' , THEN: Xi-1,j = '│' ]
+```
+
+2- If there is a square Xij that had value '┘' , then its left square Xi,j-1 (if it is not source square) must have the value '─', otherwise there will be a zigzag. This can be formed in pseudo-code:
+
+```
+constraint_2 = [ Implies(Xij == '┘'  , THEN:  Xi-1, j  = '─' ]
+```
+
+3- If there f there is a square Xij that had value '│' , then its upper square Xi-1,j (if it is not source square) must NOT have the values '─', '┘', '└' otherwise there will be a cross in the path. This can be formed in pseudo-code:
+
+```
+constraint_3 = [ Implies(Xij == '│' , THEN: Xi-1, j  != '─' AND Xi-1, j  != '┘' AND Xi-1, j  != '└' ]
+```
 
 
-* We should add variables for colors to check that the correct colors are connected together.
-* The directions method solver have almost 3 values domain after initial eliminations
-<!-- .element: class="fragment" -->
 
-* This is very good branch factor compared to other methods.
+```python[1-3|5-12]
+if(is_in_domain[(i-1, j)]):
+            delete_corner(inp, ['┘', '└'], (i-1, j), domains,
+                          Num_of_domain_values, domain_levels, assigns)
+            reduce_domain(['─'], (i-1, j), domains,
+                          Num_of_domain_values, domain_levels, assigns)
+```
+<!-- Image 2 -->
+![Image 2](assets/smarter_2.png)
 
-## Smarter Results
+<br/><br/>
+
+## Sources constraints:
+
+every source have at most 4 neighbors (up , down, right, left) and it must be  connected to one of them.
+For example: if the right, left and down squares of a source are also sources, then its upper square must have value of '┌',  '│' and  '┐'. so it must NOT have a value of '┘' or  '─' or  '└'.
+
+```python[1-3|5-12]
+if(len(terminal_domain[terminal]) == 1):
+            direction = terminal_domain[terminal]
+
+            if(direction == 'UP'):
+                delete_corner(inp, ['┘', '└'], (i-1, j), domains, Num_of_domain_values, domain_levels, [])
+                reduce_domain(['─'], (i-1, j), domains, Num_of_domain_values, domain_levels, [])
+
+```
+
+<!-- Image 3 -->
+![Image 3](assets/smarter_3.jpg)
+
+<br/><br/>
+
+## Improvement of performance:
+#### we can improve the performance by using two things:
+
+#### 1- constraint propagation (arc consistency):
+
+there are some squares that are related together. For example : if the upper left corner had the value ‘┌’ 
+then its lower right square must have the same value. Otherwise there will be a zigzag or cross. This continues until hitting a color source square:
+
+<!-- Image 4 -->
+![Image 4](assets/smarter_4.jpg)
+
+so if we know that some value is wrong for some variable and we removed it from this variable domain, then it should remove it from related squares also:
+
+<!-- Image 5 -->
+![Image 5](assets/smarter_5.jpg)
+
+#### 2- colored sources relations:
+
+if there is two sources having DIFFERENT colors and can be connected with one line, then we could remove this line from domain:
+
+```python[1-3|5-12]
+#xij is a terminal where I is y index and j is x index
+if((is_in_terminals[(i, j+2)]) and (color[i][j+2] != color[i][j]) and is_in_empty_squares[(i, j+1)]):
+reduce_domain(['─'], (i, j+1), domains, Num_of_domain_values, domain_levels)
+```
+<!-- Image 6 -->
+![Image 6](assets/smarter_6.jpg)
+
+<br/><br/>
+
+### Implementation:
+
+we firstly look for the least domain length variables (that have one value in its domain) and then we start assigning the variables that have two values in domain. We used depth first recursion and backtrack. So we have a TWO branching-factor recursion (Binary tree). This is an excellent branching factor  compared to other ways. We used a heuristic values that is corner value for border squares {'└', '┌',  '┘', '┐'} and straight lines {'─',  '│'} otherwise.
+
+<br/><br/>
+
+
+```python[1-3|5-12]
+def backtrack(inp, terminals, terminal_domain, domains, Num_of_domain_values, domain_levels, assigns, colors, is_in_domain, is_in_terminals):
+
+    if(len(assigns) == len(domains)):
+        return assigns
+
+    _terminal_domain = copy.deepcopy(terminal_domain)
+    _domains = copy.deepcopy(domains)
+    _Num_of_domain_values = copy.deepcopy(Num_of_domain_values)
+    _domain_levels = copy.deepcopy(domain_levels)
+    _assigns = copy.deepcopy(assigns)
+    _colors = copy.deepcopy(colors)
+
+    location, direction = get_heuristic(inp, _domain_levels[1], _domains)
+
+    _domain_levels[1].remove(location)
+
+    Assign(inp, direction, location, terminals, _terminal_domain, _domains, _Num_of_domain_values,
+           _domain_levels, _assigns, _colors, is_in_domain, is_in_terminals)
+
+    is_consistant = apply_arc_consistency(inp, terminals, _terminal_domain, _domains,
+                                          _Num_of_domain_values, _domain_levels, _assigns, _colors, is_in_domain, is_in_terminals)
+
+    if(is_consistant):
+        res = backtrack(inp, terminals, _terminal_domain, _domains, _Num_of_domain_values,
+                        _domain_levels, _assigns, _colors, is_in_domain, is_in_terminals)
+        if(res != False):
+            return res
+
+    domains[location].remove(direction)
+    dire = min(domains[location])
+    domain_levels[1].remove(location)
+
+    Assign(inp, dire, location, terminals, terminal_domain, domains, Num_of_domain_values,
+           domain_levels, assigns, colors, is_in_domain, is_in_terminals)
+
+    iss_consistant = apply_arc_consistency(inp, terminals, terminal_domain, domains,
+                                           Num_of_domain_values, domain_levels, assigns, colors, is_in_domain, is_in_terminals)
+
+    if(iss_consistant):
+        _res = backtrack(inp, terminals, terminal_domain, domains, Num_of_domain_values,
+                         domain_levels, assigns, colors, is_in_domain, is_in_terminals)
+        if(_res != False):
+            return _res
+
+    return False
+```
+<br/><br/>
+
+## Advantages of using directions approach instead of colors approach:
+
+* in some smaller maps(5x5) all variables are initially assigned , so we didn’t need recursion for this map.
+
+* in the worst case (biggest map : 14x14) there was about 47% of variables assigned initially and this is a very good result that reduced the unkown variables size to almost half.
+
+* the branching factor (2) is very small compared to color-approach (using colors some times causes a branching factor of 7 or 8.
+
+<br/><br/>
+
+## Smarter Solver Results
 
 |Map     |time|Number of assignments(hits)|
 |--------|--------|---------------------------|
