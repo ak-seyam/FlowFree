@@ -700,6 +700,53 @@ using directions
 </style>
 
 ---n
+
+# result comparison
+--v
+## time
+
+| Map      | time (dump) | time(smart) | time(smarter) |
+|----------|-------------|-------------|---------------|
+| 5X5      | 2 ms​       | 5 ms​       | 0.6 ms        |
+| 7x7      | 7 ms​       | 16 ms       | 1 ms          |
+| 8x8      | 200 ms​     | 23 ms​      | 1 ms          |
+| 9x9      | 80 ms       | 65 ms​      | 7 ms          |
+| 10x10(1) | 200 ms​     | 166 ms​     | 10 ms         |
+| 10x10(2) | 3 s​        | 240 ms​     | 10 ms         |
+| 12x12    | 158 s​      | 838 ms      | 24 ms         |
+| 12x14    |  5hr 16min  | 163 ms​     | 24 ms         |
+| 14x14    | -           | 2230 ms​    | 24 ms         |
+<!-- .element: class="r-stretch result_table"  data-id="table"-->
+<style>
+    .result_table > tbody > tr >td {
+        font-size: 25px;
+    }
+
+</style>
+
+--v
+## number of hits
+| Map      | Number of assignments(dump) | Number of assignments(smart) | number of assignments(smarter) |
+|----------|-----------------------------|------------------------------|--------------------------------|
+| 5X5      | 124                         | 17                           | 15                             |
+| 7x7      | 452                         | 56                           | 39                             |
+| 8x8      | 15695                       | 52                           | 50                             |
+| 9x9      | 6208                        | 100                          | 75                             |
+| 10x10(1) | 13396                       | 330                          | 102                            |
+| 10x10(2) | 255112                      | 482                          | 126                            |
+| 12x12    | 12903209                    | 1178                         | 177                            |
+| 12x14    | 1548384192                  | 146                          | 186                            |
+| 14x14    | -                           | 2374                         | 193                            |
+<!-- .element: class="r-stretch result_table"  data-id="table"-->
+<style>
+    .result_table > tbody > tr >td {
+        font-size: 25px;
+    }
+
+</style>
+
+---n
+
 # animation
 --v
 # animation
