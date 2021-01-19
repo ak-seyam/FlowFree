@@ -445,7 +445,7 @@ def forward_check(variables_domain):
 
 ## improvement in constrains
 profile for 991
-![](doc/presentaion/smart_reveal/images/bad_constrain.png)
+![](assets/bad_constrain.png)
 
 <span> terminal constrain was checking <span class="fragment highlight-red"> every </span>terminal has only on path </span>
 
@@ -454,7 +454,7 @@ profile for 991
 this improved performance significantly
 
 profile for 991
-![](doc/presentaion/smart_reveal/images/good_constrain.png)
+![](assets/good_constrain.png)
 
 #### results
 | map      | time (s) |
