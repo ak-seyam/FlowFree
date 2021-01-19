@@ -681,15 +681,16 @@ using directions
 
 |Map     |time|Number of assignments(hits)|
 |--------|--------|---------------------------|
-|5X5     |0.6 ms      |15                         |
-|7x7     |1 ms      |39                         |
-|8x8     |1 ms      |50                         |
-|9x9     |7 ms      |75                         |
-|10x10(1)|10 ms      |102                         |
-|10x10(2)|10 ms      |126                        |
-|12x12   |24 ms     |177                        |
-|12x14   |24 ms     |186                        |
-|14x14   |24 ms     |193                        |
+|5X5     |0.4 ms      |15                         |
+|7x7     |0.8 ms      |39                         |
+|8x8     |0.7 ms      |50                         |
+|9x9     |1.8 ms      |75                         |
+|10x10(1)|2.9 ms      |102                         |
+|10x10(2)|3 ms      |126                        |
+|12x12   |5.7 ms     |177                        |
+|12x14   |5.8 ms     |186                        |
+|14x14   |6.6 ms     |193                        |
+
 
 <!-- .element: class="r-stretch result_table"  data-id="table"-->
 <style>
@@ -707,15 +708,15 @@ using directions
 
 | Map      | time (dump) | time(smart) | time(smarter) |
 |----------|-------------|-------------|---------------|
-| 5X5      | 2 ms​       | 5 ms​       | 0.6 ms        |
-| 7x7      | 7 ms​       | 16 ms       | 1 ms          |
-| 8x8      | 200 ms​     | 23 ms​      | 1 ms          |
-| 9x9      | 80 ms       | 65 ms​      | 7 ms          |
-| 10x10(1) | 200 ms​     | 166 ms​     | 10 ms         |
-| 10x10(2) | 3 s​        | 240 ms​     | 10 ms         |
-| 12x12    | 158 s​      | 838 ms      | 24 ms         |
-| 12x14    |  5hr 16min  | 163 ms​     | 24 ms         |
-| 14x14    | -           | 2230 ms​    | 24 ms         |
+| 5X5      | 2 ms​       | 5 ms​       | 0.4 ms        |
+| 7x7      | 7 ms​       | 16 ms       | 0.8 ms          |
+| 8x8      | 200 ms​     | 23 ms​      | 0.7 ms          |
+| 9x9      | 80 ms       | 65 ms​      | 1.8 ms          |
+| 10x10(1) | 200 ms​     | 166 ms​     | 2.9 ms         |
+| 10x10(2) | 3 s​        | 240 ms​     | 3 ms         |
+| 12x12    | 158 s​      | 838 ms      | 5.7 ms         |
+| 12x14    |  5hr 16min  | 163 ms​     | 5.8 ms         |
+| 14x14    | -           | 2230 ms​    | 6.6 ms         |
 <!-- .element: class="r-stretch result_table"  data-id="table"-->
 <style>
     .result_table > tbody > tr >td {
