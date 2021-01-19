@@ -1102,12 +1102,12 @@ def backtrack(inp, terminals, terminal_domain, domains, Num_of_domain_values, do
     if(len(assigns) == len(domains)):
         return assigns
 
-    _terminal_domain = copy.deepcopy(terminal_domain)
-    _domains = copy.deepcopy(domains)
-    _Num_of_domain_values = copy.deepcopy(Num_of_domain_values)
-    _domain_levels = copy.deepcopy(domain_levels)
-    _assigns = copy.deepcopy(assigns)
-    _colors = copy.deepcopy(colors)
+    _terminal_domain = pickle.loads(pickle.dumps(terminal_domain))
+    _domains = pickle.loads(pickle.dumps(domains))
+    _Num_of_domain_values = pickle.loads(pickle.dumps(Num_of_domain_values))
+    _domain_levels = pickle.loads(pickle.dumps(domain_levels))
+    _assigns = pickle.loads(pickle.dumps(assigns))
+    _colors = pickle.loads(pickle.dumps(colors))
 
     loc, dire = get_heuristic(inp, _domain_levels[1], _domains)
 
