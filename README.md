@@ -960,15 +960,15 @@ def backtrack(inp, terminals, terminal_domain, domains, Num_of_domain_values, do
 
 |Map     |time|Number of assignments(hits)|
 |--------|--------|---------------------------|
-|5X5     |0.6 ms      |15                         |
-|7x7     |1 ms      |39                         |
-|8x8     |1 ms      |50                         |
-|9x9     |7 ms      |75                         |
-|10x10(1)|10 ms      |102                         |
-|10x10(2)|10 ms      |126                        |
-|12x12   |24 ms     |177                        |
-|12x14   |24 ms     |186                        |
-|14x14   |24 ms     |193                        |
+|5X5     |0.4 ms      |15                         |
+|7x7     |0.8 ms      |39                         |
+|8x8     |0.7 ms      |50                         |
+|9x9     |1.8 ms      |75                         |
+|10x10(1)|2.9 ms      |102                         |
+|10x10(2)|3 ms      |126                        |
+|12x12   |5.7 ms     |177                        |
+|12x14   |5.8 ms     |186                        |
+|14x14   |6.6 ms     |193                        |
 
 
 **5x5:**
@@ -981,7 +981,7 @@ B┌─RO
 │RO┘G
 └BG─┘
 ---------------------------------
-map ../input/input55.txt solution time = 0.0006902217864990234 sec
+map ../input/input55.txt solution time = 0.0004048347473144531 sec
 number of variables:  39
 ```
 
@@ -997,7 +997,7 @@ Result:
 ││R┌─┘│
 G└─┘O─┘
 ---------------------------------
-map ../input/input77.txt solution time = 0.0016269683837890625 sec
+map ../input/input77.txt solution time = 0.0008220672607421875 sec
 ```
 **8x8:**
 ```
@@ -1012,7 +1012,7 @@ Result:
 │Q────┘│
 └──────┘
 ---------------------------------
-map ../input/input88.txt solution time = 0.001096487045288086 sec
+map ../input/input88.txt solution time = 0.0007193088531494141 sec
 ```
 
 **9x9**
@@ -1029,7 +1029,7 @@ DB└────┘│
 │└────KP│
 └───────┘
 ---------------------------------
-map ../input/input991.txt solution time = 0.007530689239501953 sec
+map ../input/input991.txt solution time = 0.0018935203552246094 sec
 ```
 
 **10x10 1**
@@ -1047,7 +1047,7 @@ P││││└──┘│
 │Y││└───B│
 └─┘└─────┘
 ---------------------------------
-map ../input/input10101.txt solution time = 0.009502649307250977 sec
+map ../input/input10101.txt solution time = 0.002902984619140625 sec
 ```
 
 **10x10 2**
@@ -1065,7 +1065,7 @@ F┌────┐│└┐
 │└─┘└──┘V│
 └────────┘
 ---------------------------------
-map ../input/input10102.txt solution time = 0.010317087173461914 sec
+map ../input/input10102.txt solution time = 0.003052949905395508 sec
 ```
 
 **12x12**
@@ -1085,7 +1085,7 @@ Result:
 │└────────A│
 └──────────┘
 ---------------------------------
-map ../input/input1212.txt solution time = 0.023624420166015625 sec
+map ../input/input1212.txt solution time = 0.005738496780395508 sec
 ```
 
 **12x14**
@@ -1107,7 +1107,7 @@ W││Q││└┐││R│
 │R────────┘│
 └──────────┘
 ---------------------------------
-map ../input/input1214.txt solution time = 0.023621559143066406 sec
+map ../input/input1214.txt solution time = 0.005768537521362305 sec
 ```
 
 **14x14**
@@ -1128,7 +1128,7 @@ G└─────┐││││││
 │└──┘K──────┘│
 └────────────┘
 ---------------------------------
-map ../input/input1414.txt solution time = 0.022409439086914062 sec
+map ../input/input1414.txt solution time = 0.006555795669555664 sec
 ```
 
 # results comparsion
@@ -1136,15 +1136,15 @@ map ../input/input1414.txt solution time = 0.022409439086914062 sec
 
 | Map      | time (dump) | time(smart) | time(smarter) |
 |----------|-------------|-------------|---------------|
-| 5X5      | 2 ms​       | 5 ms​       | 0.6 ms        |
-| 7x7      | 7 ms​       | 16 ms       | 1 ms          |
-| 8x8      | 200 ms​     | 23 ms​      | 1 ms          |
-| 9x9      | 80 ms       | 65 ms​      | 7 ms          |
-| 10x10(1) | 200 ms​     | 166 ms​     | 10 ms         |
-| 10x10(2) | 3 s​        | 240 ms​     | 10 ms         |
-| 12x12    | 158 s​      | 838 ms      | 24 ms         |
-| 12x14    |  5hr 16min  | 163 ms​     | 24 ms         |
-| 14x14    | -           | 2230 ms​    | 24 ms         |
+| 5X5      | 2 ms​       | 5 ms​       | 0.4 ms        |
+| 7x7      | 7 ms​       | 16 ms       | 0.8 ms          |
+| 8x8      | 200 ms​     | 23 ms​      | 0.7 ms          |
+| 9x9      | 80 ms       | 65 ms​      | 1.8 ms          |
+| 10x10(1) | 200 ms​     | 166 ms​     | 2.9 ms         |
+| 10x10(2) | 3 s​        | 240 ms​     | 3 ms         |
+| 12x12    | 158 s​      | 838 ms      | 5.7 ms         |
+| 12x14    |  5hr 16min  | 163 ms​     | 5.8 ms         |
+| 14x14    | -           | 2230 ms​    | 6.6 ms         |
 
 ## number of hits
 | Map      | Number of assignments(dump) | Number of assignments(smart) | number of assignments(smarter) |
