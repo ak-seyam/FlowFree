@@ -1,6 +1,7 @@
 # smartest solution
 import time
 import copy
+import pickle
 
 
 def read_inputfile(path):
