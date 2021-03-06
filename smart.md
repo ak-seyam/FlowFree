@@ -32,7 +32,7 @@ Describes if putting the next assignment will be a good idea!  For its position 
 Number of free neighbors >= 2 => TRUE
 Number of similar neighbors == 1 
 and Number of empty neighbors == 1 => TRUE
-Number of same color neighbours == 1 and 
+Number of same color neighbours == 2 and 
 No surrounded square filled => TRUE
 Otherwise => FALSE
 ```
